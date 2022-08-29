@@ -27,7 +27,7 @@ const styledMainTheme = {
 
   breakpoints: {
     small: "390px",
-    big: "700pxpx",
+    big: "700px",
     large: "1050px",
   },
 };

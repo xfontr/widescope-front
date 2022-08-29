@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import styledMainTheme from "./styledMainTheme";
 
 const GlobalStyles = createGlobalStyle`
   * {
@@ -8,6 +9,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;
     min-height: 100vh;
+    background-color: ${styledMainTheme.colors.primaryDarker};
   }
 
   ul {
