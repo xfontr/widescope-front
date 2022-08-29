@@ -8,13 +8,13 @@ const styledMainTheme = {
   },
 
   shapes: {
-    radiusSmall: "0.75rem",
+    radiusSmall: "0.4rem",
     radiusBig: "1.5rem",
 
     shortShadow: "6px 6px 18px 6px rgba(0, 0, 0, 0.1)",
     longShadow: "10px 10px 30px 10px rgba(0, 0, 0, 0.1)",
 
-    rectangularContainer: "0.8rem 1.5rem 0.8rem 1.5rem",
+    rectangularContainer: "0.7rem 1.6rem",
   },
 
   spacing: {

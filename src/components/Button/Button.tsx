@@ -1,3 +1,5 @@
+import ButtonStyled from "./ButtonStyled";
+
 type ButtonTypes = "submit" | "button";
 
 interface ButtonProps {
@@ -18,9 +20,9 @@ const Button = ({ content, action, type }: ButtonProps): JSX.Element => {
   };
 
   return (
-    <button type={type} onClick={(event) => handleButtonAction(event)}>
+    <ButtonStyled type={type} onClick={(event) => handleButtonAction(event)}>
       {content}
-    </button>
+    </ButtonStyled>
   );
 };
 
