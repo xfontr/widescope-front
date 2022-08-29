@@ -6,6 +6,7 @@ import App from "./components/App/App";
 import { ThemeProvider } from "styled-components";
 import styledMainTheme from "./styles/styledMainTheme";
 import GlobalStyles from "./styles/GlobalStyles";
+import "@fontsource/manrope";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

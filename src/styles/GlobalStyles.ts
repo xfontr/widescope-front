@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     min-height: 100vh;
     background-color: ${styledMainTheme.colors.primaryDarker};
+    font-family: manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   ul {
