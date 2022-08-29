@@ -22,7 +22,7 @@ const styledMainTheme = {
     gapBig: "1.5rem",
 
     paddingSmall: "0.8rem",
-    paddingBig: "1.5rem",
+    paddingBig: "1.8rem",
   },
 
   breakpoints: {

@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
   button, input {
     font: inherit;
     border: none;
+    outline: none;
   }
 `;
 

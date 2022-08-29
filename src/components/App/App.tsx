@@ -1,4 +1,5 @@
 import AppStyled from "./AppStyled";
+import SignForm from "../SignForm/SignForm";
 
 const App = (): JSX.Element => {
   return (
@@ -6,6 +7,7 @@ const App = (): JSX.Element => {
       <header className="header">
         <h3>wideScope</h3>
       </header>
+      <SignForm isLogin={true} />
       <footer className="footer">wideScope © 2022</footer>
     </AppStyled>
   );
