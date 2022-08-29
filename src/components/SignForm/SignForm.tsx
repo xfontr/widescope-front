@@ -1,5 +1,13 @@
 import { useState } from "react";
 import Button from "../Button/Button";
+import {
+  FooterStyled,
+  GroupStyled,
+  HeaderStyled,
+  InputStyled,
+  LabelStyled,
+  SignFormStyled,
+} from "./SignFormStyled";
 
 interface SignFormProps {
   isLogin: boolean;
@@ -27,57 +35,82 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
   };
 
   return (
-    <form data-testId="form" onSubmit={(event) => handleSubmit(event)}>
-      <label htmlFor="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        placeholder="John Doe"
-        autoComplete="off"
-        value={values.name}
-        onChange={(event) => {
-          handleChange(event);
-        }}
-      />
+    <SignFormStyled
+      data-testId="form"
+      onSubmit={(event) => handleSubmit(event)}
+    >
+      <HeaderStyled>
+        <h3 className="form__heading">{`${isLogin ? "Log in" : "Sign up"}`}</h3>
+        <span className="form__cta-text">
+          Share your latests projects with the WideScope community.
+        </span>
+      </HeaderStyled>
 
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        autoComplete="off"
-        value={values.password}
-        onChange={(event) => {
-          handleChange(event);
-        }}
-      />
+      <GroupStyled>
+        <LabelStyled htmlFor="name">Name</LabelStyled>
+        <InputStyled
+          type="text"
+          id="name"
+          placeholder="John Doe"
+          autoComplete="off"
+          value={values.name}
+          onChange={(event) => {
+            handleChange(event);
+          }}
+        />
+      </GroupStyled>
+
+      <GroupStyled>
+        <LabelStyled htmlFor="password">Password</LabelStyled>
+        <InputStyled
+          type="password"
+          id="password"
+          autoComplete="off"
+          value={values.password}
+          onChange={(event) => {
+            handleChange(event);
+          }}
+        />
+      </GroupStyled>
 
       {!isLogin && (
         <>
-          <label htmlFor="repeatPassword">Repeat password</label>
-          <input
-            type="password"
-            id="repeatPassword"
-            autoComplete="off"
-            value={values.repeatPassword}
-            onChange={(event) => {
-              handleChange(event);
-            }}
-          />
+          <GroupStyled>
+            <LabelStyled htmlFor="repeatPassword">Repeat password</LabelStyled>
+            <InputStyled
+              type="password"
+              id="repeatPassword"
+              autoComplete="off"
+              value={values.repeatPassword}
+              onChange={(event) => {
+                handleChange(event);
+              }}
+            />
+          </GroupStyled>
 
-          <label htmlFor="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            value={values.email}
-            onChange={(event) => {
-              handleChange(event);
-            }}
-          />
+          <GroupStyled>
+            <LabelStyled htmlFor="email">Email address</LabelStyled>
+            <InputStyled
+              type="email"
+              id="email"
+              value={values.email}
+              onChange={(event) => {
+                handleChange(event);
+              }}
+            />
+          </GroupStyled>
         </>
       )}
 
-      <Button type="submit" content={`${isLogin ? "Log in" : "Sign up"}`} />
-    </form>
+      <FooterStyled>
+        <Button type="submit" content={`${isLogin ? "Log in" : "Sign up"}`} />
+        {isLogin && (
+          <span className="form__sign-up-cta">
+            Don't have an account? Sign up for free
+          </span>
+        )}
+      </FooterStyled>
+    </SignFormStyled>
   );
 };
 
