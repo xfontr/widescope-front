@@ -1,6 +1,5 @@
-import { createEvent, fireEvent, render, screen } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
-import styledMainTheme from "../../styles/styledMainTheme";
+import { createEvent, fireEvent, screen } from "@testing-library/react";
+import { render } from "../../test-utils/render/customRender";
 import Button from "./Button";
 
 describe("Given a Button component", () => {
@@ -9,11 +8,7 @@ describe("Given a Button component", () => {
 
   describe("When instantiated", () => {
     test("Then it should show a button with the specified text", () => {
-      render(
-        <ThemeProvider theme={styledMainTheme}>
-          <Button content={buttonText} type={buttonType} />
-        </ThemeProvider>
-      );
+      render(<Button content={buttonText} type={buttonType} />);
 
       const button = screen.getByRole("button", { name: buttonText });
 
@@ -23,11 +18,7 @@ describe("Given a Button component", () => {
 
   describe("When instantiated and clicked", () => {
     test("Then it should prevent its default action", () => {
-      render(
-        <ThemeProvider theme={styledMainTheme}>
-          <Button content={buttonText} type={buttonType} />
-        </ThemeProvider>
-      );
+      render(<Button content={buttonText} type={buttonType} />);
 
       const button = screen.getByRole("button", { name: buttonText });
       const clickEvent = createEvent.click(button);
@@ -39,11 +30,7 @@ describe("Given a Button component", () => {
 
     test("Then it should call the function passed as props", () => {
       const action = jest.fn();
-      render(
-        <ThemeProvider theme={styledMainTheme}>
-          <Button content={buttonText} type={buttonType} action={action} />
-        </ThemeProvider>
-      );
+      render(<Button content={buttonText} type={buttonType} action={action} />);
 
       const button = screen.getByRole("button", { name: buttonText });
       fireEvent.click(button);

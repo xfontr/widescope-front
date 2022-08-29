@@ -1,6 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { ThemeProvider } from "styled-components";
-import styledMainTheme from "../../styles/styledMainTheme";
+import { screen } from "@testing-library/react";
+import { render } from "../../test-utils/render/customRender";
 import App from "./App";
 
 describe("Given an App component", () => {
@@ -9,11 +8,7 @@ describe("Given an App component", () => {
       const appName = "wideScope";
       const footerText = `wideScope © ${new Date().getFullYear()}`;
 
-      render(
-        <ThemeProvider theme={styledMainTheme}>
-          <App />
-        </ThemeProvider>
-      );
+      render(<App />);
 
       const heading = screen.getByRole("heading", { name: appName });
       const footer = screen.getByText(footerText);
