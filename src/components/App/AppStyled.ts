@@ -14,6 +14,14 @@ const AppStyled = styled.div`
   @media (min-width: ${(props) => props.theme.breakpoints.big}) {
     max-width: ${(props) => props.theme.breakpoints.large};
   }
+
+  .footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: ${(props) => props.theme.spacing.paddingSmall};
+  }
 `;
 
 export default AppStyled;
