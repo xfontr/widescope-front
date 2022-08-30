@@ -3,6 +3,7 @@ import {
   signInActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/userSlice";
+import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
 import mockUser from "../test-utils/mocks/mockUser";
 import Wrapper from "../test-utils/render/Wrapper";
 import useUser from "./useUser";
@@ -34,6 +35,12 @@ jest.mock("../utils/auth", () => () => ({
     name: mockUser.name,
   }),
 }));
+
+Object.defineProperty(window, "localStorage", {
+  value: mockLocalStorage,
+});
+
+jest.mock("../test-utils/mocks/mockLocalStorage");
 
 describe("Given a signUp function returned by a useUser function", () => {
   describe("When called with valid sign up data", () => {
@@ -89,6 +96,25 @@ describe("Given a logIn function returned by a useUser function", () => {
       await logIn(logInData);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(toggleStatusActionCreator());
+    });
+
+    test("Then it should set the received token at the local storage", async () => {
+      mockResolvedData = {
+        data: { user: { token: "###" } },
+      };
+
+      const {
+        result: {
+          current: { logIn },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      await logIn(logInData);
+
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
+        "token",
+        mockResolvedData.data.user.token
+      );
     });
   });
 

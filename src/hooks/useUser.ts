@@ -53,6 +53,9 @@ const useUser = () => {
         const tokenContent = getTokenData(token);
 
         dispatch(toggleStatusActionCreator());
+
+        localStorage.setItem("token", token);
+
         dispatch(
           signInActionCreator({
             id: tokenContent.id,
