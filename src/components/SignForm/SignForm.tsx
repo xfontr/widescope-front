@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
+import registerSchema from "../../schemas/registerSchema";
 import Button from "../Button/Button";
 import {
   FooterStyled,
@@ -51,29 +52,24 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     }
   };
 
-  // const validateValues = (): boolean => {
-  //   let hasEmptyValues = false;
-
-  //   Object.values(values).forEach((value) => {
-  //     if (hasEmptyValues) {
-  //       return;
-  //     }
-  //     if (!value) {
-  //       hasEmptyValues = true;
-  //     }
-  //   });
-
-  //   return hasEmptyValues;
-  // };
+  const validateValues = (): boolean => {
+    const validation = registerSchema.validate(values);
+    console.log(validation);
+    if (validation.error) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
 
-    // if (validateValues()) {
-    //   return;
-    // }
+    if (!validateValues()) {
+      return;
+    }
 
     if (!isLogin && values.password !== values.repeatPassword) {
       return;
