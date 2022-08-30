@@ -23,7 +23,7 @@ const initialState = {
 };
 
 const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
-  const { signUp, logIn } = useUser();
+  const { signUp } = useUser();
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState([] as string[]);
 
