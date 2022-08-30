@@ -1,4 +1,5 @@
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { store } from "../../app/store";
 import GlobalStyles from "../../styles/GlobalStyles";
@@ -12,8 +13,10 @@ const Wrapper = ({ children }: WrapperProps): JSX.Element => {
   return (
     <ThemeProvider theme={styledMainTheme}>
       <Provider store={store}>
-        <GlobalStyles />
-        {children}
+        <BrowserRouter>
+          <GlobalStyles />
+          {children}
+        </BrowserRouter>
       </Provider>
     </ThemeProvider>
   );

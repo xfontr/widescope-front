@@ -1,6 +1,7 @@
 import AppStyled from "./AppStyled";
 import SignForm from "../SignForm/SignForm";
 import { Navigate, Route, Routes } from "react-router-dom";
+import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 
 const App = (): JSX.Element => {
   return (
@@ -12,7 +13,7 @@ const App = (): JSX.Element => {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<SignForm isLogin={true} />} />
-          <Route path="/sign-up" element={<SignForm isLogin={false} />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
         </Routes>
       </main>
       <footer className="footer">wideScope © 2022</footer>
