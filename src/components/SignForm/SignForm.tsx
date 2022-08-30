@@ -25,6 +25,7 @@ const initialState = {
 const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
   const { signUp } = useUser();
   const [values, setValues] = useState(initialState);
+  const [errors, setErrors] = useState([] as string[]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
@@ -37,7 +38,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (!event.target.value) {
-      event.target.classList.remove("form__input--error");
+      event.target.classList.remove("form__input--error-repeat");
       return;
     }
 
@@ -53,9 +54,14 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
   };
 
   const validateValues = (): boolean => {
-    const validation = registerSchema.validate(values);
-    console.log(validation);
+    const validation = registerSchema.validate(values, { abortEarly: false });
+
     if (validation.error) {
+      console.log(validation);
+      const errors = validation.error.details.map(
+        (failedInput) => failedInput.path[0]
+      );
+      setErrors(errors as string[]);
       return false;
     } else {
       return true;
@@ -99,6 +105,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="name">Name</LabelStyled>
         <InputStyled
+          className={errors.includes("name") ? "form__input--error" : ""}
           type="text"
           id="name"
           placeholder="John Doe"
@@ -113,6 +120,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="password">Password</LabelStyled>
         <InputStyled
+          className={errors.includes("password") ? "form__input--error" : ""}
           type="password"
           id="password"
           autoComplete="off"
@@ -128,6 +136,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
           <GroupStyled>
             <LabelStyled htmlFor="repeatPassword">Repeat password</LabelStyled>
             <InputStyled
+              className={
+                errors.includes("repeatPassword") ? "form__input--error" : ""
+              }
               type="password"
               id="repeatPassword"
               autoComplete="off"
@@ -142,6 +153,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
           <GroupStyled>
             <LabelStyled htmlFor="email">Email address</LabelStyled>
             <InputStyled
+              className={errors.includes("email") ? "form__input--error" : ""}
               type="email"
               id="email"
               value={values.email}
