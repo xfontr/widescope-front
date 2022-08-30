@@ -1,6 +1,5 @@
 import { createEvent, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { createFalse } from "typescript";
 import { render } from "../../test-utils/render/customRender";
 import SignForm from "./SignForm";
 
@@ -127,8 +126,8 @@ describe("Given a SignForm component", () => {
   });
 
   describe("When instantiated as a sign up form and submitted with not matching passwords", () => {
-    test("Then it should not call the signUp function", async () => {
-      const falsePassword = "asdfasdf";
+    test("Then it should not call the signUp function, and call it when they match", async () => {
+      const falsePassword = "asdfasdfasdf";
       render(<SignForm isLogin={false} />);
 
       const passwordInput = screen.getByLabelText(
@@ -137,14 +136,50 @@ describe("Given a SignForm component", () => {
       const repeatPasswordInput = screen.getByLabelText(
         "Repeat password"
       ) as HTMLInputElement;
+      const nameInput = screen.getByLabelText("Name") as HTMLInputElement;
+      const emailInput = screen.getByLabelText(
+        "Email address"
+      ) as HTMLInputElement;
+
+      await userEvent.type(nameInput, "asdfasdf");
+      await userEvent.type(emailInput, "asdf@asdf.com");
 
       await userEvent.type(passwordInput, falsePassword);
-      await userEvent.type(repeatPasswordInput, "a");
+      await userEvent.type(repeatPasswordInput, "513415234344");
 
       const submitButton = screen.getByRole("button", { name: "Sign up" });
       await userEvent.click(submitButton);
 
       expect(mockSignUp).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("When instantiated as a sign up form and submitted with matching passwords", () => {
+    test("Then it should call the signUp function", async () => {
+      const falsePassword = "asdfasdfasdf";
+      render(<SignForm isLogin={false} />);
+
+      const passwordInput = screen.getByLabelText(
+        "Password"
+      ) as HTMLInputElement;
+      const repeatPasswordInput = screen.getByLabelText(
+        "Repeat password"
+      ) as HTMLInputElement;
+      const nameInput = screen.getByLabelText("Name") as HTMLInputElement;
+      const emailInput = screen.getByLabelText(
+        "Email address"
+      ) as HTMLInputElement;
+
+      await userEvent.type(nameInput, "asdfasdf");
+      await userEvent.type(emailInput, "asdf@asdf.com");
+
+      await userEvent.type(passwordInput, falsePassword);
+      await userEvent.type(repeatPasswordInput, falsePassword);
+
+      const submitButton = screen.getByRole("button", { name: "Sign up" });
+      await userEvent.click(submitButton);
+
+      expect(mockSignUp).toHaveBeenCalled();
     });
   });
 
