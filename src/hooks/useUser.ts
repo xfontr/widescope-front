@@ -12,18 +12,20 @@ const useUser = () => {
 
   const signUp = useCallback(
     async ({ name, password, email }: UserSignUpData) => {
-      const {
-        data: { newUser },
-      }: AxiosResponse<SignUpResponse> = await axios.post(
-        `${apiUrl}/users/sign-up`,
-        {
-          name,
-          password,
-          email,
-        }
-      );
+      try {
+        const {
+          data: { newUser },
+        }: AxiosResponse<SignUpResponse> = await axios.post(
+          `${apiUrl}/users/sign-up`,
+          {
+            name,
+            password,
+            email,
+          }
+        );
 
-      dispatch(SignInActionCreator(newUser));
+        dispatch(SignInActionCreator(newUser));
+      } catch (error) {}
     },
     [dispatch]
   );

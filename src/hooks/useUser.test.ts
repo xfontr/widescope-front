@@ -9,10 +9,12 @@ const signUpData = {
   email: "mockEmail",
 };
 
+let mockResolvedData: any = {
+  data: { newUser: { ...signUpData, id: "userId", friends: ["friend"] } },
+};
+
 jest.mock("axios", () => ({
-  post: () => ({
-    data: { newUser: { ...signUpData, id: "userId", friends: ["friend"] } },
-  }),
+  post: () => mockResolvedData,
 }));
 
 const mockUseDispatch = jest.fn();
@@ -33,15 +35,24 @@ describe("Given a signUp function returned by a useUser function", () => {
 
       await signUp(signUpData);
 
-      const expectedResponse = {
-        ...signUpData,
-        id: "userId",
-        friends: ["friend"],
-      };
-
       expect(mockUseDispatch).toHaveBeenCalledWith(
-        SignInActionCreator(expectedResponse)
+        SignInActionCreator(mockResolvedData.data.newUser)
       );
+    });
+  });
+
+  describe("When called but the fetch fails", () => {
+    test("Then it should not call the dispatch", async () => {
+      const {
+        result: {
+          current: { signUp },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+      mockResolvedData = new Error();
+
+      await signUp(signUpData);
+
+      expect(mockUseDispatch).not.toHaveBeenCalled();
     });
   });
 });
