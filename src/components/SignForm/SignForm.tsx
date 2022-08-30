@@ -68,16 +68,20 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     }
   };
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!isLogin) {
+      signUpAction();
+    }
+  };
+
+  const signUpAction = async () => {
     if (!validateValues()) {
       return;
     }
 
-    if (!isLogin && values.password !== values.repeatPassword) {
+    if (values.password !== values.repeatPassword) {
       return;
     }
 
