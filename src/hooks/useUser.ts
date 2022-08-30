@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { SignInActionCreator } from "../store/slices/userSlice";
+import { signInActionCreator } from "../store/slices/userSlice";
 import { UserSignUpData } from "../types/user";
 import SignUpResponse from "./useUserTypes";
 
@@ -24,7 +24,7 @@ const useUser = () => {
           }
         );
 
-        dispatch(SignInActionCreator(newUser));
+        dispatch(signInActionCreator(newUser));
       } catch (error) {}
     },
     [dispatch]

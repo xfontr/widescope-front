@@ -1,5 +1,5 @@
 import mockUser from "../../test-utils/mocks/mockUser";
-import { SignInActionCreator, userReducer } from "./userSlice";
+import { signInActionCreator, userReducer } from "./userSlice";
 
 describe("Given a signInUser action creator", () => {
   describe("When called with a user as a payload", () => {
@@ -10,7 +10,7 @@ describe("Given a signInUser action creator", () => {
         payload: mockUser,
       };
 
-      const action = SignInActionCreator(mockUser);
+      const action = signInActionCreator(mockUser);
 
       expect(action).toStrictEqual(expectedAction);
     });
@@ -20,10 +20,11 @@ describe("Given a signInUser action creator", () => {
 describe("Given a userReducer function", () => {
   describe("When called with a signUp action with a new user as a payload", () => {
     test("Then it should return a new user", () => {
-      const action = SignInActionCreator(mockUser);
+      const previousState = { user: mockUser, isLogged: true };
+      const action = signInActionCreator(mockUser);
 
-      const result = userReducer(mockUser, action);
-      expect(result).toStrictEqual(mockUser);
+      const result = userReducer(previousState, action);
+      expect(result).toStrictEqual(previousState);
     });
   });
 });

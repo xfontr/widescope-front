@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { SignInActionCreator } from "../store/slices/userSlice";
+import { signInActionCreator } from "../store/slices/userSlice";
 import Wrapper from "../test-utils/render/Wrapper";
 import useUser from "./useUser";
 
@@ -36,7 +36,7 @@ describe("Given a signUp function returned by a useUser function", () => {
       await signUp(signUpData);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
-        SignInActionCreator(mockResolvedData.data.newUser)
+        signInActionCreator(mockResolvedData.data.newUser)
       );
     });
   });
