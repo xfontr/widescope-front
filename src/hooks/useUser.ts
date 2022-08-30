@@ -5,6 +5,7 @@ import {
   signInActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/userSlice";
+import mockUser from "../test-utils/mocks/mockUser";
 import { UserLogInData, UserSignUpData } from "../types/user";
 import getTokenData from "../utils/auth";
 import { SignUpResponse, UserToken } from "./useUserTypes";
@@ -36,26 +37,34 @@ const useUser = () => {
 
   const logIn = useCallback(
     async ({ name, password }: UserLogInData) => {
-      const {
-        data: {
-          user: { token },
-        },
-      }: AxiosResponse<UserToken> = await axios.post(`${apiUrl}/users/log-in`, {
-        name,
-        password,
-      });
+      try {
+        const {
+          data: {
+            user: { token },
+          },
+        }: AxiosResponse<UserToken> = await axios.post(
+          `${apiUrl}/users/log-in`,
+          {
+            name,
+            password,
+          }
+        );
 
-      const tokenContent = getTokenData(token);
+        const tokenContent = getTokenData(token);
 
-      dispatch(toggleStatusActionCreator());
-      dispatch(
-        signInActionCreator({
-          id: tokenContent.id,
-          name: tokenContent.name,
-          email: "",
-          friends: [],
-        })
-      );
+        dispatch(toggleStatusActionCreator());
+
+        localStorage.setItem("token", token);
+
+        dispatch(
+          signInActionCreator({
+            id: tokenContent.id,
+            name: tokenContent.name,
+            email: mockUser.email,
+            friends: mockUser.friends,
+          })
+        );
+      } catch (error) {}
     },
     [dispatch]
   );
