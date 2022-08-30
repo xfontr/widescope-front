@@ -8,6 +8,7 @@ import styledMainTheme from "./styles/styledMainTheme";
 import GlobalStyles from "./styles/GlobalStyles";
 import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/700.css";
+import { BrowserRouter } from "react-router-dom";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -16,8 +17,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={styledMainTheme}>
-        <GlobalStyles />
-        <App />
+        <BrowserRouter>
+          <GlobalStyles />
+          <App />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
