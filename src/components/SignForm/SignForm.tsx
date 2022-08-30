@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
+import loginSchema from "../../schemas/loginSchema";
 import registerSchema from "../../schemas/registerSchema";
 import Button from "../Button/Button";
 import {
@@ -23,7 +24,7 @@ const initialState = {
 };
 
 const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
-  const { signUp } = useUser();
+  const { signUp, logIn } = useUser();
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState([] as string[]);
 
@@ -54,7 +55,12 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
   };
 
   const validateValues = (): boolean => {
-    const validation = registerSchema.validate(values, { abortEarly: false });
+    const validation = isLogin
+      ? loginSchema.validate(
+          { name: values.name, password: values.password },
+          { abortEarly: false }
+        )
+      : registerSchema.validate(values, { abortEarly: false });
 
     if (validation.error) {
       const errors = validation.error.details.map(
@@ -68,12 +74,15 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!isLogin) {
-      signUpAction();
+  const logInAction = async () => {
+    if (!validateValues()) {
+      return;
     }
+
+    await logIn({
+      name: values.name,
+      password: values.password,
+    });
   };
 
   const signUpAction = async () => {
@@ -90,6 +99,17 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       password: values.password,
       email: values.email,
     });
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!isLogin) {
+      signUpAction();
+      return;
+    }
+
+    logInAction();
   };
 
   return (
