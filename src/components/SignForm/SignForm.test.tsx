@@ -99,6 +99,8 @@ describe("Given a SignForm component", () => {
         return Promise.resolve();
       }, Promise.resolve());
 
+      await form.forEach((element) => expect(element.value).toBe(typedText));
+
       const submitButton = screen.getByRole("button", { name: "Sign up" });
       await userEvent.click(submitButton);
 
