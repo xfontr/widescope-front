@@ -3,6 +3,12 @@ import userEvent from "@testing-library/user-event";
 import { render } from "../../test-utils/render/customRender";
 import SignForm from "./SignForm";
 
+const mockSignUp = jest.fn();
+
+jest.mock("../../hooks/useUser", () => () => ({
+  signUp: mockSignUp,
+}));
+
 describe("Given a SignForm component", () => {
   describe("When instantiated as a login form", () => {
     test("Then it should show a name and a password input, plus a log in button", () => {
@@ -72,6 +78,37 @@ describe("Given a SignForm component", () => {
       fireEvent(form, submitEvent);
 
       expect(submitEvent.defaultPrevented).toBe(true);
+    });
+  });
+
+  describe("When instantiated as a sign up form and submitted with a valid user", () => {
+    test("Then it should call the signUp function with the register data", async () => {
+      const typedText = "hello@hello.com";
+      render(<SignForm isLogin={false} />);
+
+      const form = [
+        screen.getByLabelText("Name") as HTMLInputElement,
+        screen.getByLabelText("Password") as HTMLInputElement,
+        screen.getByLabelText("Repeat password") as HTMLInputElement,
+        screen.getByLabelText("Email address") as HTMLInputElement,
+      ];
+
+      await form.reduce(async (previousPromise, element) => {
+        await previousPromise;
+        await userEvent.type(element, typedText);
+        return Promise.resolve();
+      }, Promise.resolve());
+
+      const submitButton = screen.getByRole("button", { name: "Sign up" });
+      await userEvent.click(submitButton);
+
+      const signUpData = {
+        name: form[0].value,
+        password: form[1].value,
+        email: form[3].value,
+      };
+
+      expect(mockSignUp).toHaveBeenCalledWith(signUpData);
     });
   });
 });
