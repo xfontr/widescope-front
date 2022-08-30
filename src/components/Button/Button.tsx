@@ -12,6 +12,10 @@ const Button = ({ content, action, type }: ButtonProps): JSX.Element => {
   const handleButtonAction = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    if (!action) {
+      return;
+    }
+
     event.preventDefault();
 
     if (action) {

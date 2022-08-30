@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useUser from "../../hooks/useUser";
 import Button from "../Button/Button";
 import {
   FooterStyled,
@@ -21,6 +22,7 @@ const initialState = {
 };
 
 const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
+  const { signUp } = useUser();
   const [values, setValues] = useState(initialState);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -30,14 +32,23 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
+    await signUp({
+      name: values.name,
+      password: values.password,
+      email: values.email,
+    });
   };
 
   return (
     <SignFormStyled
-      data-testId="form"
-      onSubmit={(event) => handleSubmit(event)}
+      data-testid="form"
+      onSubmit={(event) => {
+        handleSubmit(event);
+      }}
     >
       <HeaderStyled>
         <h3 className="form__heading">{`${isLogin ? "Log in" : "Sign up"}`}</h3>

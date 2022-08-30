@@ -9,6 +9,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const useUser = () => {
   const dispatch = useAppDispatch();
+
   const signUp = useCallback(
     async ({ name, password, email }: UserSignUpData) => {
       const {

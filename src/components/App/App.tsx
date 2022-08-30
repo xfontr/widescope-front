@@ -7,7 +7,7 @@ const App = (): JSX.Element => {
       <header className="header">
         <h3>wideScope</h3>
       </header>
-      <SignForm isLogin={true} />
+      <SignForm isLogin={false} />
       <footer className="footer">wideScope © 2022</footer>
     </AppStyled>
   );
