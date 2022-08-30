@@ -58,11 +58,7 @@
     "collectCoverageFrom": [
       "src/**/*.tsx",
       "src/**/*.ts",
-      "!src/app/**/*.ts",
-      "!src/styledMainTheme.ts",
-      "!src/index.tsx",
-      "src/test-utils/**/*.ts",
-      "src/test-utils/**/*.tsx"
+      "!src/index.tsx"
     ]
   }
 }
