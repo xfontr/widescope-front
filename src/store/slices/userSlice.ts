@@ -14,6 +14,7 @@ const userSlice = createSlice({
       ...previousState,
       isLogged: !previousState.isLogged,
     }),
+
     signIn: (previousState, action: PayloadAction<IUser>) => ({
       ...previousState,
       user: action.payload,
