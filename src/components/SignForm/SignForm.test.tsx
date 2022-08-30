@@ -174,5 +174,31 @@ describe("Given a SignForm component", () => {
         false
       );
     });
+
+    test("Then it should change the style of the repeat field and bring it back to normal if it's empty", async () => {
+      const falsePassword = "asdfasdf";
+      const expectedClassName = "form__input--error-repeat";
+      render(<SignForm isLogin={false} />);
+
+      const passwordInput = screen.getByLabelText(
+        "Password"
+      ) as HTMLInputElement;
+      const repeatPasswordInput = screen.getByLabelText(
+        "Repeat password"
+      ) as HTMLInputElement;
+
+      await userEvent.type(passwordInput, falsePassword);
+      await userEvent.type(repeatPasswordInput, "a");
+
+      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
+        true
+      );
+
+      fireEvent.change(repeatPasswordInput, { target: { value: "" } });
+
+      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
+        false
+      );
+    });
   });
 });

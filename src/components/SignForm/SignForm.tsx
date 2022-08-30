@@ -73,11 +73,17 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
   ): Promise<void> => {
     event.preventDefault();
 
+    if (!isLogin) {
+      await signUpAction();
+    }
+  };
+
+  const signUpAction = async () => {
     if (!validateValues()) {
       return;
     }
 
-    if (!isLogin && values.password !== values.repeatPassword) {
+    if (values.password !== values.repeatPassword) {
       return;
     }
 
