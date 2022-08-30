@@ -57,10 +57,10 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     const validation = registerSchema.validate(values, { abortEarly: false });
 
     if (validation.error) {
-      console.log(validation);
       const errors = validation.error.details.map(
         (failedInput) => failedInput.path[0]
       );
+
       setErrors(errors as string[]);
       return false;
     } else {
