@@ -18,9 +18,7 @@ const Button = ({ content, action, type }: ButtonProps): JSX.Element => {
 
     event.preventDefault();
 
-    if (action) {
-      action();
-    }
+    action();
   };
 
   return (

@@ -32,10 +32,53 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     });
   };
 
+  const handlePasswordValidation = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!event.target.value) {
+      event.target.classList.remove("form__input--error");
+      return;
+    }
+
+    if (values.password !== event.target.value) {
+      event.target.className += event.target.className.includes(
+        "form__input--error"
+      )
+        ? ""
+        : " form__input--error";
+    } else {
+      event.target.classList.remove("form__input--error");
+    }
+  };
+
+  // const validateValues = (): boolean => {
+  //   let hasEmptyValues = false;
+
+  //   Object.values(values).forEach((value) => {
+  //     if (hasEmptyValues) {
+  //       return;
+  //     }
+  //     if (!value) {
+  //       hasEmptyValues = true;
+  //     }
+  //   });
+
+  //   return hasEmptyValues;
+  // };
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
+
+    // if (validateValues()) {
+    //   return;
+    // }
+
+    if (!isLogin && values.password !== values.repeatPassword) {
+      return;
+    }
+
     await signUp({
       name: values.name,
       password: values.password,
@@ -95,6 +138,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
               value={values.repeatPassword}
               onChange={(event) => {
                 handleChange(event);
+                handlePasswordValidation(event);
               }}
             />
           </GroupStyled>

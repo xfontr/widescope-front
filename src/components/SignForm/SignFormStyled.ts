@@ -48,6 +48,10 @@ export const InputStyled = styled.input`
   &:focus {
     background-color: ${(props) => props.theme.colors.primaryDarker};
   }
+
+  &.form__input--error {
+    background-color: ${(props) => props.theme.colors.error};
+  }
 `;
 
 export const FooterStyled = styled.footer`
