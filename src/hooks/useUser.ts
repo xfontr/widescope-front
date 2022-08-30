@@ -1,9 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../app/hooks";
-import { signInActionCreator } from "../store/slices/userSlice";
-import { UserSignUpData } from "../types/user";
-import SignUpResponse from "./useUserTypes";
+import {
+  signInActionCreator,
+  toggleStatusActionCreator,
+} from "../store/slices/userSlice";
+import { UserLogInData, UserSignUpData } from "../types/user";
+import getTokenData from "../utils/auth";
+import { SignUpResponse, UserToken } from "./useUserTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -30,7 +34,33 @@ const useUser = () => {
     [dispatch]
   );
 
-  return { signUp };
+  const logIn = useCallback(
+    async ({ name, password }: UserLogInData) => {
+      const {
+        data: {
+          user: { token },
+        },
+      }: AxiosResponse<UserToken> = await axios.post(`${apiUrl}/users/log-in`, {
+        name,
+        password,
+      });
+
+      const tokenContent = getTokenData(token);
+
+      dispatch(toggleStatusActionCreator());
+      dispatch(
+        signInActionCreator({
+          id: tokenContent.id,
+          name: tokenContent.name,
+          email: "",
+          friends: [],
+        })
+      );
+    },
+    [dispatch]
+  );
+
+  return { signUp, logIn };
 };
 
 export default useUser;

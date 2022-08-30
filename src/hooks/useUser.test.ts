@@ -1,5 +1,8 @@
 import { renderHook } from "@testing-library/react";
-import { signInActionCreator } from "../store/slices/userSlice";
+import {
+  signInActionCreator,
+  toggleStatusActionCreator,
+} from "../store/slices/userSlice";
 import Wrapper from "../test-utils/render/Wrapper";
 import useUser from "./useUser";
 
@@ -22,6 +25,13 @@ const mockUseDispatch = jest.fn();
 jest.mock("../app/hooks", () => ({
   ...jest.requireActual("../app/hooks"),
   useAppDispatch: () => mockUseDispatch,
+}));
+
+jest.mock("../utils/auth", () => () => ({
+  getTokenData: jest.fn().mockReturnValue({
+    id: "##",
+    name: "##",
+  }),
 }));
 
 describe("Given a signUp function returned by a useUser function", () => {
@@ -53,6 +63,31 @@ describe("Given a signUp function returned by a useUser function", () => {
       await signUp(signUpData);
 
       expect(mockUseDispatch).not.toHaveBeenCalled();
+    });
+  });
+});
+
+describe("Given a logIn function returned by a useUser function", () => {
+  const logInData = {
+    name: "mockName",
+    password: "mockPassword",
+  };
+
+  describe("When called with valid log in data", () => {
+    test("Then it should call the dispatch to mark the user as logged in and to log it in", async () => {
+      mockResolvedData = {
+        data: { user: { token: "###" } },
+      };
+
+      const {
+        result: {
+          current: { logIn },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      await logIn(logInData);
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(toggleStatusActionCreator());
     });
   });
 });

@@ -1,7 +1,17 @@
 import { IUser } from "../types/user";
 
-interface SignUpResponse {
+export interface SignUpResponse {
   newUser: IUser;
 }
 
-export default SignUpResponse;
+export interface UserToken {
+  user: {
+    token: string;
+  };
+}
+
+export interface DecodedToken {
+  id: string;
+  name: string;
+  iat: number;
+}
