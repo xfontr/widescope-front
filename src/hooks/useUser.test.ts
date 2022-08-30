@@ -3,6 +3,7 @@ import {
   signInActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/userSlice";
+import mockUser from "../test-utils/mocks/mockUser";
 import Wrapper from "../test-utils/render/Wrapper";
 import useUser from "./useUser";
 
@@ -29,8 +30,8 @@ jest.mock("../app/hooks", () => ({
 
 jest.mock("../utils/auth", () => () => ({
   getTokenData: jest.fn().mockReturnValue({
-    id: "##",
-    name: "##",
+    id: mockUser.id,
+    name: mockUser.name,
   }),
 }));
 
@@ -69,8 +70,8 @@ describe("Given a signUp function returned by a useUser function", () => {
 
 describe("Given a logIn function returned by a useUser function", () => {
   const logInData = {
-    name: "mockName",
-    password: "mockPassword",
+    name: mockUser.name,
+    password: "password123",
   };
 
   describe("When called with valid log in data", () => {
@@ -88,6 +89,22 @@ describe("Given a logIn function returned by a useUser function", () => {
       await logIn(logInData);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(toggleStatusActionCreator());
+    });
+  });
+
+  describe("When called but the fetch fails", () => {
+    test("Then it should not call the dispatch", async () => {
+      mockResolvedData = new Error();
+
+      const {
+        result: {
+          current: { logIn },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      await logIn(logInData);
+
+      expect(mockUseDispatch).not.toHaveBeenCalled();
     });
   });
 });
