@@ -76,10 +76,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
 
   const logInAction = async () => {
     if (!validateValues()) {
-      console.log("not valid");
       return;
     }
-    console.log("logging in");
+
     await logIn({
       name: values.name,
       password: values.password,

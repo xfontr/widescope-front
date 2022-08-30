@@ -1,12 +1,15 @@
 import { createEvent, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import mockUser from "../../test-utils/mocks/mockUser";
 import { render } from "../../test-utils/render/customRender";
 import SignForm from "./SignForm";
 
 const mockSignUp = jest.fn();
+const mockLogIn = jest.fn();
 
 jest.mock("../../hooks/useUser", () => () => ({
   signUp: mockSignUp,
+  logIn: mockLogIn,
 }));
 
 describe("Given a SignForm component", () => {
@@ -48,7 +51,7 @@ describe("Given a SignForm component", () => {
 
   describe("When instantiated as a sign up form and when the user types in every field", () => {
     test("Then each field should have the typed value", async () => {
-      const typedText = "hello@hello.com";
+      const typedText = mockUser.email;
       render(<SignForm isLogin={false} />);
 
       const form = [
@@ -141,11 +144,11 @@ describe("Given a SignForm component", () => {
         "Email address"
       ) as HTMLInputElement;
 
-      await userEvent.type(nameInput, "asdfasdf");
-      await userEvent.type(emailInput, "asdf@asdf.com");
+      await userEvent.type(nameInput, mockUser.name);
+      await userEvent.type(emailInput, mockUser.email);
 
       await userEvent.type(passwordInput, falsePassword);
-      await userEvent.type(repeatPasswordInput, "513415234344");
+      await userEvent.type(repeatPasswordInput, "randomPassword123");
 
       const submitButton = screen.getByRole("button", { name: "Sign up" });
       await userEvent.click(submitButton);
@@ -170,8 +173,8 @@ describe("Given a SignForm component", () => {
         "Email address"
       ) as HTMLInputElement;
 
-      await userEvent.type(nameInput, "asdfasdf");
-      await userEvent.type(emailInput, "asdf@asdf.com");
+      await userEvent.type(nameInput, mockUser.name);
+      await userEvent.type(emailInput, mockUser.email);
 
       await userEvent.type(passwordInput, falsePassword);
       await userEvent.type(repeatPasswordInput, falsePassword);
@@ -185,7 +188,7 @@ describe("Given a SignForm component", () => {
 
   describe("When instantiated as a sign up form and typed a wrong password in the repeat field", () => {
     test("Then it should change the style of the repeat field until a correct password is typed", async () => {
-      const falsePassword = "asdfasdf";
+      const falsePassword = "falsePassword";
       const expectedClassName = "form__input--error-repeat";
       render(<SignForm isLogin={false} />);
 
@@ -197,13 +200,13 @@ describe("Given a SignForm component", () => {
       ) as HTMLInputElement;
 
       await userEvent.type(passwordInput, falsePassword);
-      await userEvent.type(repeatPasswordInput, "a");
+      await userEvent.type(repeatPasswordInput, "f");
 
       expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
         true
       );
 
-      await userEvent.type(repeatPasswordInput, "sdfasdf");
+      await userEvent.type(repeatPasswordInput, "alsePassword");
 
       expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
         false
@@ -211,7 +214,7 @@ describe("Given a SignForm component", () => {
     });
 
     test("Then it should change the style of the repeat field and bring it back to normal if it's empty", async () => {
-      const falsePassword = "asdfasdf";
+      const falsePassword = "falsePassword";
       const expectedClassName = "form__input--error-repeat";
       render(<SignForm isLogin={false} />);
 
@@ -223,7 +226,7 @@ describe("Given a SignForm component", () => {
       ) as HTMLInputElement;
 
       await userEvent.type(passwordInput, falsePassword);
-      await userEvent.type(repeatPasswordInput, "a");
+      await userEvent.type(repeatPasswordInput, "f");
 
       expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
         true
@@ -245,6 +248,51 @@ describe("Given a SignForm component", () => {
 
       await userEvent.click(submitButton);
       expect(mockSignUp).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("When instantiated as a log in form and submitted with valid data", () => {
+    test("Then it should call a log in function with the user login data", async () => {
+      const expectedCalledWith = {
+        name: mockUser.name,
+        password: "mockPassword123",
+      };
+
+      render(<SignForm isLogin={true} />);
+
+      const nameInput = screen.getByLabelText("Name") as HTMLInputElement;
+
+      const passwordInput = screen.getByLabelText(
+        "Password"
+      ) as HTMLInputElement;
+
+      await userEvent.type(nameInput, mockUser.name);
+      await userEvent.type(passwordInput, "mockPassword123");
+
+      const submitButton = screen.getByRole("button", { name: "Log in" });
+      await userEvent.click(submitButton);
+
+      expect(mockLogIn).toHaveBeenCalledWith(expectedCalledWith);
+    });
+  });
+
+  describe("When instantiated as a log in form and submitted with invalid data", () => {
+    test("Then it should no call the log in function", async () => {
+      render(<SignForm isLogin={true} />);
+
+      const nameInput = screen.getByLabelText("Name") as HTMLInputElement;
+
+      const passwordInput = screen.getByLabelText(
+        "Password"
+      ) as HTMLInputElement;
+
+      await userEvent.type(nameInput, "a");
+      await userEvent.type(passwordInput, "a");
+
+      const submitButton = screen.getByRole("button", { name: "Log in" });
+      await userEvent.click(submitButton);
+
+      expect(mockLogIn).not.toHaveBeenCalled();
     });
   });
 });
