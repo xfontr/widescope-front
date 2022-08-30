@@ -16,9 +16,10 @@ describe("Given a Button component", () => {
     });
   });
 
-  describe("When instantiated and clicked", () => {
+  describe("When instantiated with an action and clicked", () => {
     test("Then it should prevent its default action", () => {
-      render(<Button content={buttonText} type={buttonType} />);
+      const action = jest.fn();
+      render(<Button content={buttonText} type={buttonType} action={action} />);
 
       const button = screen.getByRole("button", { name: buttonText });
       const clickEvent = createEvent.click(button);
@@ -36,6 +37,19 @@ describe("Given a Button component", () => {
       fireEvent.click(button);
 
       expect(action).toHaveBeenCalled();
+    });
+  });
+
+  describe("When instantiated without an action and clicked", () => {
+    test("Then it should not prevent its default action", () => {
+      render(<Button content={buttonText} type={buttonType} />);
+
+      const button = screen.getByRole("button", { name: buttonText });
+      const clickEvent = createEvent.click(button);
+
+      fireEvent(button, clickEvent);
+
+      expect(clickEvent.defaultPrevented).toBe(false);
     });
   });
 });
