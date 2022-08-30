@@ -44,12 +44,12 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
 
     if (values.password !== event.target.value) {
       event.target.className += event.target.className.includes(
-        "form__input--error"
+        "form__input--error-repeat"
       )
         ? ""
-        : " form__input--error";
+        : " form__input--error-repeat";
     } else {
-      event.target.classList.remove("form__input--error");
+      event.target.classList.remove("form__input--error-repeat");
     }
   };
 

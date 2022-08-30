@@ -1,5 +1,6 @@
 import { createEvent, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { createFalse } from "typescript";
 import { render } from "../../test-utils/render/customRender";
 import SignForm from "./SignForm";
 
@@ -111,6 +112,67 @@ describe("Given a SignForm component", () => {
       };
 
       expect(mockSignUp).toHaveBeenCalledWith(signUpData);
+    });
+  });
+
+  describe("When instantiated as a sign up form and submitted with an invalid user", () => {
+    test("Then it should not call the signUp function", async () => {
+      render(<SignForm isLogin={false} />);
+
+      const submitButton = screen.getByRole("button", { name: "Sign up" });
+      await userEvent.click(submitButton);
+
+      expect(mockSignUp).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("When instantiated as a sign up form and submitted with not matching passwords", () => {
+    test("Then it should not call the signUp function", async () => {
+      const falsePassword = "asdfasdf";
+      render(<SignForm isLogin={false} />);
+
+      const passwordInput = screen.getByLabelText(
+        "Password"
+      ) as HTMLInputElement;
+      const repeatPasswordInput = screen.getByLabelText(
+        "Repeat password"
+      ) as HTMLInputElement;
+
+      await userEvent.type(passwordInput, falsePassword);
+      await userEvent.type(repeatPasswordInput, "a");
+
+      const submitButton = screen.getByRole("button", { name: "Sign up" });
+      await userEvent.click(submitButton);
+
+      expect(mockSignUp).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("When instantiated as a sign up form and typed a wrong password in the repeat field", () => {
+    test("Then it should change the style of the repeat field until a correct password is typed", async () => {
+      const falsePassword = "asdfasdf";
+      const expectedClassName = "form__input--error-repeat";
+      render(<SignForm isLogin={false} />);
+
+      const passwordInput = screen.getByLabelText(
+        "Password"
+      ) as HTMLInputElement;
+      const repeatPasswordInput = screen.getByLabelText(
+        "Repeat password"
+      ) as HTMLInputElement;
+
+      await userEvent.type(passwordInput, falsePassword);
+      await userEvent.type(repeatPasswordInput, "a");
+
+      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
+        true
+      );
+
+      await userEvent.type(repeatPasswordInput, "sdfasdf");
+
+      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
+        false
+      );
     });
   });
 });
