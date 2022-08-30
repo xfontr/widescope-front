@@ -5,6 +5,8 @@ const styledMainTheme = {
 
     secondary: "rgb(25, 29, 35)",
     secondaryBrigther: "rgba(25, 29, 35, 0.7)",
+
+    error: "rgb(179, 120, 120)",
   },
 
   shapes: {
