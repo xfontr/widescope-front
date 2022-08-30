@@ -236,4 +236,15 @@ describe("Given a SignForm component", () => {
       );
     });
   });
+
+  describe("When instantiated as a log in form and submitted", () => {
+    test("Then it should not call the sign up validations", async () => {
+      render(<SignForm isLogin={true} />);
+
+      const submitButton = screen.getByRole("button", { name: "Log in" });
+
+      await userEvent.click(submitButton);
+      expect(mockSignUp).not.toHaveBeenCalled();
+    });
+  });
 });

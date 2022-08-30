@@ -68,13 +68,11 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     }
   };
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!isLogin) {
-      await signUpAction();
+      signUpAction();
     }
   };
 
