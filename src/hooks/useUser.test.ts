@@ -103,7 +103,9 @@ describe("Given a logIn function returned by a useUser function", () => {
 
       await logIn(logInData);
 
-      expect(mockUseDispatch).toHaveBeenCalledWith(toggleStatusActionCreator());
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        toggleStatusActionCreator(true)
+      );
     });
 
     test("Then it should set the received token at the local storage", async () => {
