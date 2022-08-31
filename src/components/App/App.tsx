@@ -2,12 +2,14 @@ import AppStyled from "./AppStyled";
 import { Navigate, Route, Routes } from "react-router-dom";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
+import NavigationMenu from "../NavigationMenu/NavigationMenu";
 
 const App = (): JSX.Element => {
   return (
     <AppStyled>
       <header className="header">
         <h3>wideScope</h3>
+        <NavigationMenu />
       </header>
       <main>
         <Routes>

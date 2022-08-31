@@ -15,6 +15,13 @@ const AppStyled = styled.div`
     max-width: ${(props) => props.theme.breakpoints.large};
   }
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 5rem;
+  }
+
   .footer {
     position: absolute;
     right: 0;
