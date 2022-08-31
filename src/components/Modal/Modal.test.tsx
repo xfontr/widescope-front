@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../app/hooks";
 import {
   setMessageActionCreator,
   setTypeActionCreator,
-  toggleVisibilityActionCreator,
+  setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
 import styledMainTheme from "../../styles/styledMainTheme";
 import { render } from "../../test-utils/render/customRender";
@@ -20,7 +20,7 @@ describe("Given a Modal component", () => {
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
-        dispatch(toggleVisibilityActionCreator(true));
+        dispatch(setVisibilityActionCreator(true));
         dispatch(setTypeActionCreator("loading"));
         dispatch(setMessageActionCreator(message));
       });
@@ -42,7 +42,7 @@ describe("Given a Modal component", () => {
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
-        dispatch(toggleVisibilityActionCreator(true));
+        dispatch(setVisibilityActionCreator(true));
         dispatch(setTypeActionCreator("error"));
         dispatch(setMessageActionCreator(message));
       });
@@ -66,7 +66,7 @@ describe("Given a Modal component", () => {
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
-        dispatch(toggleVisibilityActionCreator(true));
+        dispatch(setVisibilityActionCreator(true));
         dispatch(setTypeActionCreator("success"));
         dispatch(setMessageActionCreator(message));
       });
@@ -89,7 +89,7 @@ describe("Given a Modal component", () => {
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
-        dispatch(toggleVisibilityActionCreator(false));
+        dispatch(setVisibilityActionCreator(false));
       });
 
       render(<Modal />);
