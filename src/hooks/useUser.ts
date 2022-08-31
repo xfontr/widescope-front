@@ -2,6 +2,10 @@ import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../app/hooks";
 import {
+  closeActionCreator,
+  setVisibilityActionCreator,
+} from "../store/slices/uiModal/uiModalSlice";
+import {
   loadUserActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/user/userSlice";
@@ -33,6 +37,8 @@ const useUser = () => {
 
   const logIn = useCallback(
     async ({ name, password }: UserLogInData): Promise<void> => {
+      dispatch(setVisibilityActionCreator(true));
+
       try {
         const {
           data: {
@@ -55,13 +61,28 @@ const useUser = () => {
         dispatch(loadUserActionCreator(setUserBasicData(user, token)));
         dispatch(loadUserDataActionCreator(setUserExtraData(user)));
         dispatch(toggleStatusActionCreator(true));
-      } catch (error) {}
+
+        dispatch(
+          closeActionCreator({
+            message: "Log in successful",
+            type: "success",
+          })
+        );
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: `Log in error: ${error}`,
+            type: "error",
+          })
+        );
+      }
     },
     [dispatch, getUserData]
   );
 
   const signUp = useCallback(
     async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
+      dispatch(setVisibilityActionCreator(true));
       try {
         await axios.post(`${apiUrl}/users/sign-up`, {
           name,
@@ -71,12 +92,24 @@ const useUser = () => {
 
         logIn({ name, password });
 
+        dispatch(
+          closeActionCreator({
+            message: "Registration successful",
+            type: "success",
+          })
+        );
         return true;
       } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: `Sign in error: ${error}`,
+            type: "error",
+          })
+        );
         return false;
       }
     },
-    [logIn]
+    [logIn, dispatch]
   );
 
   return { signUp, logIn, getUserData };
