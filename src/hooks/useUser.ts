@@ -2,6 +2,12 @@ import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../app/hooks";
 import {
+  closeActionCreator,
+  setMessageActionCreator,
+  setTypeActionCreator,
+  setVisibilityActionCreator,
+} from "../store/slices/uiModal/uiModalSlice";
+import {
   loadUserActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/user/userSlice";
@@ -62,6 +68,10 @@ const useUser = () => {
 
   const signUp = useCallback(
     async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
+      dispatch(setVisibilityActionCreator(true));
+      dispatch(setMessageActionCreator("Loading"));
+      dispatch(setTypeActionCreator("loading"));
+
       try {
         await axios.post(`${apiUrl}/users/sign-up`, {
           name,
@@ -71,12 +81,18 @@ const useUser = () => {
 
         logIn({ name, password });
 
+        dispatch(setMessageActionCreator("You have been registered"));
+        dispatch(setTypeActionCreator("success"));
+        dispatch(closeActionCreator(true));
         return true;
       } catch (error) {
+        dispatch(setMessageActionCreator("Error with the register process"));
+        dispatch(setTypeActionCreator("error"));
+        dispatch(closeActionCreator(true));
         return false;
       }
     },
-    [logIn]
+    [logIn, dispatch]
   );
 
   return { signUp, logIn, getUserData };
