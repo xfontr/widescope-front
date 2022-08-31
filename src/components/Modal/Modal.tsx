@@ -10,7 +10,7 @@ const Modal = (): JSX.Element => {
   return (
     <>
       {isVisible && (
-        <ModalStyled>
+        <ModalStyled data-testid="modal">
           <div className="modal__content">
             <div className="clock"></div>
             <span className={`modal__message modal__message--${type}`}>
