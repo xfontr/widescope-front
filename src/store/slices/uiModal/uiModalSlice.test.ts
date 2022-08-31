@@ -1,7 +1,8 @@
 import {
+  loadActionCreator,
   setMessageActionCreator,
   setTypeActionCreator,
-  toggleVisibilityActionCreator,
+  setVisibilityActionCreator,
   uiModalReducer,
 } from "./uiModalSlice";
 
@@ -13,7 +14,7 @@ describe("Given a toggle visibility action creator", () => {
         payload: true,
       };
 
-      const result = toggleVisibilityActionCreator(true);
+      const result = setVisibilityActionCreator(true);
 
       expect(result).toStrictEqual(expectedResult);
     });
@@ -52,8 +53,28 @@ describe("Given a setTypeActionCreator function", () => {
   });
 });
 
+describe("Given a loadActionCreator function", () => {
+  describe("When called with a payload of true", () => {
+    test("Then it should return an action with type 'uiModal/load' and true as payload", () => {
+      const expectedResult = {
+        type: "uiModal/load",
+        payload: true,
+      };
+
+      const result = loadActionCreator(true);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+});
+
 describe("Given a uiModalReducer function", () => {
-  const previousState = { isVisible: false, message: "", type: "loading" };
+  const previousState = {
+    isLoading: false,
+    isVisible: false,
+    message: "",
+    type: "loading",
+  };
 
   describe("When called with a toggleVisibility action with true as payload", () => {
     test("Then it should return 'isVisible' from false to true", () => {
@@ -64,7 +85,7 @@ describe("Given a uiModalReducer function", () => {
 
       const result = uiModalReducer(
         previousState,
-        toggleVisibilityActionCreator(true)
+        setVisibilityActionCreator(true)
       );
 
       expect(result).toStrictEqual(expectedResult);
@@ -96,6 +117,19 @@ describe("Given a uiModalReducer function", () => {
       };
 
       const result = uiModalReducer(previousState, setTypeActionCreator(type));
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a load action with true as payload", () => {
+    test("Then it should return the previous state with load as true", () => {
+      const expectedResult = {
+        ...previousState,
+        isLoading: true,
+      };
+
+      const result = uiModalReducer(previousState, loadActionCreator(true));
 
       expect(result).toStrictEqual(expectedResult);
     });
