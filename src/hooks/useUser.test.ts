@@ -1,11 +1,13 @@
 import { renderHook } from "@testing-library/react";
 import {
-  signInActionCreator,
+  loadUserActionCreator,
   toggleStatusActionCreator,
-} from "../store/slices/userDataSlice";
+} from "../store/slices/user/userSlice";
+import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
 import mockUser from "../test-utils/mocks/mockUser";
 import Wrapper from "../test-utils/render/Wrapper";
+import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
 import useUser from "./useUser";
 
 const signUpData = {
@@ -44,7 +46,7 @@ jest.mock("../test-utils/mocks/mockLocalStorage");
 
 describe("Given a signUp function returned by a useUser function", () => {
   describe("When called with valid sign up data", () => {
-    test("Then it should call the dispatch with a sign up action creator", async () => {
+    test("Then it should call the dispatch with the load user action creators", async () => {
       const {
         result: {
           current: { signUp },
@@ -54,7 +56,13 @@ describe("Given a signUp function returned by a useUser function", () => {
       await signUp(signUpData);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
-        signInActionCreator(mockResolvedData.data.newUser)
+        loadUserActionCreator(setUserBasicData(mockResolvedData.data.newUser))
+      );
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        loadUserDataActionCreator(
+          setUserExtraData(mockResolvedData.data.newUser)
+        )
       );
     });
   });

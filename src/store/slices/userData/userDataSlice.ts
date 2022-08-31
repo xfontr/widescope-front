@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserExtraData } from "../../types/user";
+import { UserExtraData } from "../../../types/user";
 
 const userDataInitialState = {
   userData: {} as UserExtraData,
