@@ -7,6 +7,7 @@ const styledMainTheme = {
     secondaryBrigther: "rgba(25, 29, 35, 0.7)",
 
     error: "rgb(179, 120, 120)",
+    success: "green",
   },
 
   shapes: {

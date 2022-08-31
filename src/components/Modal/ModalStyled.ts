@@ -15,9 +15,27 @@ const ModalStyled = styled.div`
   box-shadow: ${(props) => props.theme.shapes.longShadow};
   background-color: ${(props) => props.theme.colors.primary};
 
+  & .modal__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   & .modal__message {
     display: block;
     margin-top: 0.6rem;
+
+    &--loading {
+      color: inherit;
+    }
+
+    &--error {
+      color: ${(props) => props.theme.colors.error};
+    }
+
+    &--success {
+      color: ${(props) => props.theme.colors.success};
+    }
   }
 
   & .clock {
