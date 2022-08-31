@@ -2,6 +2,7 @@ import { renderHook, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { useAppDispatch } from "../../app/hooks";
 import {
+  closeActionCreator,
   setMessageActionCreator,
   setTypeActionCreator,
   setVisibilityActionCreator,
@@ -10,6 +11,8 @@ import styledMainTheme from "../../styles/styledMainTheme";
 import { render } from "../../test-utils/render/customRender";
 import Wrapper from "../../test-utils/render/Wrapper";
 import Modal from "./Modal";
+
+jest.useFakeTimers();
 
 describe("Given a Modal component", () => {
   describe("When instantiated with store states of visible, 'loading' and 'Message'", () => {
@@ -95,6 +98,29 @@ describe("Given a Modal component", () => {
       render(<Modal />);
 
       const modal = screen.queryByTestId("modal");
+
+      expect(modal).not.toBeInTheDocument();
+    });
+  });
+
+  describe("When instantiated with a state of visible and loading", () => {
+    test("Then it should not be visible after 2300ms", async () => {
+      const {
+        result: { current: dispatch },
+      } = renderHook(useAppDispatch, { wrapper: Wrapper });
+
+      act(() => {
+        dispatch(setVisibilityActionCreator(true));
+        dispatch(closeActionCreator(true));
+      });
+
+      render(<Modal />);
+
+      const modal = screen.getByTestId("modal");
+
+      expect(modal).toBeInTheDocument();
+
+      await jest.advanceTimersByTime(2300);
 
       expect(modal).not.toBeInTheDocument();
     });
