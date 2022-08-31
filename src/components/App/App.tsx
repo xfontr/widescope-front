@@ -3,10 +3,12 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
+import Modal from "../Modal/Modal";
 
 const App = (): JSX.Element => {
   return (
     <AppStyled>
+      <Modal />
       <header className="header">
         <h3>wideScope</h3>
         <NavigationMenu />
