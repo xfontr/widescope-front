@@ -5,9 +5,12 @@ import { setVisibilityActionCreator } from "../../store/slices/uiModal/uiModalSl
 import ModalStyled from "./ModalStyled";
 
 const Modal = (): JSX.Element => {
-  const { isVisible, message, type, isLoading } = useAppSelector(
-    (state: RootState) => state.uiModal
-  );
+  const {
+    isVisible,
+    message,
+    type,
+    isClosing: isLoading,
+  } = useAppSelector((state: RootState) => state.uiModal);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

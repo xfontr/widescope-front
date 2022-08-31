@@ -1,16 +1,16 @@
 import {
-  loadActionCreator,
+  closeActionCreator,
   setMessageActionCreator,
   setTypeActionCreator,
   setVisibilityActionCreator,
   uiModalReducer,
 } from "./uiModalSlice";
 
-describe("Given a toggle visibility action creator", () => {
+describe("Given a setVisibilityActionCreator function", () => {
   describe("When called with true as an argument", () => {
-    test("Then it should return an action with a type 'uiModal/toggleVisibility' and true as payload", () => {
+    test("Then it should return an action with a type 'uiModal/setVisibility' and true as payload", () => {
       const expectedResult = {
-        type: "uiModal/toggleVisibility",
+        type: "uiModal/setVisibility",
         payload: true,
       };
 
@@ -55,13 +55,13 @@ describe("Given a setTypeActionCreator function", () => {
 
 describe("Given a loadActionCreator function", () => {
   describe("When called with a payload of true", () => {
-    test("Then it should return an action with type 'uiModal/load' and true as payload", () => {
+    test("Then it should return an action with type 'uiModal/close' and true as payload", () => {
       const expectedResult = {
-        type: "uiModal/load",
+        type: "uiModal/close",
         payload: true,
       };
 
-      const result = loadActionCreator(true);
+      const result = closeActionCreator(true);
 
       expect(result).toStrictEqual(expectedResult);
     });
@@ -70,7 +70,7 @@ describe("Given a loadActionCreator function", () => {
 
 describe("Given a uiModalReducer function", () => {
   const previousState = {
-    isLoading: false,
+    isClosing: false,
     isVisible: false,
     message: "",
     type: "loading",
@@ -126,10 +126,10 @@ describe("Given a uiModalReducer function", () => {
     test("Then it should return the previous state with load as true", () => {
       const expectedResult = {
         ...previousState,
-        isLoading: true,
+        isClosing: true,
       };
 
-      const result = uiModalReducer(previousState, loadActionCreator(true));
+      const result = uiModalReducer(previousState, closeActionCreator(true));
 
       expect(result).toStrictEqual(expectedResult);
     });

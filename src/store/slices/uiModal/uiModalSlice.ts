@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 type ModalTypes = "loading" | "error" | "success";
 
 const uiModalInitialState = {
-  isLoading: false,
+  isClosing: false,
   isVisible: false,
   message: "",
   type: "loading",
@@ -18,9 +18,9 @@ const uiModalSlice = createSlice({
       isVisible: action.payload,
     }),
 
-    load: (previousState, action: PayloadAction<boolean>) => ({
+    close: (previousState, action: PayloadAction<boolean>) => ({
       ...previousState,
-      isLoading: action.payload,
+      isClosing: action.payload,
     }),
 
     setMessage: (previousState, action: PayloadAction<string>) => ({
@@ -44,4 +44,4 @@ export const { setMessage: setMessageActionCreator } = uiModalSlice.actions;
 
 export const { setType: setTypeActionCreator } = uiModalSlice.actions;
 
-export const { load: loadActionCreator } = uiModalSlice.actions;
+export const { close: closeActionCreator } = uiModalSlice.actions;
