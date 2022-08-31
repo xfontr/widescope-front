@@ -1,12 +1,13 @@
 import { UserBasicData, UserExtraData } from "../../types/user";
+import mockUser from "./mockUser";
 
 export const mockUserBasicData: UserBasicData = {
-  id: "id",
-  name: "username",
+  id: mockUser.id,
+  name: mockUser.name,
   token: "userToken",
 };
 
 export const mockUserExtraData: UserExtraData = {
-  email: "email@email.com",
-  friends: ["friend_one", "friend_two"],
+  email: mockUser.email,
+  friends: mockUser.friends,
 };
