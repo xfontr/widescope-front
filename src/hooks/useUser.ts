@@ -2,12 +2,13 @@ import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../app/hooks";
 import {
-  signInActionCreator,
+  loadUserActionCreator,
   toggleStatusActionCreator,
-} from "../store/slices/userSlice";
-import mockUser from "../test-utils/mocks/mockUser";
+} from "../store/slices/user/userSlice";
+import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
 import { UserLogInData, UserSignUpData } from "../types/user";
 import getTokenData from "../utils/auth";
+import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
 import { SignUpResponse, UserToken } from "./useUserTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -29,7 +30,8 @@ const useUser = () => {
           }
         );
 
-        dispatch(signInActionCreator(newUser));
+        dispatch(loadUserActionCreator(setUserBasicData(newUser)));
+        dispatch(loadUserDataActionCreator(setUserExtraData(newUser)));
       } catch (error) {}
     },
     [dispatch]
@@ -57,11 +59,10 @@ const useUser = () => {
         localStorage.setItem("token", token);
 
         dispatch(
-          signInActionCreator({
+          loadUserActionCreator({
             id: tokenContent.id,
             name: tokenContent.name,
-            email: mockUser.email,
-            friends: mockUser.friends,
+            token: "",
           })
         );
       } catch (error) {}

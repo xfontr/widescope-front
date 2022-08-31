@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../../types/user";
+import { UserBasicData } from "../../../types/user";
 
 const userInitialState = {
   isLogged: false,
-  user: {} as IUser,
+  user: {} as UserBasicData,
 };
 
 const userSlice = createSlice({
@@ -15,7 +15,7 @@ const userSlice = createSlice({
       isLogged: !previousState.isLogged,
     }),
 
-    signIn: (previousState, action: PayloadAction<IUser>) => ({
+    loadUser: (previousState, action: PayloadAction<UserBasicData>) => ({
       ...previousState,
       user: action.payload,
     }),
@@ -24,5 +24,5 @@ const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 
-export const { signIn: signInActionCreator } = userSlice.actions;
+export const { loadUser: loadUserActionCreator } = userSlice.actions;
 export const { toggleStatus: toggleStatusActionCreator } = userSlice.actions;
