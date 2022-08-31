@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
-import "./NavigationMenu.css";
+import NavigationStyled from "./NavigationMenuStyled";
 
 const NavigationMenu = (): JSX.Element => {
   const [isMenuVisible, setVisibility] = useState(false);
@@ -11,7 +11,7 @@ const NavigationMenu = (): JSX.Element => {
   };
 
   return (
-    <nav>
+    <NavigationStyled>
       <div
         data-testId="burger-icon"
         className="burger-icon"
@@ -38,23 +38,21 @@ const NavigationMenu = (): JSX.Element => {
           >
             <ul className="navigation__links">
               <li className="navigation__link">
-                <Link to={"/"} />
+                <Link to={"/"} className="navigation__link">
+                  Home
+                </Link>
               </li>
 
               <li className="navigation__link">
-                <Link to={"/"} />
+                <Link to={"/sign-up"} className="navigation__link">
+                  Sign up
+                </Link>
               </li>
 
               <li className="navigation__link">
-                <Link to={"/"} />
-              </li>
-
-              <li className="navigation__link">
-                <Link to={"/"} />
-              </li>
-
-              <li className="navigation__link">
-                <Link to={"/"} />
+                <Link to={"/log-in"} className="navigation__link">
+                  Log in
+                </Link>
               </li>
             </ul>
 
@@ -62,7 +60,7 @@ const NavigationMenu = (): JSX.Element => {
           </section>
         </div>
       )}
-    </nav>
+    </NavigationStyled>
   );
 };
 
