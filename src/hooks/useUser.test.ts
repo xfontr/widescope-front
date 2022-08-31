@@ -120,3 +120,34 @@ describe("Given a logIn function returned by a useUser function", () => {
     });
   });
 });
+
+describe("Given a getUserData function returned by a useUser function", () => {
+  describe(`When called with a user ID of ${mockUser.id}`, () => {
+    test("Then it should return the user with said id", async () => {
+      const {
+        result: {
+          current: { getUserData },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      const result = await getUserData(mockUser.id);
+
+      expect(result).toStrictEqual(mockUser);
+    });
+  });
+
+  describe("When called with a user id that doesn't exist, like 'falseId'", () => {
+    test("Then it should not return a user", async () => {
+      const fakeId = "falseId";
+      const {
+        result: {
+          current: { getUserData },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      const result = await getUserData(fakeId);
+
+      expect(result).toBe(undefined);
+    });
+  });
+});

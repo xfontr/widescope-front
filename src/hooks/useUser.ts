@@ -21,12 +21,14 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const useUser = () => {
   const dispatch = useAppDispatch();
 
-  const getUserData = useCallback(async (id: string): Promise<IUser> => {
-    const {
-      data: { user },
-    }: AxiosResponse<UserGetData> = await axios.get(`${apiUrl}/users/${id}`);
+  const getUserData = useCallback(async (id: string): Promise<IUser | void> => {
+    try {
+      const {
+        data: { user },
+      }: AxiosResponse<UserGetData> = await axios.get(`${apiUrl}/users/${id}`);
 
-    return user;
+      return user;
+    } catch (error) {}
   }, []);
 
   const logIn = useCallback(
@@ -48,7 +50,7 @@ const useUser = () => {
 
         localStorage.setItem("token", token);
 
-        const user: IUser = await getUserData(tokenContent.id);
+        const user: IUser = (await getUserData(tokenContent.id)) as IUser;
 
         dispatch(loadUserActionCreator(setUserBasicData(user, token)));
         dispatch(loadUserDataActionCreator(setUserExtraData(user)));
@@ -61,18 +63,15 @@ const useUser = () => {
   const signUp = useCallback(
     async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
       try {
-        const signUpResponse = await axios.post(`${apiUrl}/users/sign-up`, {
+        await axios.post(`${apiUrl}/users/sign-up`, {
           name,
           password,
           email,
         });
 
-        if (signUpResponse.status === 200) {
-          logIn({ name, password });
-          return true;
-        }
+        logIn({ name, password });
 
-        throw new Error();
+        return true;
       } catch (error) {
         return false;
       }
