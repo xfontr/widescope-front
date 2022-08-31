@@ -1,9 +1,12 @@
 import { IUser, UserBasicData, UserExtraData } from "../types/user";
 
-export const setUserBasicData = (user: IUser): UserBasicData => ({
+export const setUserBasicData = (
+  user: IUser,
+  token: string = ""
+): UserBasicData => ({
   id: user.id,
   name: user.name,
-  token: "",
+  token: token,
 });
 
 export const setUserExtraData = (user: IUser): UserExtraData => ({

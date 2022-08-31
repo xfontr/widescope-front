@@ -6,39 +6,33 @@ import {
   toggleStatusActionCreator,
 } from "../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
-import { UserLogInData, UserSignUpData } from "../types/user";
+import {
+  IUser,
+  UserGetData,
+  UserLogInData,
+  UserSignUpData,
+} from "../types/user";
 import getTokenData from "../utils/auth";
 import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
-import { SignUpResponse, UserToken } from "./useUserTypes";
+import { UserToken } from "./useUserTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const useUser = () => {
   const dispatch = useAppDispatch();
 
-  const signUp = useCallback(
-    async ({ name, password, email }: UserSignUpData) => {
-      try {
-        const {
-          data: { newUser },
-        }: AxiosResponse<SignUpResponse> = await axios.post(
-          `${apiUrl}/users/sign-up`,
-          {
-            name,
-            password,
-            email,
-          }
-        );
+  const getUserData = useCallback(async (id: string): Promise<IUser | void> => {
+    try {
+      const {
+        data: { user },
+      }: AxiosResponse<UserGetData> = await axios.get(`${apiUrl}/users/${id}`);
 
-        dispatch(loadUserActionCreator(setUserBasicData(newUser)));
-        dispatch(loadUserDataActionCreator(setUserExtraData(newUser)));
-      } catch (error) {}
-    },
-    [dispatch]
-  );
+      return user;
+    } catch (error) {}
+  }, []);
 
   const logIn = useCallback(
-    async ({ name, password }: UserLogInData) => {
+    async ({ name, password }: UserLogInData): Promise<void> => {
       try {
         const {
           data: {
@@ -54,23 +48,38 @@ const useUser = () => {
 
         const tokenContent = getTokenData(token);
 
-        dispatch(toggleStatusActionCreator());
-
         localStorage.setItem("token", token);
 
-        dispatch(
-          loadUserActionCreator({
-            id: tokenContent.id,
-            name: tokenContent.name,
-            token: "",
-          })
-        );
+        const user: IUser = (await getUserData(tokenContent.id)) as IUser;
+
+        dispatch(loadUserActionCreator(setUserBasicData(user, token)));
+        dispatch(loadUserDataActionCreator(setUserExtraData(user)));
+        dispatch(toggleStatusActionCreator(true));
       } catch (error) {}
     },
-    [dispatch]
+    [dispatch, getUserData]
   );
 
-  return { signUp, logIn };
+  const signUp = useCallback(
+    async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
+      try {
+        await axios.post(`${apiUrl}/users/sign-up`, {
+          name,
+          password,
+          email,
+        });
+
+        logIn({ name, password });
+
+        return true;
+      } catch (error) {
+        return false;
+      }
+    },
+    [logIn]
+  );
+
+  return { signUp, logIn, getUserData };
 };
 
 export default useUser;

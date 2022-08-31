@@ -12,10 +12,10 @@ describe("Given a toggle status action creator", () => {
       const actionType = "user/toggleStatus";
       const expectedAction = {
         type: actionType,
-        payload: undefined,
+        payload: true,
       };
 
-      const action = toggleStatusActionCreator();
+      const action = toggleStatusActionCreator(true);
 
       expect(action).toStrictEqual(expectedAction);
     });
@@ -47,7 +47,7 @@ describe("Given a userReducer function", () => {
         ...previousState,
         isLogged: true,
       };
-      const action = toggleStatusActionCreator();
+      const action = toggleStatusActionCreator(true);
 
       const result = userReducer(previousState, action);
 

@@ -23,3 +23,7 @@ export interface UserLogInData {
   name: string;
   password: string;
 }
+
+export interface UserGetData {
+  user: IUser;
+}

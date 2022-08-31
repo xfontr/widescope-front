@@ -10,9 +10,9 @@ const userSlice = createSlice({
   name: "user",
   initialState: userInitialState,
   reducers: {
-    toggleStatus: (previousState) => ({
+    toggleStatus: (previousState, action: PayloadAction<boolean>) => ({
       ...previousState,
-      isLogged: !previousState.isLogged,
+      isLogged: action.payload,
     }),
 
     loadUser: (previousState, action: PayloadAction<UserBasicData>) => ({
