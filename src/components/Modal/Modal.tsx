@@ -1,11 +1,22 @@
-import { useAppSelector } from "../../app/hooks";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
+import { setVisibilityActionCreator } from "../../store/slices/uiModal/uiModalSlice";
 import ModalStyled from "./ModalStyled";
 
 const Modal = (): JSX.Element => {
-  const { isVisible, message, type } = useAppSelector(
+  const { isVisible, message, type, isLoading } = useAppSelector(
     (state: RootState) => state.uiModal
   );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isVisible && isLoading) {
+      setTimeout(() => {
+        dispatch(setVisibilityActionCreator(false));
+      }, 2250);
+    }
+  }, [dispatch, isVisible, isLoading]);
 
   return (
     <>
