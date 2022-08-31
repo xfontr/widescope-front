@@ -94,6 +94,62 @@ const NavigationStyled = styled.nav`
     top: -3px;
     transform: rotate(-495deg);
   }
+
+  .modal-cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: flex-end;
+
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+  }
+
+  .modal-close-area {
+    width: 30%;
+    height: 100%;
+  }
+
+  .navigation__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: auto;
+  }
+
+  .navigation__link {
+    width: fit-content;
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+
+  .navigation__link::after {
+    transition: 0.6s;
+    content: "";
+    display: block;
+    width: 0%;
+    opacity: 0%;
+    background-color: black;
+    height: 0.1rem;
+  }
+
+  .navigation__link:hover::after {
+    opacity: 100%;
+    width: 100%;
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translate(100%);
+    }
+    to {
+      transform: translate(0);
+    }
+  }
 `;
 
 export default NavigationStyled;
