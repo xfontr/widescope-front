@@ -14,6 +14,11 @@ const uiModalSlice = createSlice({
       ...previousState,
       isVisible: action.payload,
     }),
+
+    setMessage: (previousState, action: PayloadAction<string>) => ({
+      ...previousState,
+      message: action.payload,
+    }),
   },
 });
 
@@ -21,3 +26,5 @@ export const uiModalReducer = uiModalSlice.reducer;
 
 export const { toggleVisibility: toggleVisibilityActionCreator } =
   uiModalSlice.actions;
+
+export const { setMessage: setMessageActionCreator } = uiModalSlice.actions;
