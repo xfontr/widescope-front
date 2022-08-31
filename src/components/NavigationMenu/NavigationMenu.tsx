@@ -13,7 +13,7 @@ const NavigationMenu = (): JSX.Element => {
   return (
     <NavigationStyled>
       <div
-        data-testId="burger-icon"
+        data-testid="burger-icon"
         className="burger-icon"
         onClick={toggleVisiblity}
       >
@@ -27,15 +27,11 @@ const NavigationMenu = (): JSX.Element => {
       {isMenuVisible && (
         <div className="modal-cover">
           <div
-            data-testId="modal-close-area"
+            data-testid="modal-close-area"
             className="modal-close-area"
             onClick={toggleVisiblity}
           ></div>
-          <section
-            className={`navigation ${
-              isMenuVisible ? "navigation--in" : "navigation--out"
-            }`}
-          >
+          <section className={"navigation navigation--in"}>
             <ul className="navigation__links">
               <li className="navigation__link">
                 <Link to={"/"} className="navigation__link">
