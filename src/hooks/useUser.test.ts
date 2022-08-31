@@ -1,4 +1,9 @@
 import { renderHook } from "@testing-library/react";
+import { exec } from "child_process";
+import {
+  closeActionCreator,
+  setVisibilityActionCreator,
+} from "../store/slices/uiModal/uiModalSlice";
 import {
   loadUserActionCreator,
   toggleStatusActionCreator,
@@ -34,9 +39,11 @@ Object.defineProperty(window, "localStorage", {
 
 jest.mock("../test-utils/mocks/mockLocalStorage");
 
+const axiosErrorMessage = "AxiosError: Request failed with status code 400";
+
 describe("Given a signUp function returned by a useUser function", () => {
   describe("When called with valid sign up data", () => {
-    test("Then it should return true", async () => {
+    test("Then it should return true and call the modal dispatch from the log in user", async () => {
       const {
         result: {
           current: { signUp },
@@ -46,11 +53,13 @@ describe("Given a signUp function returned by a useUser function", () => {
       const result = await signUp(signUpData);
 
       expect(result).toBe(true);
+
+      expect(mockUseDispatch).toHaveBeenCalledTimes(2);
     });
   });
 
   describe("When called but the fetch fails", () => {
-    test("Then it should return false", async () => {
+    test("Then it should return false and call the modal dispatch with error", async () => {
       const {
         result: {
           current: { signUp },
@@ -60,6 +69,17 @@ describe("Given a signUp function returned by a useUser function", () => {
       const result = await signUp({ ...signUpData, password: "" });
 
       expect(result).toBe(false);
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        closeActionCreator({
+          message: `Sign up error: ${axiosErrorMessage}`,
+          type: "error",
+        })
+      );
     });
   });
 });
@@ -91,6 +111,26 @@ describe("Given a logIn function returned by a useUser function", () => {
       );
     });
 
+    test("Then it should also call the modal dispatch to show a success message", async () => {
+      const {
+        result: {
+          current: { logIn },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      await logIn(logInData);
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        closeActionCreator({
+          message: "Log in successful",
+          type: "success",
+        })
+      );
+    });
+
     test("Then it should set the received token at the local storage", async () => {
       const token = "#";
 
@@ -107,7 +147,7 @@ describe("Given a logIn function returned by a useUser function", () => {
   });
 
   describe("When called but the fetch fails", () => {
-    test("Then it should not call the dispatch", async () => {
+    test("Then it should call the dispatch only to open the modal error", async () => {
       const {
         result: {
           current: { logIn },
@@ -116,7 +156,18 @@ describe("Given a logIn function returned by a useUser function", () => {
 
       await logIn({ ...logInData, password: "" });
 
-      expect(mockUseDispatch).not.toHaveBeenCalled();
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        closeActionCreator({
+          message: `Log in error: ${axiosErrorMessage}`,
+          type: "error",
+        })
+      );
+
+      expect(mockUseDispatch).toHaveBeenCalledTimes(2);
     });
   });
 });
