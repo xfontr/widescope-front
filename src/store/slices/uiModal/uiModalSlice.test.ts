@@ -1,7 +1,6 @@
+import { ModalTypes } from "../../../types/modal";
 import {
   closeActionCreator,
-  setMessageActionCreator,
-  setTypeActionCreator,
   setVisibilityActionCreator,
   uiModalReducer,
 } from "./uiModalSlice";
@@ -21,47 +20,15 @@ describe("Given a setVisibilityActionCreator function", () => {
   });
 });
 
-describe("Given a setMessageActionCreator function", () => {
-  describe("When called with a message 'Message'", () => {
-    test("Then it should return an action with type 'uiModal/setMessage' and the message as payload", () => {
-      const message = "Message";
-      const expectedResult = {
-        type: "uiModal/setMessage",
-        payload: message,
-      };
-
-      const result = setMessageActionCreator(message);
-
-      expect(result).toStrictEqual(expectedResult);
-    });
-  });
-});
-
-describe("Given a setTypeActionCreator function", () => {
-  describe("When called with the type 'error'", () => {
-    test("Then it should return an action with type 'uiModal/setType' and the type as payload", () => {
-      const type = "error";
-      const expectedResult = {
-        type: "uiModal/setType",
-        payload: type,
-      };
-
-      const result = setTypeActionCreator(type);
-
-      expect(result).toStrictEqual(expectedResult);
-    });
-  });
-});
-
-describe("Given a loadActionCreator function", () => {
-  describe("When called with a payload of true", () => {
-    test("Then it should return an action with type 'uiModal/close' and true as payload", () => {
+describe("Given a closeActionCreator function", () => {
+  describe("When called with a message 'Message' and a type 'error'", () => {
+    test("Then it should return an action with a type 'uiModal/close' and said data as payload", () => {
       const expectedResult = {
         type: "uiModal/close",
-        payload: true,
+        payload: { message: "Message", type: "error" },
       };
 
-      const result = closeActionCreator(true);
+      const result = closeActionCreator({ message: "Message", type: "error" });
 
       expect(result).toStrictEqual(expectedResult);
     });
@@ -73,13 +40,14 @@ describe("Given a uiModalReducer function", () => {
     isClosing: false,
     isVisible: false,
     message: "",
-    type: "loading",
+    type: "loading" as ModalTypes,
   };
 
-  describe("When called with a toggleVisibility action with true as payload", () => {
-    test("Then it should return 'isVisible' from false to true", () => {
+  describe("When called with a setVisibility action with true as payload", () => {
+    test("Then it should return 'isVisible' from false to true, and set message as 'Loading'", () => {
       const expectedResult = {
         ...previousState,
+        message: "Loading",
         isVisible: true,
       };
 
@@ -92,44 +60,19 @@ describe("Given a uiModalReducer function", () => {
     });
   });
 
-  describe("When called with a setMessage action with 'Message' as payload", () => {
-    test("Then it should return the previous state with the message passed", () => {
+  describe("When called with a close action with a message 'Message' and a type 'error'", () => {
+    test("Then it should return the previous state with the message and type passed, and with isSlosing true", () => {
       const expectedResult = {
         ...previousState,
+        isClosing: true,
         message: "Message",
+        type: "error",
       };
 
       const result = uiModalReducer(
         previousState,
-        setMessageActionCreator(expectedResult.message)
+        closeActionCreator({ message: expectedResult.message, type: "error" })
       );
-
-      expect(result).toStrictEqual(expectedResult);
-    });
-  });
-
-  describe("When called with a setType action with 'error' as payload", () => {
-    test("Then it should return the previous state with the said type", () => {
-      const type = "error";
-      const expectedResult = {
-        ...previousState,
-        type,
-      };
-
-      const result = uiModalReducer(previousState, setTypeActionCreator(type));
-
-      expect(result).toStrictEqual(expectedResult);
-    });
-  });
-
-  describe("When called with a load action with true as payload", () => {
-    test("Then it should return the previous state with load as true", () => {
-      const expectedResult = {
-        ...previousState,
-        isClosing: true,
-      };
-
-      const result = uiModalReducer(previousState, closeActionCreator(true));
 
       expect(result).toStrictEqual(expectedResult);
     });

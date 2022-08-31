@@ -3,8 +3,6 @@ import { act } from "react-dom/test-utils";
 import { useAppDispatch } from "../../app/hooks";
 import {
   closeActionCreator,
-  setMessageActionCreator,
-  setTypeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
 import styledMainTheme from "../../styles/styledMainTheme";
@@ -15,39 +13,38 @@ import Modal from "./Modal";
 jest.useFakeTimers();
 
 describe("Given a Modal component", () => {
-  describe("When instantiated with store states of visible, 'loading' and 'Message'", () => {
+  describe("When instantiated with store states of visible and 'Loading' message", () => {
     test("Then it should show a 'Message' with the main typography color", () => {
-      const message = "Message";
+      const expectedMessage = "Loading";
       const {
         result: { current: dispatch },
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
-        dispatch(setTypeActionCreator("loading"));
-        dispatch(setMessageActionCreator(message));
       });
 
       render(<Modal />);
 
-      const shownMessage = screen.getByText(message);
+      const shownMessage = screen.getByText(expectedMessage);
 
       expect(shownMessage).toBeInTheDocument();
       expect(shownMessage).toHaveStyle("color: inherit");
     });
   });
 
-  describe("When instantiated with store states of visible, 'error' and 'Message'", () => {
+  describe("When instantiated with store states of closing, message 'Message' and type 'error'", () => {
     test("Then it should show a 'Message' with color red", () => {
       const message = "Message";
+      const type = "error";
+
       const {
         result: { current: dispatch },
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
-        dispatch(setTypeActionCreator("error"));
-        dispatch(setMessageActionCreator(message));
+        dispatch(closeActionCreator({ message, type }));
       });
 
       render(<Modal />);
@@ -61,17 +58,18 @@ describe("Given a Modal component", () => {
     });
   });
 
-  describe("When instantiated with store states of visible, 'success' and 'Message'", () => {
+  describe("When instantiated with store states of closing, message 'Message' and type 'success'", () => {
     test("Then it should show a 'Message' with color green", () => {
       const message = "Message";
+      const type = "success";
+
       const {
         result: { current: dispatch },
       } = renderHook(useAppDispatch, { wrapper: Wrapper });
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
-        dispatch(setTypeActionCreator("success"));
-        dispatch(setMessageActionCreator(message));
+        dispatch(closeActionCreator({ message, type }));
       });
 
       render(<Modal />);
@@ -103,7 +101,7 @@ describe("Given a Modal component", () => {
     });
   });
 
-  describe("When instantiated with a state of visible and loading", () => {
+  describe("When instantiated with a state of visible and closing", () => {
     test("Then it should not be visible after 2300ms", async () => {
       const {
         result: { current: dispatch },
@@ -111,7 +109,7 @@ describe("Given a Modal component", () => {
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
-        dispatch(closeActionCreator(true));
+        dispatch(closeActionCreator({ message: "", type: "error" }));
       });
 
       render(<Modal />);
