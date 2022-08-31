@@ -4,7 +4,7 @@ import { useAppDispatch } from "../app/hooks";
 import {
   signInActionCreator,
   toggleStatusActionCreator,
-} from "../store/slices/userSlice";
+} from "../store/slices/userDataSlice";
 import mockUser from "../test-utils/mocks/mockUser";
 import { UserLogInData, UserSignUpData } from "../types/user";
 import getTokenData from "../utils/auth";

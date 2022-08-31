@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import {
   signInActionCreator,
   toggleStatusActionCreator,
-} from "../store/slices/userSlice";
+} from "../store/slices/userDataSlice";
 import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
 import mockUser from "../test-utils/mocks/mockUser";
 import Wrapper from "../test-utils/render/Wrapper";
