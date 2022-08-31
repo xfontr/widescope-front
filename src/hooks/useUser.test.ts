@@ -1,26 +1,20 @@
 import { renderHook } from "@testing-library/react";
-import { toggleStatusActionCreator } from "../store/slices/user/userSlice";
+import {
+  loadUserActionCreator,
+  toggleStatusActionCreator,
+} from "../store/slices/user/userSlice";
+import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
 import mockUser from "../test-utils/mocks/mockUser";
 import Wrapper from "../test-utils/render/Wrapper";
+import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
 import useUser from "./useUser";
 
 const signUpData = {
   name: mockUser.name,
-  password: "mockPassword",
+  password: "password123",
   email: mockUser.email,
 };
-
-let mockResolvedData: any = {
-  data: {
-    newUser: { ...signUpData, id: mockUser.id, friends: mockUser.friends },
-  },
-  status: 200,
-};
-
-jest.mock("axios", () => ({
-  post: () => mockResolvedData,
-}));
 
 const mockUseDispatch = jest.fn();
 
@@ -30,10 +24,8 @@ jest.mock("../app/hooks", () => ({
 }));
 
 jest.mock("../utils/auth", () => () => ({
-  getTokenData: jest.fn().mockReturnValue({
-    id: mockUser.id,
-    name: mockUser.name,
-  }),
+  id: mockUser.id,
+  name: mockUser.name,
 }));
 
 Object.defineProperty(window, "localStorage", {
@@ -65,9 +57,7 @@ describe("Given a signUp function returned by a useUser function", () => {
         },
       } = renderHook(useUser, { wrapper: Wrapper });
 
-      mockResolvedData = { ...mockResolvedData, status: 400 };
-
-      const result = await signUp(signUpData);
+      const result = await signUp({ ...signUpData, password: "" });
 
       expect(result).toBe(false);
     });
@@ -82,10 +72,6 @@ describe("Given a logIn function returned by a useUser function", () => {
 
   describe("When called with valid log in data", () => {
     test("Then it should call the dispatch to mark the user as logged in and to log it in", async () => {
-      mockResolvedData = {
-        data: { user: { token: "###" } },
-      };
-
       const {
         result: {
           current: { logIn },
@@ -95,14 +81,18 @@ describe("Given a logIn function returned by a useUser function", () => {
       await logIn(logInData);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
+        loadUserActionCreator(setUserBasicData(mockUser, "#"))
+      );
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        loadUserDataActionCreator(setUserExtraData(mockUser))
+      );
+      expect(mockUseDispatch).toHaveBeenCalledWith(
         toggleStatusActionCreator(true)
       );
     });
 
     test("Then it should set the received token at the local storage", async () => {
-      mockResolvedData = {
-        data: { user: { token: "###" } },
-      };
+      const token = "#";
 
       const {
         result: {
@@ -112,24 +102,19 @@ describe("Given a logIn function returned by a useUser function", () => {
 
       await logIn(logInData);
 
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-        "token",
-        mockResolvedData.data.user.token
-      );
+      expect(mockLocalStorage.setItem).toHaveBeenCalledWith("token", token);
     });
   });
 
   describe("When called but the fetch fails", () => {
     test("Then it should not call the dispatch", async () => {
-      mockResolvedData = new Error();
-
       const {
         result: {
           current: { logIn },
         },
       } = renderHook(useUser, { wrapper: Wrapper });
 
-      await logIn(logInData);
+      await logIn({ ...logInData, password: "" });
 
       expect(mockUseDispatch).not.toHaveBeenCalled();
     });

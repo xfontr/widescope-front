@@ -45,6 +45,7 @@ const useUser = () => {
         );
 
         const tokenContent = getTokenData(token);
+
         localStorage.setItem("token", token);
 
         const user: IUser = await getUserData(tokenContent.id);
@@ -70,6 +71,7 @@ const useUser = () => {
           logIn({ name, password });
           return true;
         }
+
         throw new Error();
       } catch (error) {
         return false;
