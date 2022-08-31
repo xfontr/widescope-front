@@ -1,23 +1,21 @@
 import { renderHook } from "@testing-library/react";
-import {
-  loadUserActionCreator,
-  toggleStatusActionCreator,
-} from "../store/slices/user/userSlice";
-import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
+import { toggleStatusActionCreator } from "../store/slices/user/userSlice";
 import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
 import mockUser from "../test-utils/mocks/mockUser";
 import Wrapper from "../test-utils/render/Wrapper";
-import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
 import useUser from "./useUser";
 
 const signUpData = {
-  name: "mockName",
+  name: mockUser.name,
   password: "mockPassword",
-  email: "mockEmail",
+  email: mockUser.email,
 };
 
 let mockResolvedData: any = {
-  data: { newUser: { ...signUpData, id: "userId", friends: ["friend"] } },
+  data: {
+    newUser: { ...signUpData, id: mockUser.id, friends: mockUser.friends },
+  },
+  status: 200,
 };
 
 jest.mock("axios", () => ({
@@ -46,39 +44,32 @@ jest.mock("../test-utils/mocks/mockLocalStorage");
 
 describe("Given a signUp function returned by a useUser function", () => {
   describe("When called with valid sign up data", () => {
-    test("Then it should call the dispatch with the load user action creators", async () => {
+    test("Then it should return true", async () => {
       const {
         result: {
           current: { signUp },
         },
       } = renderHook(useUser, { wrapper: Wrapper });
 
-      await signUp(signUpData);
+      const result = await signUp(signUpData);
 
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        loadUserActionCreator(setUserBasicData(mockResolvedData.data.newUser))
-      );
-
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        loadUserDataActionCreator(
-          setUserExtraData(mockResolvedData.data.newUser)
-        )
-      );
+      expect(result).toBe(true);
     });
   });
 
   describe("When called but the fetch fails", () => {
-    test("Then it should not call the dispatch", async () => {
+    test("Then it should return false", async () => {
       const {
         result: {
           current: { signUp },
         },
       } = renderHook(useUser, { wrapper: Wrapper });
-      mockResolvedData = new Error();
 
-      await signUp(signUpData);
+      mockResolvedData = { ...mockResolvedData, status: 400 };
 
-      expect(mockUseDispatch).not.toHaveBeenCalled();
+      const result = await signUp(signUpData);
+
+      expect(result).toBe(false);
     });
   });
 });

@@ -14,14 +14,14 @@ import {
 } from "../types/user";
 import getTokenData from "../utils/auth";
 import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
-import { SignUpResponse, UserToken } from "./useUserTypes";
+import { UserToken } from "./useUserTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const useUser = () => {
   const dispatch = useAppDispatch();
 
-  const getUserData = useCallback(async (id: string) => {
+  const getUserData = useCallback(async (id: string): Promise<IUser> => {
     const {
       data: { user },
     }: AxiosResponse<UserGetData> = await axios.get(`${apiUrl}/users/${id}`);
@@ -30,7 +30,7 @@ const useUser = () => {
   }, []);
 
   const logIn = useCallback(
-    async ({ name, password }: UserLogInData) => {
+    async ({ name, password }: UserLogInData): Promise<void> => {
       try {
         const {
           data: {
@@ -58,16 +58,22 @@ const useUser = () => {
   );
 
   const signUp = useCallback(
-    async ({ name, password, email }: UserSignUpData) => {
+    async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
       try {
-        await axios.post(`${apiUrl}/users/sign-up`, {
+        const signUpResponse = await axios.post(`${apiUrl}/users/sign-up`, {
           name,
           password,
           email,
         });
 
-        logIn({ name, password });
-      } catch (error) {}
+        if (signUpResponse.status === 200) {
+          logIn({ name, password });
+          return true;
+        }
+        throw new Error();
+      } catch (error) {
+        return false;
+      }
     },
     [logIn]
   );
