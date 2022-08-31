@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser, UserExtraData } from "../../types/user";
+import { UserBasicData } from "../../../types/user";
 
 const userInitialState = {
   isLogged: false,
-  user: {} as UserExtraData,
+  user: {} as UserBasicData,
 };
 
 const userSlice = createSlice({
@@ -15,7 +15,7 @@ const userSlice = createSlice({
       isLogged: !previousState.isLogged,
     }),
 
-    loadUser: (previousState, action: PayloadAction<IUser>) => ({
+    loadUser: (previousState, action: PayloadAction<UserBasicData>) => ({
       ...previousState,
       user: action.payload,
     }),
