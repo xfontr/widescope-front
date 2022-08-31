@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type ModalTypes = "loading" | "error" | "success";
+
 const uiModalInitialState = {
   isVisible: false,
   message: "",
@@ -19,6 +21,11 @@ const uiModalSlice = createSlice({
       ...previousState,
       message: action.payload,
     }),
+
+    setType: (previousState, action: PayloadAction<ModalTypes>) => ({
+      ...previousState,
+      type: action.payload,
+    }),
   },
 });
 
@@ -28,3 +35,5 @@ export const { toggleVisibility: toggleVisibilityActionCreator } =
   uiModalSlice.actions;
 
 export const { setMessage: setMessageActionCreator } = uiModalSlice.actions;
+
+export const { setType: setTypeActionCreator } = uiModalSlice.actions;

@@ -1,5 +1,6 @@
 import {
   setMessageActionCreator,
+  setTypeActionCreator,
   toggleVisibilityActionCreator,
   uiModalReducer,
 } from "./uiModalSlice";
@@ -29,6 +30,22 @@ describe("Given a setMessageActionCreator function", () => {
       };
 
       const result = setMessageActionCreator(message);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+});
+
+describe("Given a setTypeActionCreator function", () => {
+  describe("When called with the type 'error'", () => {
+    test("Then it should return an action with type 'uiModal/setType' and the type as payload", () => {
+      const type = "error";
+      const expectedResult = {
+        type: "uiModal/setType",
+        payload: type,
+      };
+
+      const result = setTypeActionCreator(type);
 
       expect(result).toStrictEqual(expectedResult);
     });
@@ -65,6 +82,20 @@ describe("Given a uiModalReducer function", () => {
         previousState,
         setMessageActionCreator(expectedResult.message)
       );
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a setType action with 'error' as payload", () => {
+    test("Then it should return the previous state with the said type", () => {
+      const type = "error";
+      const expectedResult = {
+        ...previousState,
+        type,
+      };
+
+      const result = uiModalReducer(previousState, setTypeActionCreator(type));
 
       expect(result).toStrictEqual(expectedResult);
     });
