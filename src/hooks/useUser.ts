@@ -92,17 +92,11 @@ const useUser = () => {
 
         logIn({ name, password });
 
-        dispatch(
-          closeActionCreator({
-            message: "Registration successful",
-            type: "success",
-          })
-        );
         return true;
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: `Sign in error: ${error}`,
+            message: `Sign up error: ${error}`,
             type: "error",
           })
         );
