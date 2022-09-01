@@ -43,21 +43,21 @@ describe("Given a getToken function returned from a useToken function", () => {
     result: { current: getToken },
   } = renderHook(useToken, { wrapper: Wrapper });
 
+  const tokenContent = "###";
+
   describe("When called with a valid token in the localStorage", () => {
     test("Then it should log the user in", async () => {
       act(async () => {
-        mockLocalStorage.setItem("token", "###");
-
-        Object.defineProperty(window, "localStorage", {
-          value: mockLocalStorage,
-        });
+        mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
       });
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
-          loadUserActionCreator(setUserBasicData(mockUser as IUser, "###"))
+          loadUserActionCreator(
+            setUserBasicData(mockUser as IUser, tokenContent)
+          )
         );
       });
 
@@ -74,11 +74,7 @@ describe("Given a getToken function returned from a useToken function", () => {
 
     test("Then it should dispatch the ui modal actions", async () => {
       act(async () => {
-        mockLocalStorage.setItem("token", "###");
-
-        Object.defineProperty(window, "localStorage", {
-          value: mockLocalStorage,
-        });
+        mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
       });
@@ -101,11 +97,7 @@ describe("Given a getToken function returned from a useToken function", () => {
 
     test("Then it should redirect the user to '/home'", async () => {
       act(async () => {
-        mockLocalStorage.setItem("token", "###");
-
-        Object.defineProperty(window, "localStorage", {
-          value: mockLocalStorage,
-        });
+        mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
       });
@@ -122,11 +114,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       mockTokenContent = {};
 
       act(async () => {
-        mockLocalStorage.setItem("token", "invalidToken");
-
-        Object.defineProperty(window, "localStorage", {
-          value: mockLocalStorage,
-        });
+        mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
       });
@@ -144,11 +132,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       mockTokenContent = {};
 
       act(async () => {
-        mockLocalStorage.setItem("token", "invalidToken");
-
-        Object.defineProperty(window, "localStorage", {
-          value: mockLocalStorage,
-        });
+        mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
       });
@@ -168,11 +152,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       mockTokenContent = {};
 
       act(async () => {
-        mockLocalStorage.setItem("token", "invalidToken");
-
-        Object.defineProperty(window, "localStorage", {
-          value: mockLocalStorage,
-        });
+        mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
       });
