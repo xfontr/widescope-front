@@ -19,6 +19,8 @@ const userSlice = createSlice({
       ...previousState,
       user: action.payload,
     }),
+
+    logOut: () => userInitialState,
   },
 });
 
@@ -26,3 +28,4 @@ export const userReducer = userSlice.reducer;
 
 export const { loadUser: loadUserActionCreator } = userSlice.actions;
 export const { toggleStatus: toggleStatusActionCreator } = userSlice.actions;
+export const { logOut: logOutActionCreator } = userSlice.actions;
