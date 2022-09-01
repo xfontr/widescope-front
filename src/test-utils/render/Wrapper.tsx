@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { store } from "../../app/store";
 import GlobalStyles from "../../styles/GlobalStyles";
 import styledMainTheme from "../../styles/styledMainTheme";
+import mockStore from "../mocks/mockStore";
 
 interface WrapperProps {
   children: JSX.Element | JSX.Element[];
@@ -22,4 +23,17 @@ const Wrapper = ({ children }: WrapperProps): JSX.Element => {
   );
 };
 
-export default Wrapper;
+const WrapperWithMockStore = ({ children }: WrapperProps): JSX.Element => {
+  return (
+    <ThemeProvider theme={styledMainTheme}>
+      <Provider store={mockStore}>
+        <BrowserRouter>
+          <GlobalStyles />
+          {children}
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
+  );
+};
+
+export { Wrapper, WrapperWithMockStore };
