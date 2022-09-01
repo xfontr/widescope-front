@@ -6,6 +6,7 @@ import {
 } from "../store/slices/uiModal/uiModalSlice";
 import {
   loadUserActionCreator,
+  logOutActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
@@ -199,6 +200,34 @@ describe("Given a getUserData function returned by a useUser function", () => {
       const result = await getUserData(fakeId);
 
       expect(result).toBe(undefined);
+    });
+  });
+});
+
+describe("Given a logOut function returned by a useUser function", () => {
+  describe(`When called`, () => {
+    test("Then it should clear the local storage", () => {
+      const {
+        result: {
+          current: { logOut },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      logOut();
+
+      expect(mockLocalStorage.clear).toHaveBeenCalled();
+    });
+
+    test("Then it should dispatch the log out action creator", () => {
+      const {
+        result: {
+          current: { logOut },
+        },
+      } = renderHook(useUser, { wrapper: Wrapper });
+
+      logOut();
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(logOutActionCreator());
     });
   });
 });

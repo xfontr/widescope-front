@@ -1,8 +1,8 @@
 import mockLocalStorage from "../mocks/mockLocalStorage";
 
 describe("Given a mockLocalStorage variable", () => {
-  describe("When called", () => {
-    test("Then it should return an object with a setItem function", () => {
+  describe("When called with its returned function setItem", () => {
+    test("Said function should not be null and do nothing", () => {
       const { setItem } = mockLocalStorage;
 
       expect(setItem).not.toBeNull();
@@ -14,6 +14,17 @@ describe("Given a mockLocalStorage variable", () => {
       const result = setItem("", "");
 
       expect(result).toBeUndefined();
+    });
+
+    describe("When called with its returned function clear", () => {
+      test("Said function should not be null and do nothing", () => {
+        const { clear } = mockLocalStorage;
+
+        const result = clear();
+
+        expect(clear).not.toBeNull();
+        expect(result).toBeUndefined();
+      });
     });
   });
 });

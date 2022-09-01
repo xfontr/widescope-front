@@ -7,6 +7,7 @@ import {
 } from "../store/slices/uiModal/uiModalSlice";
 import {
   loadUserActionCreator,
+  logOutActionCreator,
   toggleStatusActionCreator,
 } from "../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
@@ -106,7 +107,12 @@ const useUser = () => {
     [logIn, dispatch]
   );
 
-  return { signUp, logIn, getUserData };
+  const logOut = () => {
+    localStorage.clear();
+    dispatch(logOutActionCreator());
+  };
+
+  return { signUp, logIn, getUserData, logOut };
 };
 
 export default useUser;
