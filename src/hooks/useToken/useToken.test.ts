@@ -24,10 +24,12 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockNavigate,
 }));
 
-jest.mock("../../utils/auth", () => () => ({
+let mockTokenContent = {
   id: mockUser.id,
   name: mockUser.name,
-}));
+} as any;
+
+jest.mock("../../utils/auth", () => () => mockTokenContent);
 
 const mockUseDispatch = jest.fn();
 
@@ -40,6 +42,7 @@ describe("Given a getToken function returned from a useToken function", () => {
   const {
     result: { current: getToken },
   } = renderHook(useToken, { wrapper: Wrapper });
+
   describe("When called with a valid token in the localStorage", () => {
     test("Then it should log the user in", async () => {
       act(async () => {
@@ -109,6 +112,73 @@ describe("Given a getToken function returned from a useToken function", () => {
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith("/home");
+      });
+    });
+  });
+
+  describe("When called with an invalid token in the localStorage", () => {
+    test("Then it should clear the local storage", async () => {
+      localStorage.clear = jest.fn();
+      mockTokenContent = {};
+
+      act(async () => {
+        mockLocalStorage.setItem("token", "invalidToken");
+
+        Object.defineProperty(window, "localStorage", {
+          value: mockLocalStorage,
+        });
+
+        await getToken();
+      });
+
+      await waitFor(() => {
+        expect(localStorage.clear).toHaveBeenCalled();
+      });
+    });
+
+    test("Then it should dispatch the error ui modal", async () => {
+      const expectedError =
+        "TypeError: Cannot read properties of undefined (reading 'id')";
+
+      localStorage.clear = jest.fn();
+      mockTokenContent = {};
+
+      act(async () => {
+        mockLocalStorage.setItem("token", "invalidToken");
+
+        Object.defineProperty(window, "localStorage", {
+          value: mockLocalStorage,
+        });
+
+        await getToken();
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: `Log in error: ${expectedError}`,
+            type: "error",
+          })
+        );
+      });
+    });
+
+    test("Then it should redirect the user to '/log-in'", async () => {
+      localStorage.clear = jest.fn();
+      mockTokenContent = {};
+
+      act(async () => {
+        mockLocalStorage.setItem("token", "invalidToken");
+
+        Object.defineProperty(window, "localStorage", {
+          value: mockLocalStorage,
+        });
+
+        await getToken();
+      });
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith("/log-in");
       });
     });
   });
