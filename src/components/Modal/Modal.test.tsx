@@ -7,7 +7,7 @@ import {
 } from "../../store/slices/uiModal/uiModalSlice";
 import styledMainTheme from "../../styles/styledMainTheme";
 import { render } from "../../test-utils/render/customRender";
-import Wrapper from "../../test-utils/render/Wrapper";
+import { Wrapper } from "../../test-utils/render/Wrapper";
 import Modal from "./Modal";
 
 jest.useFakeTimers();

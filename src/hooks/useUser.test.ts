@@ -12,7 +12,7 @@ import {
 import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
 import mockUser from "../test-utils/mocks/mockUser";
-import Wrapper from "../test-utils/render/Wrapper";
+import { Wrapper } from "../test-utils/render/Wrapper";
 import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
 import useUser from "./useUser";
 

@@ -1,6 +1,7 @@
-import { screen } from "@testing-library/react";
+import { screen, render as reactRender } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { render } from "../../test-utils/render/customRender";
+import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import NavigationMenu from "./NavigationMenu";
 
 describe("Given a NavigationMenu component", () => {
@@ -14,6 +15,7 @@ describe("Given a NavigationMenu component", () => {
         screen.queryByRole("link", { name: "Home" }),
         screen.queryByRole("link", { name: "Sign up" }),
         screen.queryByRole("link", { name: "Log in" }),
+        screen.queryByRole("link", { name: "Log out" }),
       ];
 
       expect(burgerIcon).toBeInTheDocument();
@@ -41,6 +43,19 @@ describe("Given a NavigationMenu component", () => {
       navigationElements.forEach((element) =>
         expect(element).toBeInTheDocument()
       );
+    });
+
+    test("If the user is logged, log out should appear instead of log in", async () => {
+      reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const logInLink = screen.queryByRole("link", { name: "Log in" });
+      const logOutLink = screen.getByRole("link", { name: "Log out" });
+
+      expect(logInLink).not.toBeInTheDocument();
+      expect(logOutLink).toBeInTheDocument();
     });
 
     test("Then it should hide all the elements if the burger-icon is clicked again", async () => {
