@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import useUser from "../../hooks/useUser";
+import useUser from "../../hooks/useUser/useUser";
 import Button from "../Button/Button";
 import NavigationStyled from "./NavigationMenuStyled";
 

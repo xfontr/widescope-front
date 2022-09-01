@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 
-import { server } from "./test-utils/mocks/server";
+import { server } from "./test-utils/requestHandlers/server";
 
 beforeAll(() => server.listen());
 

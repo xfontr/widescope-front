@@ -1,25 +1,25 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch } from "../../app/hooks";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
-} from "../store/slices/uiModal/uiModalSlice";
+} from "../../store/slices/uiModal/uiModalSlice";
 import {
   loadUserActionCreator,
   logOutActionCreator,
   toggleStatusActionCreator,
-} from "../store/slices/user/userSlice";
-import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
+} from "../../store/slices/user/userSlice";
+import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import {
   IUser,
   UserGetData,
   UserLogInData,
   UserSignUpData,
-} from "../types/user";
-import getTokenData from "../utils/auth";
-import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
-import { UserToken } from "./useUserTypes";
+} from "../../types/user";
+import getTokenData from "../../utils/auth";
+import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
+import { UserToken } from "../types/useUserTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

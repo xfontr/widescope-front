@@ -1,19 +1,18 @@
 import { renderHook } from "@testing-library/react";
-import { exec } from "child_process";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
-} from "../store/slices/uiModal/uiModalSlice";
+} from "../../store/slices/uiModal/uiModalSlice";
 import {
   loadUserActionCreator,
   logOutActionCreator,
   toggleStatusActionCreator,
-} from "../store/slices/user/userSlice";
-import { loadUserDataActionCreator } from "../store/slices/userData/userDataSlice";
-import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
-import mockUser from "../test-utils/mocks/mockUser";
-import { Wrapper } from "../test-utils/render/Wrapper";
-import { setUserBasicData, setUserExtraData } from "../utils/setUserData";
+} from "../../store/slices/user/userSlice";
+import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
+import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
+import mockUser from "../../test-utils/mocks/mockUser";
+import { Wrapper } from "../../test-utils/render/Wrapper";
+import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
 import useUser from "./useUser";
 
 const signUpData = {
@@ -24,12 +23,12 @@ const signUpData = {
 
 const mockUseDispatch = jest.fn();
 
-jest.mock("../app/hooks", () => ({
-  ...jest.requireActual("../app/hooks"),
+jest.mock("../../app/hooks", () => ({
+  ...jest.requireActual("../../app/hooks"),
   useAppDispatch: () => mockUseDispatch,
 }));
 
-jest.mock("../utils/auth", () => () => ({
+jest.mock("../../utils/auth", () => () => ({
   id: mockUser.id,
   name: mockUser.name,
 }));
@@ -38,7 +37,7 @@ Object.defineProperty(window, "localStorage", {
   value: mockLocalStorage,
 });
 
-jest.mock("../test-utils/mocks/mockLocalStorage");
+jest.mock("../../test-utils/mocks/mockLocalStorage");
 
 const axiosErrorMessage = "AxiosError: Request failed with status code 400";
 
