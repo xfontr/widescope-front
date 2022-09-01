@@ -4,8 +4,16 @@ import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import Modal from "../Modal/Modal";
+import { useEffect } from "react";
+import useToken from "../../hooks/useToken/useToken";
 
 const App = (): JSX.Element => {
+  const getToken = useToken();
+
+  useEffect(() => {
+    getToken();
+  }, [getToken]);
+
   return (
     <AppStyled>
       <Modal />

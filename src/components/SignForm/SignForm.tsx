@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useUser from "../../hooks/useUser";
+import useUser from "../../hooks/useUser/useUser";
 import loginSchema from "../../schemas/loginSchema";
 import registerSchema from "../../schemas/registerSchema";
 import Button from "../Button/Button";

@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import mockUser from "./mockUser";
+import mockUser from "../mocks/mockUser";
 
 const apiUrl = process.env.REACT_APP_API_URL as string;
 
