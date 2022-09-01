@@ -1,7 +1,12 @@
-import { screen, render as reactRender } from "@testing-library/react";
+import {
+  screen,
+  render as reactRender,
+  renderHook,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocation } from "react-router-dom";
 import { render } from "../../test-utils/render/customRender";
-import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
+import { Wrapper, WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import NavigationMenu from "./NavigationMenu";
 
 describe("Given a NavigationMenu component", () => {
@@ -98,6 +103,92 @@ describe("Given a NavigationMenu component", () => {
       unexpectedNavigationElements.forEach((element) =>
         expect(element).not.toBeInTheDocument()
       );
+    });
+  });
+});
+
+describe("Given the links of the NavigationMenu component", () => {
+  describe("When clicked the 'home' link", () => {
+    test("Then it should route the page to '/'", async () => {
+      render(<NavigationMenu />);
+      const route = "/";
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const homeLink = screen.getByRole("link", { name: "Home" });
+      await userEvent.click(homeLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(route);
+    });
+  });
+
+  describe("When clicked the 'Sign up' link", () => {
+    test("Then it should route the page to '/sign-up'", async () => {
+      render(<NavigationMenu />);
+      const route = "/sign-up";
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const homeLink = screen.getByRole("link", { name: "Sign up" });
+      await userEvent.click(homeLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(route);
+    });
+  });
+
+  describe("When clicked the 'Log out' link", () => {
+    test("Then it should route the page to '/log-in'", async () => {
+      reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
+      const route = "/log-in";
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const homeLink = screen.getByRole("link", { name: "Log out" });
+      await userEvent.click(homeLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(route);
+    });
+  });
+
+  describe("When clicked the 'Log in' link", () => {
+    test("Then it should route the page to '/log-in'", async () => {
+      render(<NavigationMenu />);
+      const route = "/log-in";
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const homeLink = screen.getByRole("link", { name: "Log in" });
+      await userEvent.click(homeLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(route);
     });
   });
 });
