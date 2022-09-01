@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
+import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -34,7 +35,7 @@ const useToken = () => {
             type: "success",
           })
         );
-        navigate("/home");
+        navigate(routes.home);
       } catch (error) {
         localStorage.clear();
         dispatch(
@@ -43,7 +44,7 @@ const useToken = () => {
             type: "error",
           })
         );
-        navigate("/log-in");
+        navigate(routes.logIn);
       }
     }
   }, [getUserData, dispatch, navigate]);

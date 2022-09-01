@@ -1,5 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
+import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -68,8 +69,6 @@ describe("Given a getToken function returned from a useToken function", () => {
       expect(mockUseDispatch).toHaveBeenCalledWith(
         loadUserDataActionCreator(setUserExtraData(mockUser as IUser))
       );
-
-      expect(mockNavigate).toHaveBeenCalledWith("/home");
     });
 
     test("Then it should dispatch the ui modal actions", async () => {
@@ -95,7 +94,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       });
     });
 
-    test("Then it should redirect the user to '/home'", async () => {
+    test(`Then it should redirect the user to '${routes.home}'`, async () => {
       act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
@@ -103,7 +102,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       });
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith("/home");
+        expect(mockNavigate).toHaveBeenCalledWith(routes.home);
       });
     });
   });
@@ -147,7 +146,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       });
     });
 
-    test("Then it should redirect the user to '/log-in'", async () => {
+    test(`Then it should redirect the user to '${routes.logIn}'`, async () => {
       localStorage.clear = jest.fn();
       mockTokenContent = {};
 
@@ -158,7 +157,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       });
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith("/log-in");
+        expect(mockNavigate).toHaveBeenCalledWith(routes.logIn);
       });
     });
   });
