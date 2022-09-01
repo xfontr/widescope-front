@@ -9,7 +9,7 @@ import { loadUserActionCreator } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
 import mockUser from "../../test-utils/mocks/mockUser";
-import { Wrapper } from "../../test-utils/render/Wrapper";
+import { Wrapper, WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import { IUser } from "../../types/user";
 import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
 import useToken from "./useToken";
@@ -158,6 +158,22 @@ describe("Given a getToken function returned from a useToken function", () => {
 
       await waitFor(() => {
         expect(mockNavigate).toHaveBeenCalledWith(routes.logIn);
+      });
+    });
+  });
+
+  describe("When called and the user is already logged in", () => {
+    const {
+      result: { current: getTokenLoggedOut },
+    } = renderHook(useToken, { wrapper: WrapperWithMockStore });
+
+    test("Then it should not log the user again", async () => {
+      act(async () => {
+        await getTokenLoggedOut();
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).not.toHaveBeenCalled();
       });
     });
   });
