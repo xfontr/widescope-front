@@ -45,8 +45,6 @@ const useToken = () => {
         );
         navigate("/log-in");
       }
-
-      return;
     }
   }, [getUserData, dispatch, navigate]);
 
