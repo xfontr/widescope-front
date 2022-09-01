@@ -1,6 +1,13 @@
 const mockLocalStorage = (() => {
+  let store = {} as any;
+
   return {
-    setItem(key: string, value: string) {},
+    getItem(key: string) {
+      return store[key];
+    },
+    setItem(key: string, value: string) {
+      store[key] = value.toString();
+    },
     clear() {},
   };
 })();
