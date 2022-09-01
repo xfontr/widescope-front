@@ -6,6 +6,7 @@ import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import Modal from "../Modal/Modal";
 import { useEffect } from "react";
 import useToken from "../../hooks/useToken/useToken";
+import routes from "../../configs/routes";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -23,10 +24,10 @@ const App = (): JSX.Element => {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route path="/home" element={<LogInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/log-in" element={<LogInPage />} />
+          <Route path={routes.root} element={<Navigate to={routes.home} />} />
+          <Route path={routes.home} element={<LogInPage />} />
+          <Route path={routes.signUp} element={<SignUpPage />} />
+          <Route path={routes.logIn} element={<LogInPage />} />
         </Routes>
       </main>
       <footer className="footer">wideScope © 2022</footer>

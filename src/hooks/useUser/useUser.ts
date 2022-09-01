@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../../app/hooks";
+import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -46,7 +47,7 @@ const useUser = () => {
             user: { token },
           },
         }: AxiosResponse<UserToken> = await axios.post(
-          `${apiUrl}/users/log-in`,
+          `${apiUrl}/users${routes.logIn}`,
           {
             name,
             password,
@@ -85,7 +86,7 @@ const useUser = () => {
     async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
       dispatch(setVisibilityActionCreator(true));
       try {
-        await axios.post(`${apiUrl}/users/sign-up`, {
+        await axios.post(`${apiUrl}/users${routes.signUp}`, {
           name,
           password,
           email,

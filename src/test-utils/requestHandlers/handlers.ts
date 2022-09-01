@@ -1,4 +1,5 @@
 import { rest } from "msw";
+import routes from "../../configs/routes";
 import mockUser from "../mocks/mockUser";
 
 const apiUrl = process.env.REACT_APP_API_URL as string;
@@ -22,7 +23,7 @@ const handlers = [
     )
   ),
 
-  rest.post(`${apiUrl}/users/log-in`, async (req, res, ctx) => {
+  rest.post(`${apiUrl}/users${routes.logIn}`, async (req, res, ctx) => {
     const { password } = await req.json();
     const status = password === "" ? 400 : 200;
 
@@ -34,7 +35,7 @@ const handlers = [
     );
   }),
 
-  rest.post(`${apiUrl}/users/sign-up`, async (req, res, ctx) => {
+  rest.post(`${apiUrl}/users${routes.signUp}`, async (req, res, ctx) => {
     const { password } = await req.json();
     const status = password === "" ? 400 : 200;
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
+import routes from "../../configs/routes";
 import useUser from "../../hooks/useUser/useUser";
 import Button from "../Button/Button";
 import NavigationStyled from "./NavigationMenuStyled";
@@ -39,20 +40,20 @@ const NavigationMenu = (): JSX.Element => {
           <section className={"navigation navigation--in"}>
             <ul className="navigation__links">
               <li className="navigation__link">
-                <Link to={"/"} className="navigation__link">
+                <Link to={routes.root} className="navigation__link">
                   Home
                 </Link>
               </li>
 
               <li className="navigation__link">
-                <Link to={"/sign-up"} className="navigation__link">
+                <Link to={routes.signUp} className="navigation__link">
                   Sign up
                 </Link>
               </li>
 
               {!isLogged && (
                 <li className="navigation__link">
-                  <Link to={"/log-in"} className="navigation__link">
+                  <Link to={routes.logIn} className="navigation__link">
                     Log in
                   </Link>
                 </li>
@@ -61,7 +62,7 @@ const NavigationMenu = (): JSX.Element => {
               {isLogged && (
                 <li className="navigation__link">
                   <Link
-                    to="/log-in"
+                    to={routes.logIn}
                     className="navigation__link"
                     onClick={logOut}
                   >
