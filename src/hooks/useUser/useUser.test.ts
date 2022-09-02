@@ -10,6 +10,7 @@ import {
 } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
+import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { Wrapper } from "../../test-utils/render/Wrapper";
 import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
@@ -20,13 +21,6 @@ const signUpData = {
   password: "password123",
   email: mockUser.email,
 };
-
-const mockUseDispatch = jest.fn();
-
-jest.mock("../../app/hooks", () => ({
-  ...jest.requireActual("../../app/hooks"),
-  useAppDispatch: () => mockUseDispatch,
-}));
 
 jest.mock("../../utils/auth", () => () => ({
   id: mockUser.id,
