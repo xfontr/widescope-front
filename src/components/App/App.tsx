@@ -19,7 +19,7 @@ const App = (): JSX.Element => {
     <AppStyled>
       <Modal />
       <header className="header">
-        <h3>wideScope</h3>
+        <h1>wideScope</h1>
         <NavigationMenu />
       </header>
       <main>
