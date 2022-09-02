@@ -46,6 +46,12 @@ const NavigationMenu = (): JSX.Element => {
               </li>
 
               <li className="navigation__link">
+                <Link to={routes.explore} className="navigation__link">
+                  Explore
+                </Link>
+              </li>
+
+              <li className="navigation__link">
                 <Link to={routes.signUp} className="navigation__link">
                   Sign up
                 </Link>
