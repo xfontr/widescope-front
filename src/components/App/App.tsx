@@ -7,6 +7,7 @@ import Modal from "../Modal/Modal";
 import { useEffect } from "react";
 import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
+import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -28,6 +29,8 @@ const App = (): JSX.Element => {
           <Route path={routes.home} element={<LogInPage />} />
           <Route path={routes.signUp} element={<SignUpPage />} />
           <Route path={routes.logIn} element={<LogInPage />} />
+          <Route path={routes.logIn} element={<LogInPage />} />
+          <Route path={routes.explore} element={<ExplorePage />} />
         </Routes>
       </main>
       <footer className="footer">wideScope © 2022</footer>

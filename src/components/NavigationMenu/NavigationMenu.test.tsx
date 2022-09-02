@@ -19,6 +19,7 @@ describe("Given a NavigationMenu component", () => {
 
       const unexpectedNavigationElements = [
         screen.queryByRole("link", { name: "Home" }),
+        screen.queryByRole("link", { name: "Explore" }),
         screen.queryByRole("link", { name: "Sign up" }),
         screen.queryByRole("link", { name: "Log in" }),
         screen.queryByRole("link", { name: "Log out" }),
@@ -41,6 +42,7 @@ describe("Given a NavigationMenu component", () => {
 
       const navigationElements = [
         screen.getByRole("link", { name: "Home" }),
+        screen.getByRole("link", { name: "Explore" }),
         screen.getByRole("link", { name: "Sign up" }),
         screen.getByRole("link", { name: "Log in" }),
         burgerIcon,
@@ -73,6 +75,7 @@ describe("Given a NavigationMenu component", () => {
 
       const unexpectedNavigationElements = [
         screen.queryByRole("link", { name: "Home" }),
+        screen.queryByRole("link", { name: "Explore" }),
         screen.queryByRole("link", { name: "Sign up" }),
         screen.queryByRole("link", { name: "Log in" }),
       ];
@@ -186,6 +189,26 @@ describe("Given the links of the NavigationMenu component", () => {
       } = renderHook(useLocation, { wrapper: Wrapper });
 
       expect(pathname).toBe(routes.logIn);
+    });
+  });
+
+  describe("When clicked the 'Explore' link", () => {
+    test(`Then it should route the page to '${routes.explore}'`, async () => {
+      render(<NavigationMenu />);
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const exploreLink = screen.getByRole("link", { name: "Explore" });
+      await userEvent.click(exploreLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(routes.explore);
     });
   });
 });
