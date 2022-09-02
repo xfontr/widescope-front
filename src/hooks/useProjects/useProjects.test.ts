@@ -4,15 +4,9 @@ import endpoints from "../../configs/endpoints";
 import { loadAllActionCreator } from "../../store/slices/projects/projectsSlice";
 import { closeActionCreator } from "../../store/slices/uiModal/uiModalSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
+import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import { Wrapper } from "../../test-utils/render/Wrapper";
 import useProjects from "./useProjects";
-
-const mockUseDispatch = jest.fn();
-
-jest.mock("../../app/hooks", () => ({
-  ...jest.requireActual("../../app/hooks"),
-  useAppDispatch: () => mockUseDispatch,
-}));
 
 describe("Given a getAll function returned by a useProjects function", () => {
   describe("When called", () => {

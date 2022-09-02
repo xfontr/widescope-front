@@ -8,6 +8,7 @@ import {
 import { loadUserActionCreator } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
+import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { Wrapper, WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import { IUser } from "../../types/user";
@@ -31,13 +32,6 @@ let mockTokenContent = {
 } as any;
 
 jest.mock("../../utils/auth", () => () => mockTokenContent);
-
-const mockUseDispatch = jest.fn();
-
-jest.mock("../../app/hooks", () => ({
-  ...jest.requireActual("../../app/hooks"),
-  useAppDispatch: () => mockUseDispatch,
-}));
 
 describe("Given a getToken function returned from a useToken function", () => {
   const {
