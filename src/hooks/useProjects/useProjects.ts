@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../../app/hooks";
+import endpoints from "../../configs/endpoints";
 import { loadAllActionCreator } from "../../store/slices/projects/projectsSlice";
 import {
   closeActionCreator,
@@ -20,7 +21,7 @@ const useProjects = () => {
       const {
         data: { projects },
       }: AxiosResponse<GetAllProjects> = await axios.get(
-        `${apiUrl}/projects/all`
+        `${apiUrl}${endpoints.getAll}`
       );
 
       if (typeof projects === "string") {

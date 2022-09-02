@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../../app/hooks";
-import routes from "../../configs/routes";
+import endpoints from "../../configs/endpoints";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -31,7 +31,9 @@ const useUser = () => {
     try {
       const {
         data: { user },
-      }: AxiosResponse<UserGetData> = await axios.get(`${apiUrl}/users/${id}`);
+      }: AxiosResponse<UserGetData> = await axios.get(
+        `${apiUrl}${endpoints.usersRoot}/${id}`
+      );
 
       return user;
     } catch (error) {}
@@ -47,7 +49,7 @@ const useUser = () => {
             user: { token },
           },
         }: AxiosResponse<UserToken> = await axios.post(
-          `${apiUrl}/users${routes.logIn}`,
+          `${apiUrl}${endpoints.logIn}`,
           {
             name,
             password,
@@ -86,7 +88,7 @@ const useUser = () => {
     async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
       dispatch(setVisibilityActionCreator(true));
       try {
-        await axios.post(`${apiUrl}/users${routes.signUp}`, {
+        await axios.post(`${apiUrl}${endpoints.signUp}`, {
           name,
           password,
           email,
