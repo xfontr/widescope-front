@@ -7,7 +7,7 @@ const ProjectStyled = styled.article`
 
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.spacing.gapBig};
+  gap: ${(props) => props.theme.spacing.gapSmall};
   font-size: 1.3rem;
 
   h3 {
