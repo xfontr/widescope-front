@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import routes from "../../configs/routes";
+import mockProject from "../mocks/mockProject";
 import mockUser from "../mocks/mockUser";
 
 const apiUrl = process.env.REACT_APP_API_URL as string;
@@ -43,6 +44,15 @@ const handlers = [
       ctx.status(status),
       ctx.json({
         newUser: mockUser,
+      })
+    );
+  }),
+
+  rest.get(`${apiUrl}/projects/all`, async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        projects: [mockProject],
       })
     );
   }),
