@@ -1,4 +1,6 @@
-import { renderHook } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
+import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -33,47 +35,68 @@ Object.defineProperty(window, "localStorage", {
 
 jest.mock("../../test-utils/mocks/mockLocalStorage");
 
+const mockNavigate = jest.fn().mockReturnThis();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
+}));
+
 const axiosErrorMessage = "AxiosError: Request failed with status code 400";
 
 describe("Given a signUp function returned by a useUser function", () => {
   describe("When called with valid sign up data", () => {
-    test("Then it should return true and call the modal dispatch from the log in user", async () => {
+    test("Then it should return true and call all the dispatches from the log in user", async () => {
       const {
         result: {
           current: { signUp },
         },
       } = renderHook(useUser, { wrapper: Wrapper });
 
-      const result = await signUp(signUpData);
+      let result: boolean = false;
 
-      expect(result).toBe(true);
+      act(async () => {
+        result = await signUp(signUpData);
+      });
 
-      expect(mockUseDispatch).toHaveBeenCalledTimes(2);
+      await waitFor(() => {
+        expect(result).toBe(true);
+      });
+
+      expect(mockUseDispatch).toHaveBeenCalledTimes(6);
     });
   });
 
   describe("When called but the fetch fails", () => {
+    const {
+      result: {
+        current: { signUp },
+      },
+    } = renderHook(useUser, { wrapper: Wrapper });
+
     test("Then it should return false and call the modal dispatch with error", async () => {
-      const {
-        result: {
-          current: { signUp },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
+      let result: boolean = false;
 
-      const result = await signUp({ ...signUpData, password: "" });
+      act(async () => {
+        result = await signUp({ ...signUpData, password: "" });
+      });
 
-      expect(result).toBe(false);
+      await waitFor(() => {
+        expect(result).toBe(false);
+      });
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
       );
 
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        closeActionCreator({
-          message: `Sign up error: ${axiosErrorMessage}`,
-          type: "error",
-        })
-      );
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: `Sign up error: ${axiosErrorMessage}`,
+            type: "error",
+          })
+        );
+      });
     });
   });
 });
@@ -85,18 +108,23 @@ describe("Given a logIn function returned by a useUser function", () => {
   };
 
   describe("When called with valid log in data", () => {
+    const {
+      result: {
+        current: { logIn },
+      },
+    } = renderHook(useUser, { wrapper: Wrapper });
+
     test("Then it should call the dispatch to mark the user as logged in and to log it in", async () => {
-      const {
-        result: {
-          current: { logIn },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
+      act(async () => {
+        await logIn(logInData);
+      });
 
-      await logIn(logInData);
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          loadUserActionCreator(setUserBasicData(mockUser, "#"))
+        );
+      });
 
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        loadUserActionCreator(setUserBasicData(mockUser, "#"))
-      );
       expect(mockUseDispatch).toHaveBeenCalledWith(
         loadUserDataActionCreator(setUserExtraData(mockUser))
       );
@@ -106,60 +134,75 @@ describe("Given a logIn function returned by a useUser function", () => {
     });
 
     test("Then it should also call the modal dispatch to show a success message", async () => {
-      const {
-        result: {
-          current: { logIn },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
+      act(async () => {
+        await logIn(logInData);
+      });
 
-      await logIn(logInData);
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          setVisibilityActionCreator(true)
+        );
+      });
 
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        setVisibilityActionCreator(true)
-      );
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        closeActionCreator({
-          message: "Log in successful",
-          type: "success",
-        })
-      );
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Log in successful",
+            type: "success",
+          })
+        );
+      });
     });
 
     test("Then it should set the received token at the local storage", async () => {
       const token = "#";
 
-      const {
-        result: {
-          current: { logIn },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
+      act(async () => {
+        await logIn(logInData);
+      });
 
-      await logIn(logInData);
+      await waitFor(() => {
+        expect(mockLocalStorage.setItem).toHaveBeenCalledWith("token", token);
+      });
+    });
 
-      expect(mockLocalStorage.setItem).toHaveBeenCalledWith("token", token);
+    test(`Then it should redirect the user to the page ${routes.explore}`, async () => {
+      act(async () => {
+        await logIn(logInData);
+      });
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(routes.explore);
+      });
     });
   });
 
   describe("When called but the fetch fails", () => {
+    const {
+      result: {
+        current: { logIn },
+      },
+    } = renderHook(useUser, { wrapper: Wrapper });
+
     test("Then it should call the dispatch only to open the modal error", async () => {
-      const {
-        result: {
-          current: { logIn },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
+      act(async () => {
+        await logIn({ ...logInData, password: "" });
+      });
 
-      await logIn({ ...logInData, password: "" });
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          setVisibilityActionCreator(true)
+        );
+      });
 
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        setVisibilityActionCreator(true)
-      );
-
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        closeActionCreator({
-          message: `Log in error: ${axiosErrorMessage}`,
-          type: "error",
-        })
-      );
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: `Log in error: ${axiosErrorMessage}`,
+            type: "error",
+          })
+        );
+      });
 
       expect(mockUseDispatch).toHaveBeenCalledTimes(2);
     });
@@ -167,14 +210,14 @@ describe("Given a logIn function returned by a useUser function", () => {
 });
 
 describe("Given a getUserData function returned by a useUser function", () => {
+  const {
+    result: {
+      current: { getUserData },
+    },
+  } = renderHook(useUser, { wrapper: Wrapper });
+
   describe(`When called with a user ID of ${mockUser.id}`, () => {
     test("Then it should return the user with said id", async () => {
-      const {
-        result: {
-          current: { getUserData },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
-
       const result = await getUserData(mockUser.id);
 
       expect(result).toStrictEqual(mockUser);
@@ -184,11 +227,6 @@ describe("Given a getUserData function returned by a useUser function", () => {
   describe("When called with a user id that doesn't exist, like 'falseId'", () => {
     test("Then it should not return a user", async () => {
       const fakeId = "falseId";
-      const {
-        result: {
-          current: { getUserData },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
 
       const result = await getUserData(fakeId);
 
@@ -198,29 +236,35 @@ describe("Given a getUserData function returned by a useUser function", () => {
 });
 
 describe("Given a logOut function returned by a useUser function", () => {
+  const {
+    result: {
+      current: { logOut },
+    },
+  } = renderHook(useUser, { wrapper: Wrapper });
+
   describe(`When called`, () => {
     test("Then it should clear the local storage", () => {
-      const {
-        result: {
-          current: { logOut },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
-
-      logOut();
+      act(() => {
+        logOut();
+      });
 
       expect(mockLocalStorage.clear).toHaveBeenCalled();
     });
 
     test("Then it should dispatch the log out action creator", () => {
-      const {
-        result: {
-          current: { logOut },
-        },
-      } = renderHook(useUser, { wrapper: Wrapper });
-
-      logOut();
+      act(() => {
+        logOut();
+      });
 
       expect(mockUseDispatch).toHaveBeenCalledWith(logOutActionCreator());
+    });
+
+    test("Then it should redirect the user to the log in page", () => {
+      act(() => {
+        logOut();
+      });
+
+      expect(mockNavigate).toHaveBeenCalledWith(routes.logIn);
     });
   });
 });
