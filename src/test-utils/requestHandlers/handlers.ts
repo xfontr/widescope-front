@@ -56,6 +56,15 @@ const handlers = [
       })
     );
   }),
+
+  rest.get(`${apiUrl}/projects/allWithError`, async (req, res, ctx) => {
+    return res(
+      ctx.status(404),
+      ctx.json({
+        projects: [],
+      })
+    );
+  }),
 ];
 
 export default handlers;

@@ -8,7 +8,7 @@ const mockProject: IProject = {
   repository: "#",
   author: "John Doe",
   logo: "#",
-  creationDate: new Date("2022-09-02T08:35:07.126Z"),
+  creationDate: "2022-09-02T08:35:07.126Z",
 };
 
 export default mockProject;

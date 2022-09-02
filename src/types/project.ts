@@ -3,7 +3,7 @@ export interface IProject {
   name: string;
   repository: string;
   technologies: string[];
-  creationDate: Date;
+  creationDate: string;
   author: string;
   description: string;
   logo: string;

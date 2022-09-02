@@ -7,6 +7,7 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
+import { Projects } from "../../types/project";
 import GetAllProjects from "../types/useProjectTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -24,11 +25,7 @@ const useProjects = () => {
         `${apiUrl}${endpoints.getAll}`
       );
 
-      if (typeof projects === "string") {
-        throw new Error("No projects found");
-      }
-
-      dispatch(loadAllActionCreator(projects));
+      dispatch(loadAllActionCreator(projects as Projects));
     } catch (error) {
       dispatch(
         closeActionCreator({
