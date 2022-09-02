@@ -19,7 +19,8 @@ const ExplorePage = (): JSX.Element => {
         These are the <span className="page__title--bold">latest projects</span>
       </h2>
 
-      <Projects projects={allProjects} />
+      {allProjects.length && <Projects projects={allProjects} />}
+      {!allProjects.length && <span>No projects found.</span>}
     </>
   );
 };
