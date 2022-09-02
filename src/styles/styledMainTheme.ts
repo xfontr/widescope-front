@@ -21,8 +21,8 @@ const styledMainTheme = {
   },
 
   spacing: {
-    gapSmall: "1rem",
-    gapBig: "1.5rem",
+    gapSmall: "1.7rem",
+    gapBig: "2.5rem",
 
     paddingSmall: "0.8rem",
     paddingBig: "1.8rem",
@@ -31,7 +31,7 @@ const styledMainTheme = {
   breakpoints: {
     small: "390px",
     big: "700px",
-    large: "1050px",
+    large: "1250px",
   },
 };
 

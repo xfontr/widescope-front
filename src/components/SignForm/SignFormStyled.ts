@@ -60,7 +60,7 @@ export const InputStyled = styled.input`
 
 export const FooterStyled = styled.footer`
   display: flex;
-  gap: ${(props) => props.theme.spacing.gapBig};
+  gap: ${(props) => props.theme.spacing.gapSmall};
 
   & .form__sign-up-cta {
     width: 50%;
