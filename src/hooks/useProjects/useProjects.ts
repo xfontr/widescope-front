@@ -26,6 +26,12 @@ const useProjects = () => {
       );
 
       dispatch(loadAllActionCreator(projects as Projects));
+      dispatch(
+        closeActionCreator({
+          message: `Projects loaded`,
+          type: "success",
+        })
+      );
     } catch (error) {
       dispatch(
         closeActionCreator({

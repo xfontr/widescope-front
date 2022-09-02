@@ -9,7 +9,7 @@ interface ProjectsProps {
 const Projects = ({ projects }: ProjectsProps): JSX.Element => {
   return (
     <ProjectsStyled>
-      <ul className="projects__list">
+      <ul className="projects__list" key="project-list">
         {projects.map((project) => (
           <li className="projects__project">
             <Project project={project} key={project.id} />

@@ -22,7 +22,7 @@ const Project = ({ project }: ProjectProps): JSX.Element => (
 
     <ul className="project__technologies">
       {project.technologies.map((technology) => (
-        <li className="project__technology">
+        <li className="project__technology" key={`${project.id}-technology`}>
           {`${technology.charAt(0).toUpperCase()}${technology.slice(1)}`}
         </li>
       ))}
