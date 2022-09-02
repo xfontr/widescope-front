@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
+import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -26,6 +28,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const useUser = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const getUserData = useCallback(async (id: string): Promise<IUser | void> => {
     try {
@@ -72,6 +75,7 @@ const useUser = () => {
             type: "success",
           })
         );
+        navigate(routes.explore);
       } catch (error) {
         dispatch(
           closeActionCreator({
@@ -81,7 +85,7 @@ const useUser = () => {
         );
       }
     },
-    [dispatch, getUserData]
+    [dispatch, getUserData, navigate]
   );
 
   const signUp = useCallback(
@@ -113,6 +117,8 @@ const useUser = () => {
   const logOut = () => {
     localStorage.clear();
     dispatch(logOutActionCreator());
+
+    navigate(routes.logIn);
   };
 
   return { signUp, logIn, getUserData, logOut };
