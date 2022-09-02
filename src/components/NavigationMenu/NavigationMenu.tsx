@@ -40,26 +40,42 @@ const NavigationMenu = (): JSX.Element => {
           <section className={"navigation navigation--in"}>
             <ul className="navigation__links">
               <li className="navigation__link">
-                <Link to={routes.root} className="navigation__link">
+                <Link
+                  to={routes.root}
+                  className="navigation__link"
+                  onClick={toggleVisiblity}
+                >
                   Home
                 </Link>
               </li>
 
               <li className="navigation__link">
-                <Link to={routes.explore} className="navigation__link">
+                <Link
+                  to={routes.explore}
+                  className="navigation__link"
+                  onClick={toggleVisiblity}
+                >
                   Explore
                 </Link>
               </li>
 
               <li className="navigation__link">
-                <Link to={routes.signUp} className="navigation__link">
+                <Link
+                  to={routes.signUp}
+                  className="navigation__link"
+                  onClick={toggleVisiblity}
+                >
                   Sign up
                 </Link>
               </li>
 
               {!isLogged && (
                 <li className="navigation__link">
-                  <Link to={routes.logIn} className="navigation__link">
+                  <Link
+                    to={routes.logIn}
+                    className="navigation__link"
+                    onClick={toggleVisiblity}
+                  >
                     Log in
                   </Link>
                 </li>
@@ -70,7 +86,10 @@ const NavigationMenu = (): JSX.Element => {
                   <Link
                     to={routes.logIn}
                     className="navigation__link"
-                    onClick={logOut}
+                    onClick={() => {
+                      logOut();
+                      toggleVisiblity();
+                    }}
                   >
                     Log out
                   </Link>

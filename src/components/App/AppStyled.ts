@@ -3,6 +3,7 @@ import styled from "styled-components";
 const AppStyled = styled.div`
   color: ${(props) => props.theme.colors.secondary};
   padding: ${(props) => props.theme.spacing.paddingSmall};
+  padding-bottom: 2.5rem;
 
   max-width: ${(props) => props.theme.breakpoints.small};
   margin: 0 auto;
@@ -24,10 +25,12 @@ const AppStyled = styled.div`
 
   .footer {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: ${(props) => props.theme.spacing.paddingSmall};
+    min-height: 2.5rem;
+
+    &__copyright {
+      display: block;
+      padding-top: 2rem;
+    }
   }
 `;
 

@@ -33,7 +33,9 @@ const App = (): JSX.Element => {
           <Route path={routes.explore} element={<ExplorePage />} />
         </Routes>
       </main>
-      <footer className="footer">wideScope © 2022</footer>
+      <footer className="footer">
+        <span className="footer__copyright">wideScope © 2022</span>
+      </footer>
     </AppStyled>
   );
 };
