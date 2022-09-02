@@ -113,7 +113,7 @@ describe("Given a NavigationMenu component", () => {
 
 describe("Given the links of the NavigationMenu component", () => {
   describe("When clicked the 'home' link", () => {
-    test(`Then it should route the page to ${routes.root}`, async () => {
+    test(`Then it should route the page to ${routes.root} and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -129,18 +129,19 @@ describe("Given the links of the NavigationMenu component", () => {
       } = renderHook(useLocation, { wrapper: Wrapper });
 
       expect(pathname).toBe(routes.root);
+      expect(homeLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Sign up' link", () => {
-    test(`Then it should route the page to '${routes.signUp}'`, async () => {
+    test(`Then it should route the page to '${routes.signUp}' and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
       await userEvent.click(burgerIcon);
 
-      const homeLink = screen.getByRole("link", { name: "Sign up" });
-      await userEvent.click(homeLink);
+      const signUpLink = screen.getByRole("link", { name: "Sign up" });
+      await userEvent.click(signUpLink);
 
       const {
         result: {
@@ -149,18 +150,19 @@ describe("Given the links of the NavigationMenu component", () => {
       } = renderHook(useLocation, { wrapper: Wrapper });
 
       expect(pathname).toBe(routes.signUp);
+      expect(signUpLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Log out' link", () => {
-    test(`Then it should route the page to '${routes.logIn}'`, async () => {
+    test(`Then it should route the page to '${routes.logIn}' and close the menu`, async () => {
       reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
 
       const burgerIcon = screen.getByTestId("burger-icon");
       await userEvent.click(burgerIcon);
 
-      const homeLink = screen.getByRole("link", { name: "Log out" });
-      await userEvent.click(homeLink);
+      const logOutLink = screen.getByRole("link", { name: "Log out" });
+      await userEvent.click(logOutLink);
 
       const {
         result: {
@@ -169,18 +171,19 @@ describe("Given the links of the NavigationMenu component", () => {
       } = renderHook(useLocation, { wrapper: Wrapper });
 
       expect(pathname).toBe(routes.logIn);
+      expect(logOutLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Log in' link", () => {
-    test(`Then it should route the page to '${routes.logIn}'`, async () => {
+    test(`Then it should route the page to '${routes.logIn}' and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
       await userEvent.click(burgerIcon);
 
-      const homeLink = screen.getByRole("link", { name: "Log in" });
-      await userEvent.click(homeLink);
+      const logInLink = screen.getByRole("link", { name: "Log in" });
+      await userEvent.click(logInLink);
 
       const {
         result: {
@@ -189,11 +192,12 @@ describe("Given the links of the NavigationMenu component", () => {
       } = renderHook(useLocation, { wrapper: Wrapper });
 
       expect(pathname).toBe(routes.logIn);
+      expect(logInLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Explore' link", () => {
-    test(`Then it should route the page to '${routes.explore}'`, async () => {
+    test(`Then it should route the page to '${routes.explore}' and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -209,6 +213,7 @@ describe("Given the links of the NavigationMenu component", () => {
       } = renderHook(useLocation, { wrapper: Wrapper });
 
       expect(pathname).toBe(routes.explore);
+      expect(exploreLink).not.toBeInTheDocument();
     });
   });
 });

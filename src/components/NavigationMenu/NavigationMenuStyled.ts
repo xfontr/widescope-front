@@ -46,6 +46,9 @@ const NavigationStyled = styled.nav`
 
   .burger-icon {
     position: relative;
+    height: 36px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
     z-index: 9999;
   }
