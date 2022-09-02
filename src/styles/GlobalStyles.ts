@@ -24,6 +24,19 @@ const GlobalStyles = createGlobalStyle`
     border: none;
     outline: none;
   }
+
+  .page__title{
+    font-size: 2.8rem;
+    font-weight: normal;
+
+    &--bold {
+      font-weight: bold;
+    }
+    
+    @media (min-width: ${styledMainTheme.breakpoints.large}) {
+      max-width: 30%;
+    }
+  }
 `;
 
 export default GlobalStyles;

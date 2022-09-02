@@ -3,8 +3,8 @@ import mockProject from "../../test-utils/mocks/mockProject";
 
 const ExplorePage = (): JSX.Element => (
   <>
-    <h2>
-      These are the <span className={"marked"}>latest projects</span>
+    <h2 className="page__title">
+      These are the <span className="page__title--bold">latest projects</span>
     </h2>
 
     <Projects projects={[mockProject, mockProject]} />
