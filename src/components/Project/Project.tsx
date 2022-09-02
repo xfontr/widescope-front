@@ -30,7 +30,7 @@ const Project = ({ project }: ProjectProps): JSX.Element => (
 
     <p className="project__description">{project.description}</p>
 
-    <Button content="View full project" type="button" />
+    <Button content="View full project" type="button" customStyle="outline" />
   </ProjectStyled>
 );
 

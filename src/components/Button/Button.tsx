@@ -6,9 +6,15 @@ interface ButtonProps {
   content: string;
   action?: () => void;
   type: ButtonTypes;
+  customStyle?: "default" | "outline";
 }
 
-const Button = ({ content, action, type }: ButtonProps): JSX.Element => {
+const Button = ({
+  content,
+  action,
+  type,
+  customStyle = "default",
+}: ButtonProps): JSX.Element => {
   const handleButtonAction = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -22,7 +28,11 @@ const Button = ({ content, action, type }: ButtonProps): JSX.Element => {
   };
 
   return (
-    <ButtonStyled type={type} onClick={(event) => handleButtonAction(event)}>
+    <ButtonStyled
+      type={type}
+      onClick={(event) => handleButtonAction(event)}
+      className={`button--${customStyle}`}
+    >
       {content}
     </ButtonStyled>
   );

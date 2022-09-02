@@ -22,6 +22,19 @@ const ButtonStyled = styled.button`
   &:active {
     transform: scale(0.95);
   }
+
+  &.button--outline {
+    font-weight: normal;
+    background-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.secondary};
+    border: 1px solid ${(props) => props.theme.colors.secondary};
+  }
+
+  &.button--outline:hover {
+    background-color: ${(props) => props.theme.colors.secondary};
+    color: ${(props) => props.theme.colors.primary};
+    border: 1px solid transparent;
+  }
 `;
 
 export default ButtonStyled;
