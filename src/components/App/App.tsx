@@ -7,6 +7,8 @@ import Modal from "../Modal/Modal";
 import { useEffect } from "react";
 import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
+import Project from "../Project/Project";
+import mockProject from "../../test-utils/mocks/mockProject";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -18,8 +20,9 @@ const App = (): JSX.Element => {
   return (
     <AppStyled>
       <Modal />
+      <Project project={mockProject} />
       <header className="header">
-        <h3>wideScope</h3>
+        <h1>wideScope</h1>
         <NavigationMenu />
       </header>
       <main>
