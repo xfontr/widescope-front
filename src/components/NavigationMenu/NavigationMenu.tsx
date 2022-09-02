@@ -37,6 +37,7 @@ const NavigationMenu = (): JSX.Element => {
             className="modal-close-area"
             onClick={toggleVisiblity}
           ></div>
+
           <section className={"navigation navigation--in"}>
             <ul className="navigation__links">
               <li className="navigation__link">
