@@ -3,11 +3,20 @@ import styled from "styled-components";
 const ProjectStyled = styled.article`
   background-color: ${(props) => props.theme.colors.primary};
   border-radius: ${(props) => props.theme.shapes.radiusSmall};
-  padding: ${(props) => props.theme.spacing.paddingSmall};
+  padding: ${(props) => props.theme.spacing.paddingBig};
+
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) => props.theme.spacing.gapBig};
+  font-size: 1.3rem;
 
   h3 {
     margin: 0;
     font-size: 1.7rem;
+  }
+
+  p {
+    margin: 0;
   }
 
   .project__header {

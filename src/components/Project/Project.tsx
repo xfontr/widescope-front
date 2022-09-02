@@ -1,5 +1,6 @@
 import { IProject } from "../../types/project";
 import ProjectStyled from "./ProjectStyled";
+import Button from "./../Button/Button";
 
 interface ProjectProps {
   project: IProject;
@@ -18,6 +19,7 @@ const Project = ({ project }: ProjectProps): JSX.Element => (
         className="project__header-logo"
       />
     </div>
+
     <ul className="project__technologies">
       {project.technologies.map((technology) => (
         <li className="project__technology">
@@ -25,6 +27,10 @@ const Project = ({ project }: ProjectProps): JSX.Element => (
         </li>
       ))}
     </ul>
+
+    <p className="project__description">{project.description}</p>
+
+    <Button content="View full project" type="button" />
   </ProjectStyled>
 );
 
