@@ -42,7 +42,7 @@ describe("Given a getToken function returned from a useToken function", () => {
 
   describe("When called with a valid token in the localStorage", () => {
     test("Then it should log the user in", async () => {
-      act(async () => {
+      await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
@@ -66,9 +66,8 @@ describe("Given a getToken function returned from a useToken function", () => {
     });
 
     test("Then it should dispatch the ui modal actions", async () => {
-      act(async () => {
+      await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
-
         await getToken();
       });
 
@@ -89,7 +88,7 @@ describe("Given a getToken function returned from a useToken function", () => {
     });
 
     test(`Then it should redirect the user to '${routes.home}'`, async () => {
-      act(async () => {
+      await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
@@ -106,7 +105,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       localStorage.clear = jest.fn();
       mockTokenContent = {};
 
-      act(async () => {
+      await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
@@ -124,7 +123,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       localStorage.clear = jest.fn();
       mockTokenContent = {};
 
-      act(async () => {
+      await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
@@ -144,7 +143,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       localStorage.clear = jest.fn();
       mockTokenContent = {};
 
-      act(async () => {
+      await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
         await getToken();
@@ -162,7 +161,7 @@ describe("Given a getToken function returned from a useToken function", () => {
     } = renderHook(useToken, { wrapper: WrapperWithMockStore });
 
     test("Then it should not log the user again", async () => {
-      act(async () => {
+      await act(async () => {
         await getTokenLoggedOut();
       });
 
