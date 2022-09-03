@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import {
   GroupStyled,
   InputStyled,
@@ -20,6 +20,8 @@ const initialState = {
   description: "",
 };
 
+const formData = new FormData();
+
 const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
   const [values, setValues] = useState(initialState);
 
@@ -30,8 +32,20 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
     });
   };
 
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    formData.append("logo", event.target.files![0]);
+
+    handleChange(event);
+  };
+
+  const handleSubmit = (event: SyntheticEvent): void => {
+    event.preventDefault();
+  };
+
   return (
-    <SignFormStyled>
+    <SignFormStyled onSubmit={handleSubmit} data-testid="form">
       <h3 className="form__title">
         {isCreate ? "Tell us about your project" : "Update your project"}
       </h3>
@@ -49,11 +63,11 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
       </GroupStyled>
 
       <GroupStyled>
-        <LabelStyled htmlFor="name">Repository URL</LabelStyled>
+        <LabelStyled htmlFor="repository">Repository URL</LabelStyled>
         <InputStyled
           type="text"
           id="repository"
-          placeholder="John Doe"
+          placeholder="Your Github, etc. repository"
           autoComplete="off"
           value={values.repository}
           onChange={handleChange}
@@ -67,7 +81,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
           id="logo"
           autoComplete="off"
           value={values.logo}
-          onChange={handleChange}
+          onChange={handleFileChange}
         />
       </GroupStyled>
 
