@@ -2,13 +2,20 @@ import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useAppDispatch } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
-import { loadAllActionCreator } from "../../store/slices/projects/projectsSlice";
+import {
+  addProjectActionCreator,
+  loadAllActionCreator,
+} from "../../store/slices/projects/projectsSlice";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
 import { IProject, Projects } from "../../types/project";
-import { GetAllProjects, GetProjectById } from "../types/useProjectTypes";
+import {
+  GetAllProjects,
+  GetProjectById,
+  NewProject,
+} from "../types/useProjectTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -68,7 +75,39 @@ const useProjects = () => {
     [dispatch]
   );
 
-  return { getAll, getById };
+  const create = useCallback(
+    async (project: FormData) => {
+      try {
+        dispatch(setVisibilityActionCreator(true));
+
+        const {
+          data: { projectCreated },
+        }: AxiosResponse<NewProject> = await axios.post(
+          `${apiUrl}${endpoints.createProject}`,
+          project,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+
+        dispatch(addProjectActionCreator(projectCreated));
+        dispatch(
+          closeActionCreator({
+            message: "Project created successfully",
+            type: "success",
+          })
+        );
+      } catch (error) {
+        closeActionCreator({
+          message: `Error while creating the project: ${error}`,
+          type: "error",
+        });
+      }
+    },
+    [dispatch]
+  );
+
+  return { getAll, getById, create };
 };
 
 export default useProjects;
