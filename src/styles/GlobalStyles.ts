@@ -25,6 +25,11 @@ const GlobalStyles = createGlobalStyle`
     outline: none;
   }
 
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
+
   .page__title{
     font-size: 2.8rem;
     font-weight: normal;

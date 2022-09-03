@@ -48,6 +48,10 @@ const ProjectDetailsStyled = styled.article`
       font-weight: bold;
     }
 
+    &__cta-text {
+      display: block;
+    }
+
     &__body {
       margin-top: ${(props) => props.theme.spacing.gapSmall};
 

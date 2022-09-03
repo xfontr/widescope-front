@@ -1,8 +1,7 @@
-import Button from "../Button/Button";
-
 import { IProject } from "../../types/project";
 import ProjectDetailsStyled from "./ProjectDetailsStyled";
-
+import ButtonStyled from "../Button/ButtonStyled";
+import Button from "../Button/Button";
 interface ProjectDetailsProps {
   project: IProject;
 }
@@ -43,6 +42,12 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
           <span className="project__cta-text">
             See it yourself from the repository shared by the author
           </span>
+
+          <Button
+            type="link"
+            content="Take me to the code (free)"
+            link="https://www.google.com/"
+          />
         </div>
       </div>
     </ProjectDetailsStyled>
