@@ -6,7 +6,7 @@ const endpoints = {
   projectsRoot: "/projects",
   getAll: "/projects/all",
   projectById: "/projects/",
-  createProject: "/prokects/new",
+  createProject: "/projects/new",
 };
 
 export default endpoints;

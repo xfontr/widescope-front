@@ -100,13 +100,19 @@ const handlers = [
   ),
 
   rest.post(`${apiUrl}${endpoints.createProject}`, async (req, res, ctx) => {
-    const { name } = await req.json();
-    const status = name === "" ? 400 : 201;
-
     return res(
-      ctx.status(status),
+      ctx.status(201),
       ctx.json<NewProject>({
         projectCreated: mockProject,
+      })
+    );
+  }),
+
+  rest.post(`${apiUrl}/projects/newError`, async (req, res, ctx) => {
+    return res(
+      ctx.status(400),
+      ctx.json({
+        error: "Unable to create a project",
       })
     );
   }),

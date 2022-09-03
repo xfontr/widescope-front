@@ -98,10 +98,12 @@ const useProjects = () => {
           })
         );
       } catch (error) {
-        closeActionCreator({
-          message: `Error while creating the project: ${error}`,
-          type: "error",
-        });
+        dispatch(
+          closeActionCreator({
+            message: `Error while creating the project: ${error}`,
+            type: "error",
+          })
+        );
       }
     },
     [dispatch]
