@@ -5,5 +5,5 @@ export interface GetAllProjects {
 }
 
 export interface GetProjectById {
-  projects: IProject | "No projects found";
+  project: IProject | "No projects found";
 }

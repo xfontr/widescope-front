@@ -1,5 +1,10 @@
 import { rest } from "msw";
 import endpoints from "../../configs/endpoints";
+import {
+  GetAllProjects,
+  GetProjectById,
+} from "../../hooks/types/useProjectTypes";
+import { SignUpResponse, UserToken } from "../../hooks/types/useUserTypes";
 import mockProject from "../mocks/mockProject";
 import mockUser from "../mocks/mockUser";
 
@@ -30,7 +35,7 @@ const handlers = [
 
     return res(
       ctx.status(status),
-      ctx.json({
+      ctx.json<UserToken>({
         user: { token: "#" },
       })
     );
@@ -42,7 +47,7 @@ const handlers = [
 
     return res(
       ctx.status(status),
-      ctx.json({
+      ctx.json<SignUpResponse>({
         newUser: mockUser,
       })
     );
@@ -51,7 +56,7 @@ const handlers = [
   rest.get(`${apiUrl}${endpoints.getAll}`, async (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json({
+      ctx.json<GetAllProjects>({
         projects: [mockProject],
       })
     );
@@ -62,7 +67,7 @@ const handlers = [
     async (req, res, ctx) => {
       return res(
         ctx.status(404),
-        ctx.json({
+        ctx.json<GetAllProjects>({
           projects: [],
         })
       );
@@ -74,8 +79,8 @@ const handlers = [
     async (req, res, ctx) => {
       return res(
         ctx.status(200),
-        ctx.json({
-          projects: mockProject,
+        ctx.json<GetProjectById>({
+          project: mockProject,
         })
       );
     }
@@ -86,8 +91,8 @@ const handlers = [
     async (req, res, ctx) => {
       return res(
         ctx.status(404),
-        ctx.json({
-          projects: "No projects found",
+        ctx.json<GetProjectById>({
+          project: "No projects found",
         })
       );
     }
