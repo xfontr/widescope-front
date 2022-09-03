@@ -60,10 +60,17 @@ export const InputStyled = styled.input`
 
 export const FooterStyled = styled.footer`
   display: flex;
+  align-items: center;
   gap: ${(props) => props.theme.spacing.gapSmall};
 
   & .form__sign-up-cta {
-    width: 50%;
+    display: block;
+    max-width: 12rem;
     color: ${(props) => props.theme.colors.secondaryBrigther};
+    line-height: 1.1rem;
+
+    a {
+      font-weight: bold;
+    }
   }
 `;
