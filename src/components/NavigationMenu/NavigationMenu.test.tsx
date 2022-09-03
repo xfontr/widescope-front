@@ -216,4 +216,27 @@ describe("Given the links of the NavigationMenu component", () => {
       expect(exploreLink).not.toBeInTheDocument();
     });
   });
+
+  describe("When clicked the 'Post a project' button", () => {
+    test(`Then it should route the page to '${routes.createProject}' and close the menu`, async () => {
+      render(<NavigationMenu />);
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const postButton = screen.getByRole("button", {
+        name: "Post a project",
+      });
+      await userEvent.click(postButton);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(routes.createProject);
+      expect(postButton).not.toBeInTheDocument();
+    });
+  });
 });

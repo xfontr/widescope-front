@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import routes from "../../configs/routes";
@@ -11,6 +11,7 @@ const NavigationMenu = (): JSX.Element => {
   const [isMenuVisible, setVisibility] = useState(false);
   const { logOut } = useUser();
   const isLogged = useAppSelector((state: RootState) => state.user.isLogged);
+  const navigate = useNavigate();
 
   const toggleVisiblity = () => {
     setVisibility(!isMenuVisible);
@@ -98,7 +99,14 @@ const NavigationMenu = (): JSX.Element => {
               )}
             </ul>
 
-            <Button type="button" content="Post a project" />
+            <Button
+              type="button"
+              content="Post a project"
+              action={() => {
+                navigate(routes.createProject);
+                toggleVisiblity();
+              }}
+            />
           </section>
         </div>
       )}
