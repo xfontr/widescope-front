@@ -7,15 +7,15 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
-import { Projects } from "../../types/project";
-import GetAllProjects from "../types/useProjectTypes";
+import { IProject, Projects } from "../../types/project";
+import { GetAllProjects, GetProjectById } from "../types/useProjectTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const useProjects = () => {
   const dispatch = useAppDispatch();
 
-  const getAll = useCallback(async () => {
+  const getAll = useCallback(async (): Promise<void> => {
     try {
       dispatch(setVisibilityActionCreator(true));
 
@@ -42,7 +42,33 @@ const useProjects = () => {
     }
   }, [dispatch]);
 
-  return { getAll };
+  const getById = useCallback(
+    async (projectId: string): Promise<IProject | void> => {
+      try {
+        dispatch(setVisibilityActionCreator(true));
+
+        const {
+          data: { projects },
+        }: AxiosResponse<GetProjectById> = await axios.get(
+          `${apiUrl}${endpoints.projectById}${projectId}`
+        );
+
+        dispatch(setVisibilityActionCreator(false));
+
+        return projects as IProject;
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: `Error while loading projects: ${error}`,
+            type: "error",
+          })
+        );
+      }
+    },
+    [dispatch]
+  );
+
+  return { getAll, getById };
 };
 
 export default useProjects;
