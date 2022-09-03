@@ -4,6 +4,7 @@ import {
   LabelStyled,
   SignFormStyled,
 } from "../../styles/FormStyled";
+import Button from "../Button/Button";
 
 interface ProjectFormProps {
   isCreate: boolean;
@@ -41,7 +42,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => (
     </GroupStyled>
 
     <GroupStyled>
-      <LabelStyled htmlFor="technology-front">
+      <LabelStyled htmlFor="technologyFront">
         Frontend main library or framework
       </LabelStyled>
       <InputStyled
@@ -53,7 +54,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => (
     </GroupStyled>
 
     <GroupStyled>
-      <LabelStyled htmlFor="technology-back">
+      <LabelStyled htmlFor="technologyBack">
         Backend main library or framework
       </LabelStyled>
       <InputStyled
@@ -73,6 +74,11 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => (
         autoComplete="off"
       />
     </GroupStyled>
+
+    <Button
+      content={isCreate ? "Create project" : "Update project"}
+      type="submit"
+    />
   </SignFormStyled>
 );
 
