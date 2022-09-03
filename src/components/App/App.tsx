@@ -9,6 +9,7 @@ import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
+import ProjectForm from "../ProjectForm/ProjectForm";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -19,6 +20,7 @@ const App = (): JSX.Element => {
 
   return (
     <AppStyled>
+      <ProjectForm isCreate={true} />
       <Modal />
       <header className="header">
         <h1>wideScope</h1>
