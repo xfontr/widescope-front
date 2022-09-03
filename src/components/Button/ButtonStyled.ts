@@ -7,6 +7,7 @@ const ButtonStyled = styled.button`
   color: ${(props) => props.theme.colors.primary};
   border: 1px solid transparent;
   width: fit-content;
+  display: inline-block;
 
   font-weight: bold;
   cursor: pointer;

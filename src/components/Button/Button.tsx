@@ -1,12 +1,14 @@
 import ButtonStyled from "./ButtonStyled";
 
-type ButtonTypes = "submit" | "button";
+type ButtonTypes = "submit" | "button" | "link";
+type ButtonStyles = "default" | "outline";
 
 interface ButtonProps {
   content: string;
   action?: () => void;
   type: ButtonTypes;
-  customStyle?: "default" | "outline";
+  customStyle?: ButtonStyles;
+  link?: string;
 }
 
 const Button = ({
@@ -14,6 +16,7 @@ const Button = ({
   action,
   type,
   customStyle = "default",
+  link,
 }: ButtonProps): JSX.Element => {
   const handleButtonAction = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -28,13 +31,28 @@ const Button = ({
   };
 
   return (
-    <ButtonStyled
-      type={type}
-      onClick={(event) => handleButtonAction(event)}
-      className={`button--${customStyle}`}
-    >
-      {content}
-    </ButtonStyled>
+    <>
+      {type !== "link" && (
+        <ButtonStyled
+          type={type}
+          onClick={(event) => handleButtonAction(event)}
+          className={`button--${customStyle}`}
+        >
+          {content}
+        </ButtonStyled>
+      )}
+      {type === "link" && (
+        <ButtonStyled
+          as={"a"}
+          className={`button--${customStyle}`}
+          href={link}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {content}
+        </ButtonStyled>
+      )}
+    </>
   );
 };
 
