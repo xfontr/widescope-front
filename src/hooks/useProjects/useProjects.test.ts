@@ -2,7 +2,10 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import endpoints from "../../configs/endpoints";
 import { loadAllActionCreator } from "../../store/slices/projects/projectsSlice";
-import { closeActionCreator } from "../../store/slices/uiModal/uiModalSlice";
+import {
+  closeActionCreator,
+  setVisibilityActionCreator,
+} from "../../store/slices/uiModal/uiModalSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import { Wrapper } from "../../test-utils/render/Wrapper";
@@ -60,8 +63,19 @@ describe("Given a getById function returned by a useProjects function", () => {
     },
   } = renderHook(useProjects, { wrapper: Wrapper });
 
+  describe("When called", () => {
+    test("Then it should open the ui modal for loading", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getById(mockProject.id);
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+    });
+  });
+
   describe("When called with an actual project id as an argument", () => {
-    test("Then it should return a project", async () => {
+    test("Then it should return a project and close the modal loading", async () => {
       // eslint-disable-next-line testing-library/no-await-sync-query
       const project = await getById(mockProject.id);
 
@@ -83,7 +97,8 @@ describe("Given a getById function returned by a useProjects function", () => {
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         closeActionCreator({
-          message: `Error while loading projects: `,
+          message:
+            "Error while loading projects: AxiosError: Request failed with status code 404",
           type: "error",
         })
       );
