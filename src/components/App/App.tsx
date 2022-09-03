@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
+import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -31,6 +32,10 @@ const App = (): JSX.Element => {
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.explore} element={<ExplorePage />} />
+          <Route
+            path={routes.projectDetails}
+            element={<ProjectDetailsPage />}
+          />
         </Routes>
       </main>
       <footer className="footer">
