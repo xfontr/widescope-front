@@ -1,7 +1,15 @@
-import { createEvent, fireEvent, screen } from "@testing-library/react";
+import {
+  createEvent,
+  fireEvent,
+  renderHook,
+  screen,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useLocation } from "react-router-dom";
+import routes from "../../configs/routes";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { render } from "../../test-utils/render/customRender";
+import { Wrapper } from "../../test-utils/render/Wrapper";
 import SignForm from "./SignForm";
 
 const mockSignUp = jest.fn();
@@ -21,6 +29,8 @@ describe("Given a SignForm component", () => {
         screen.getByLabelText("Name"),
         screen.getByLabelText("Password"),
         screen.getByRole("button", { name: "Log in" }),
+        screen.getByText("Don't have an account?"),
+        screen.getByRole("link", { name: "Sign up for free" }),
       ];
 
       const hiddenForm = [
@@ -293,6 +303,23 @@ describe("Given a SignForm component", () => {
       await userEvent.click(submitButton);
 
       expect(mockLogIn).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("When instantiated as a log in form and clicked 'Sign up for free'", () => {
+    test(`Then it should redirect the user to ${routes.signUp}`, async () => {
+      render(<SignForm isLogin={true} />);
+
+      const logOutLink = screen.getByRole("link", { name: "Sign up for free" });
+      await userEvent.click(logOutLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation, { wrapper: Wrapper });
+
+      expect(pathname).toBe(routes.signUp);
     });
   });
 });
