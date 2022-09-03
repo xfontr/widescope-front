@@ -1,4 +1,9 @@
-import { render, screen } from "../../test-utils/render/customRender";
+import mockProject from "../../test-utils/mocks/mockProject";
+import {
+  fireEvent,
+  render,
+  screen,
+} from "../../test-utils/render/customRender";
 import ProjectForm from "./ProjectForm";
 
 describe("Given a ProjectForm component", () => {
@@ -37,6 +42,31 @@ describe("Given a ProjectForm component", () => {
       ];
 
       form.forEach((element) => expect(element).toBeInTheDocument());
+    });
+  });
+
+  describe("When instantiated as any sort of form", () => {
+    test("Then the user should be able to type values to the input fields", () => {
+      const typedText = mockProject.name;
+      render(<ProjectForm isCreate={true} />);
+
+      const form = [
+        screen.getByLabelText("Name") as HTMLInputElement,
+        screen.getByLabelText("Repository URL") as HTMLInputElement,
+        screen.getByLabelText(
+          "Frontend main library or framework"
+        ) as HTMLInputElement,
+        screen.getByLabelText(
+          "Backend main library or framework"
+        ) as HTMLInputElement,
+        screen.getByLabelText("Description") as HTMLInputElement,
+      ];
+
+      form.forEach((element) => {
+        fireEvent.change(element, { target: { value: typedText } });
+      });
+
+      form.forEach((element) => expect(element.value).toBe(typedText));
     });
   });
 });
