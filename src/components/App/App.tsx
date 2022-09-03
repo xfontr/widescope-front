@@ -10,6 +10,7 @@ import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
 import ProjectForm from "../ProjectForm/ProjectForm";
+import CreateProjectPage from "../../pages/CreateProjectPage/CreateProjectPage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -34,6 +35,7 @@ const App = (): JSX.Element => {
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.explore} element={<ExplorePage />} />
+          <Route path={routes.createProject} element={<CreateProjectPage />} />
           <Route
             path={routes.projectDetails}
             element={<ProjectDetailsPage />}
