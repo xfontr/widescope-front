@@ -3,6 +3,7 @@ import endpoints from "../../configs/endpoints";
 import {
   GetAllProjects,
   GetProjectById,
+  NewProject,
 } from "../../hooks/types/useProjectTypes";
 import { SignUpResponse, UserToken } from "../../hooks/types/useUserTypes";
 import mockProject from "../mocks/mockProject";
@@ -97,6 +98,18 @@ const handlers = [
       );
     }
   ),
+
+  rest.post(`${apiUrl}${endpoints.createProject}`, async (req, res, ctx) => {
+    const { name } = await req.json();
+    const status = name === "" ? 400 : 201;
+
+    return res(
+      ctx.status(status),
+      ctx.json<NewProject>({
+        projectCreated: mockProject,
+      })
+    );
+  }),
 ];
 
 export default handlers;
