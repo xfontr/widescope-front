@@ -9,7 +9,6 @@ import {
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import { Wrapper } from "../../test-utils/render/Wrapper";
-import { IProject } from "../../types/project";
 import useProjects from "./useProjects";
 
 describe("Given a getAll function returned by a useProjects function", () => {
