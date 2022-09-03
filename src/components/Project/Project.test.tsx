@@ -46,6 +46,7 @@ describe("Given a Project component", () => {
       });
 
       await userEvent.click(viewDetailsButton);
+
       expect(mockNavigate).toHaveBeenCalledWith(`/project/${mockProject.id}`);
     });
   });
