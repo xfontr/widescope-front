@@ -55,7 +55,7 @@ describe("Given a signUp function returned by a useUser function", () => {
 
       let result: boolean = false;
 
-      act(async () => {
+      await act(async () => {
         result = await signUp(signUpData);
       });
 
@@ -77,7 +77,7 @@ describe("Given a signUp function returned by a useUser function", () => {
     test("Then it should return false and call the modal dispatch with error", async () => {
       let result: boolean = false;
 
-      act(async () => {
+      await act(async () => {
         result = await signUp({ ...signUpData, password: "" });
       });
 
@@ -115,7 +115,7 @@ describe("Given a logIn function returned by a useUser function", () => {
     } = renderHook(useUser, { wrapper: Wrapper });
 
     test("Then it should call the dispatch to mark the user as logged in and to log it in", async () => {
-      act(async () => {
+      await act(async () => {
         await logIn(logInData);
       });
 
@@ -134,7 +134,7 @@ describe("Given a logIn function returned by a useUser function", () => {
     });
 
     test("Then it should also call the modal dispatch to show a success message", async () => {
-      act(async () => {
+      await act(async () => {
         await logIn(logInData);
       });
 
@@ -157,7 +157,7 @@ describe("Given a logIn function returned by a useUser function", () => {
     test("Then it should set the received token at the local storage", async () => {
       const token = "#";
 
-      act(async () => {
+      await act(async () => {
         await logIn(logInData);
       });
 
@@ -167,7 +167,7 @@ describe("Given a logIn function returned by a useUser function", () => {
     });
 
     test(`Then it should redirect the user to the page ${routes.explore}`, async () => {
-      act(async () => {
+      await act(async () => {
         await logIn(logInData);
       });
 
@@ -185,7 +185,7 @@ describe("Given a logIn function returned by a useUser function", () => {
     } = renderHook(useUser, { wrapper: Wrapper });
 
     test("Then it should call the dispatch only to open the modal error", async () => {
-      act(async () => {
+      await act(async () => {
         await logIn({ ...logInData, password: "" });
       });
 

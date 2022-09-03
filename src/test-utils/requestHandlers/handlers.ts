@@ -85,9 +85,9 @@ const handlers = [
     `${apiUrl}${endpoints.projectsRoot}/falseId`,
     async (req, res, ctx) => {
       return res(
-        ctx.status(200),
+        ctx.status(404),
         ctx.json({
-          projects: mockProject,
+          projects: "No projects found",
         })
       );
     }
