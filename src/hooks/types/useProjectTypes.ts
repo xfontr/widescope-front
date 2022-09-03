@@ -7,3 +7,7 @@ export interface GetAllProjects {
 export interface GetProjectById {
   project: IProject | "No projects found";
 }
+
+export interface NewProject {
+  projectCreated: IProject;
+}
