@@ -12,7 +12,7 @@ import {
   InputStyled,
   LabelStyled,
   SignFormStyled,
-} from "./SignFormStyled";
+} from "../../styles/FormStyled";
 
 interface SignFormProps {
   isLogin: boolean;
