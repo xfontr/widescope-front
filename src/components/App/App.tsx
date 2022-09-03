@@ -20,8 +20,8 @@ const App = (): JSX.Element => {
 
   return (
     <AppStyled>
-      <ProjectForm isCreate={true} />
       <Modal />
+      <ProjectForm isCreate={true} />
       <header className="header">
         <h1>wideScope</h1>
         <NavigationMenu />

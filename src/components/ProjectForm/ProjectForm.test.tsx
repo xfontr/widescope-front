@@ -1,5 +1,20 @@
-import { render, screen } from "../../test-utils/render/customRender";
+import userEvent from "@testing-library/user-event";
+import mockProject from "../../test-utils/mocks/mockProject";
+import {
+  createEvent,
+  fireEvent,
+  render,
+  screen,
+} from "../../test-utils/render/customRender";
 import ProjectForm from "./ProjectForm";
+
+const mockAppend = jest.fn();
+
+const mockFile = new File([""], "");
+
+global.FormData = jest.fn().mockReturnValue({
+  append: () => mockAppend,
+});
 
 describe("Given a ProjectForm component", () => {
   describe("When instantiated as a create form", () => {
@@ -37,6 +52,53 @@ describe("Given a ProjectForm component", () => {
       ];
 
       form.forEach((element) => expect(element).toBeInTheDocument());
+    });
+  });
+
+  describe("When instantiated as any sort of form", () => {
+    test("Then the user should be able to type values to the input fields", () => {
+      const typedText = mockProject.name;
+      render(<ProjectForm isCreate={true} />);
+
+      const form = [
+        screen.getByLabelText("Name") as HTMLInputElement,
+        screen.getByLabelText("Repository URL") as HTMLInputElement,
+        screen.getByLabelText(
+          "Frontend main library or framework"
+        ) as HTMLInputElement,
+        screen.getByLabelText(
+          "Backend main library or framework"
+        ) as HTMLInputElement,
+        screen.getByLabelText("Description") as HTMLInputElement,
+      ];
+
+      form.forEach((element) => {
+        fireEvent.change(element, { target: { value: typedText } });
+      });
+
+      form.forEach((element) => expect(element.value).toBe(typedText));
+    });
+
+    test("Then if the user sets a file, it should be appended to the form data", async () => {
+      render(<ProjectForm isCreate={true} />);
+
+      const inputFile = screen.getByLabelText(
+        "Project logo"
+      ) as HTMLInputElement;
+      await userEvent.upload(inputFile, mockFile);
+
+      expect(inputFile.value).toBe("C:\\fakepath\\");
+    });
+
+    test("If the user submits, the default action of submit should be prevented", () => {
+      render(<ProjectForm isCreate={true} />);
+
+      const form = screen.getByTestId("form");
+      const submitEvent = createEvent.submit(form);
+
+      fireEvent(form, submitEvent);
+
+      expect(submitEvent.defaultPrevented).toBe(true);
     });
   });
 });
