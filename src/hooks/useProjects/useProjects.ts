@@ -48,14 +48,14 @@ const useProjects = () => {
         dispatch(setVisibilityActionCreator(true));
 
         const {
-          data: { projects },
+          data: { project },
         }: AxiosResponse<GetProjectById> = await axios.get(
           `${apiUrl}${endpoints.projectById}${projectId}`
         );
 
         dispatch(setVisibilityActionCreator(false));
 
-        return projects as IProject;
+        return project as IProject;
       } catch (error) {
         dispatch(
           closeActionCreator({
