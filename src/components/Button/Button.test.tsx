@@ -52,4 +52,20 @@ describe("Given a Button component", () => {
       expect(clickEvent.defaultPrevented).toBe(false);
     });
   });
+
+  describe("When instantiated as a link", () => {
+    test("Then it should render as link instead of a button", () => {
+      render(
+        <Button
+          content={buttonText}
+          type="link"
+          link="https://www.google.com"
+        />
+      );
+
+      const buttonLink = screen.getByRole("link", { name: buttonText });
+
+      expect(buttonLink).toBeInTheDocument();
+    });
+  });
 });

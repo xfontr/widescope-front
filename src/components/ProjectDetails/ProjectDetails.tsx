@@ -1,6 +1,5 @@
 import { IProject } from "../../types/project";
 import ProjectDetailsStyled from "./ProjectDetailsStyled";
-import ButtonStyled from "../Button/ButtonStyled";
 import Button from "../Button/Button";
 interface ProjectDetailsProps {
   project: IProject;
