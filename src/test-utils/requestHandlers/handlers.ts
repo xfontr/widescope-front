@@ -57,14 +57,41 @@ const handlers = [
     );
   }),
 
-  rest.get(`${apiUrl}/projects/allWithError`, async (req, res, ctx) => {
-    return res(
-      ctx.status(404),
-      ctx.json({
-        projects: [],
-      })
-    );
-  }),
+  rest.get(
+    `${apiUrl}${endpoints.projectsRoot}/allWithError`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          projects: [],
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${apiUrl}${endpoints.projectById}${mockProject.id}`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          projects: mockProject,
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${apiUrl}${endpoints.projectsRoot}/falseId`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          projects: mockProject,
+        })
+      );
+    }
+  ),
 ];
 
 export default handlers;
