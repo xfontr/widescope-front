@@ -42,6 +42,12 @@ const GlobalStyles = createGlobalStyle`
       max-width: 30%;
     }
   }
+
+  .page-container {
+    background-color: ${styledMainTheme.colors.primary};
+    border-radius: ${styledMainTheme.shapes.radiusSmall};
+    padding: ${styledMainTheme.spacing.paddingBig};
+  }
 `;
 
 export default GlobalStyles;

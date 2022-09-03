@@ -22,7 +22,11 @@ const ProjectDetailsPage = (): JSX.Element => {
 
   return (
     <>
-      {!currentProject && <>Project not found.</>}
+      {!currentProject && (
+        <div className="page-container">
+          <span>Project not found.</span>
+        </div>
+      )}
       {currentProject && <ProjectDetails project={currentProject} />}
     </>
   );
