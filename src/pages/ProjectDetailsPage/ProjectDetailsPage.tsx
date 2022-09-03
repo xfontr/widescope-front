@@ -14,9 +14,7 @@ const ProjectDetailsPage = (): JSX.Element => {
       try {
         const retreivedProject = await getById(projectId as string);
         setProject(retreivedProject as IProject);
-      } catch (error) {
-        setProject(false);
-      }
+      } catch (error) {}
     })();
   }, [getById, projectId, setProject]);
 
