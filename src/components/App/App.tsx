@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
+import ProjectDetails from "../ProjectDetails/ProjectDetails";
+import mockProject from "../../test-utils/mocks/mockProject";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -19,6 +21,7 @@ const App = (): JSX.Element => {
   return (
     <AppStyled>
       <Modal />
+      <ProjectDetails project={mockProject} />
       <header className="header">
         <h1>wideScope</h1>
         <NavigationMenu />

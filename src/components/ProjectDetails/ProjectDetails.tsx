@@ -1,6 +1,7 @@
 import Button from "../Button/Button";
 
 import { IProject } from "../../types/project";
+import ProjectDetailsStyled from "./ProjectDetailsStyled";
 
 interface ProjectDetailsProps {
   project: IProject;
@@ -8,10 +9,10 @@ interface ProjectDetailsProps {
 
 const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
   return (
-    <article>
+    <ProjectDetailsStyled>
       <div className="project__title-section">
         <h2 className="project__title">{project.name}</h2>
-        <h2 className="project__author">{project.author}</h2>
+        <span className="project__author">developed by {project.author}</span>
       </div>
 
       <img src={project.logo} alt={`${project.name} logo`} />
@@ -44,7 +45,7 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
           </span>
         </div>
       </div>
-    </article>
+    </ProjectDetailsStyled>
   );
 };
 
