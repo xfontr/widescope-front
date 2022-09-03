@@ -1,7 +1,9 @@
-import { Projects } from "../../types/project";
+import { IProject, Projects } from "../../types/project";
 
-interface GetAllProjects {
+export interface GetAllProjects {
   projects: Projects | "No projects found";
 }
 
-export default GetAllProjects;
+export interface GetProjectById {
+  projects: IProject | "No projects found";
+}
