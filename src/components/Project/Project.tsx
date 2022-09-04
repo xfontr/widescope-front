@@ -21,13 +21,19 @@ const Project = ({ project }: ProjectProps): JSX.Element => {
         <img
           src={`${apiUrl}/uploads/${project.logo.slice(8)}`}
           alt={`${project.name} logo`}
+          width="60"
+          height="60"
           className="project__header-logo"
+          loading="lazy"
         />
       </div>
 
       <ul className="project__technologies">
-        {project.technologies.map((technology) => (
-          <li className="project__technology" key={`${project.id}-technology`}>
+        {project.technologies.map((technology, index) => (
+          <li
+            className="project__technology"
+            key={`${project.id}-technology-${index}`}
+          >
             {`${technology.charAt(0).toUpperCase()}${technology.slice(1)}`}
           </li>
         ))}

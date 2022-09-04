@@ -23,11 +23,27 @@ const ProjectDetailsStyled = styled.article`
 
   .project {
     &__title {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-weight: normal;
+
+      &-section {
+        margin-bottom: ${(props) => props.theme.spacing.paddingBig};
+      }
+    }
+
+    &__header-logo {
+      object-fit: contain;
+      height: 200px;
+      width: auto;
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+        height: 250px;
+        width: auto;
+      }
     }
 
     &__author {
+      font-size: 1.2rem;
       color: ${(props) => props.theme.colors.secondaryBrigther};
     }
 
@@ -50,6 +66,7 @@ const ProjectDetailsStyled = styled.article`
 
     &__cta-text {
       display: block;
+      margin-bottom: ${(props) => props.theme.spacing.gapSmall};
     }
 
     &__body {
