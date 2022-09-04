@@ -8,13 +8,14 @@ import {
 } from "../../test-utils/render/customRender";
 import ProjectForm from "./ProjectForm";
 
-const mockAppend = jest.fn();
-
 const mockFile = new File([""], "");
 
-global.FormData = jest.fn().mockReturnValue({
-  append: () => mockAppend,
-});
+const mockCreate = jest.fn();
+
+jest.mock("../../hooks/useProjects/useProjects", () => () => ({
+  ...jest.requireActual("../../hooks/useProjects/useProjects"),
+  create: mockCreate,
+}));
 
 describe("Given a ProjectForm component", () => {
   describe("When instantiated as a create form", () => {
@@ -56,7 +57,7 @@ describe("Given a ProjectForm component", () => {
   });
 
   describe("When instantiated as any sort of form", () => {
-    test("Then the user should be able to type values to the input fields", () => {
+    test("Then the user should be able to type values to the input fields", async () => {
       const typedText = mockProject.name;
       render(<ProjectForm isCreate={true} />);
 
@@ -99,6 +100,42 @@ describe("Given a ProjectForm component", () => {
       fireEvent(form, submitEvent);
 
       expect(submitEvent.defaultPrevented).toBe(true);
+    });
+  });
+
+  describe("When submitted as a create form", () => {
+    test("Then it should call the create function with the form data", async () => {
+      render(<ProjectForm isCreate={true} />);
+      const typedText = mockProject.name;
+
+      const form = [
+        screen.getByLabelText("Name") as HTMLInputElement,
+        screen.getByLabelText("Repository URL") as HTMLInputElement,
+        screen.getByLabelText(
+          "Frontend main library or framework"
+        ) as HTMLInputElement,
+        screen.getByLabelText(
+          "Backend main library or framework"
+        ) as HTMLInputElement,
+        screen.getByLabelText("Description") as HTMLInputElement,
+      ];
+
+      form.forEach((element) => {
+        fireEvent.change(element, { target: { value: typedText } });
+      });
+
+      const inputFile = screen.getByLabelText(
+        "Project logo"
+      ) as HTMLInputElement;
+      await userEvent.upload(inputFile, mockFile);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Create project",
+      });
+
+      await userEvent.click(submitButton);
+
+      expect(mockCreate).toHaveBeenCalled();
     });
   });
 });

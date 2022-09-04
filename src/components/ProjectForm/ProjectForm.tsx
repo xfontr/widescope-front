@@ -1,10 +1,14 @@
 import { SyntheticEvent, useState } from "react";
+import { useAppSelector } from "../../app/hooks";
+import { RootState } from "../../app/store";
+import useProjects from "../../hooks/useProjects/useProjects";
 import {
   GroupStyled,
   InputStyled,
   LabelStyled,
   SignFormStyled,
 } from "../../styles/FormStyled";
+import { IProject } from "../../types/project";
 import Button from "../Button/Button";
 
 interface ProjectFormProps {
@@ -24,6 +28,8 @@ const formData = new FormData();
 
 const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
   const [values, setValues] = useState(initialState);
+  const { create } = useProjects();
+  const username = useAppSelector((state: RootState) => state.user.user.name);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
@@ -40,8 +46,20 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
     handleChange(event);
   };
 
-  const handleSubmit = (event: SyntheticEvent): void => {
+  const curateData = (): Partial<IProject> => ({
+    author: username,
+    name: values.name,
+    repository: values.repository,
+    technologies: [values.technologyBack, values.technologyFront],
+    description: values.description,
+  });
+
+  const handleSubmit = async (event: SyntheticEvent): Promise<void> => {
     event.preventDefault();
+
+    formData.append("project", JSON.stringify(curateData()));
+
+    await create(formData);
   };
 
   return (
@@ -79,6 +97,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
         <InputStyled
           type="file"
           id="logo"
+          name="logo"
           autoComplete="off"
           value={values.logo}
           onChange={handleFileChange}
