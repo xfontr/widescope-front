@@ -66,6 +66,19 @@ describe("Given a NavigationMenu component", () => {
       expect(logOutLink).toBeInTheDocument();
     });
 
+    test("If the user is not logged, the post a project button should not appear", async () => {
+      render(<NavigationMenu />);
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const postProject = screen.queryByRole("button", {
+        name: "Post a project",
+      });
+
+      expect(postProject).not.toBeInTheDocument();
+    });
+
     test("Then it should hide all the elements if the burger-icon is clicked again", async () => {
       render(<NavigationMenu />);
 
@@ -219,7 +232,7 @@ describe("Given the links of the NavigationMenu component", () => {
 
   describe("When clicked the 'Post a project' button", () => {
     test(`Then it should route the page to '${routes.createProject}' and close the menu`, async () => {
-      render(<NavigationMenu />);
+      reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
 
       const burgerIcon = screen.getByTestId("burger-icon");
       await userEvent.click(burgerIcon);

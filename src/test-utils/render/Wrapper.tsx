@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
@@ -6,11 +7,7 @@ import GlobalStyles from "../../styles/GlobalStyles";
 import styledMainTheme from "../../styles/styledMainTheme";
 import mockStore from "../mocks/mockStore";
 
-interface WrapperProps {
-  children: JSX.Element | JSX.Element[];
-}
-
-const Wrapper = ({ children }: WrapperProps): JSX.Element => {
+const Wrapper = ({ children }: PropsWithChildren): JSX.Element => {
   return (
     <ThemeProvider theme={styledMainTheme}>
       <Provider store={store}>
@@ -23,7 +20,7 @@ const Wrapper = ({ children }: WrapperProps): JSX.Element => {
   );
 };
 
-const WrapperWithMockStore = ({ children }: WrapperProps): JSX.Element => {
+const WrapperWithMockStore = ({ children }: PropsWithChildren): JSX.Element => {
   return (
     <ThemeProvider theme={styledMainTheme}>
       <Provider store={mockStore}>
