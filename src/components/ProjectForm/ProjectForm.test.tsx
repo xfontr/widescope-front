@@ -8,7 +8,7 @@ import {
 } from "../../test-utils/render/customRender";
 import ProjectForm from "./ProjectForm";
 
-const mockFile = new File([""], "");
+const mockFile = new File([""], mockProject.logo);
 
 const mockCreate = jest.fn();
 
@@ -88,7 +88,7 @@ describe("Given a ProjectForm component", () => {
       ) as HTMLInputElement;
       await userEvent.upload(inputFile, mockFile);
 
-      expect(inputFile.value).toBe("C:\\fakepath\\");
+      expect(inputFile.value).toBe(`C:\\fakepath\\${mockProject.logo}`);
     });
 
     test("If the user submits, the default action of submit should be prevented", () => {
@@ -101,6 +101,23 @@ describe("Given a ProjectForm component", () => {
 
       expect(submitEvent.defaultPrevented).toBe(true);
     });
+
+    test("If the user submits but there are fields with invalid values, the fields styles should change", async () => {
+      render(<ProjectForm isCreate={true} />);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Create project",
+      });
+
+      await userEvent.click(submitButton);
+
+      const form = screen.getAllByRole("textbox");
+
+      form.forEach((element) => {
+        expect(element).toHaveStyle("border-color: rgb(179,120,120)");
+        expect(element).toHaveStyle("border-width: 2px");
+      });
+    });
   });
 
   describe("When submitted as a create form", () => {
@@ -108,21 +125,13 @@ describe("Given a ProjectForm component", () => {
       render(<ProjectForm isCreate={true} />);
       const typedText = mockProject.name;
 
-      const form = [
-        screen.getByLabelText("Name") as HTMLInputElement,
-        screen.getByLabelText("Repository URL") as HTMLInputElement,
-        screen.getByLabelText(
-          "Frontend main library or framework"
-        ) as HTMLInputElement,
-        screen.getByLabelText(
-          "Backend main library or framework"
-        ) as HTMLInputElement,
-        screen.getByLabelText("Description") as HTMLInputElement,
-      ];
+      const form = screen.getAllByRole("textbox");
 
-      form.forEach((element) => {
-        fireEvent.change(element, { target: { value: typedText } });
-      });
+      await form.reduce(async (previousPromise, element) => {
+        await previousPromise;
+        await userEvent.type(element, typedText);
+        return Promise.resolve();
+      }, Promise.resolve());
 
       const inputFile = screen.getByLabelText(
         "Project logo"
@@ -136,6 +145,18 @@ describe("Given a ProjectForm component", () => {
       await userEvent.click(submitButton);
 
       expect(mockCreate).toHaveBeenCalled();
+    });
+
+    test("Then it should not call the create function if there's an empty required field", async () => {
+      render(<ProjectForm isCreate={true} />);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Create project",
+      });
+
+      await userEvent.click(submitButton);
+
+      expect(mockCreate).not.toHaveBeenCalled();
     });
   });
 });

@@ -2,6 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import useProjects from "../../hooks/useProjects/useProjects";
+import projectSchema from "../../schemas/projectSchema";
 import {
   GroupStyled,
   InputStyled,
@@ -30,12 +31,31 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
   const [values, setValues] = useState(initialState);
   const { create } = useProjects();
   const username = useAppSelector((state: RootState) => state.user.user.name);
+  const [errors, setErrors] = useState([] as string[]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
       ...values,
       [event.target.id]: event.target.value,
     });
+  };
+
+  const validateValues = (): boolean => {
+    const validation = projectSchema.validate(values, { abortEarly: false });
+    debugger;
+    if (validation.error) {
+      debugger;
+      const errors = validation.error.details.map(
+        (failedInput) => failedInput.path[0]
+      );
+      debugger;
+      setErrors(errors as string[]);
+      debugger;
+      return false;
+    } else {
+      debugger;
+      return true;
+    }
   };
 
   const handleFileChange = (
@@ -57,11 +77,19 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
   const handleSubmit = async (event: SyntheticEvent): Promise<void> => {
     event.preventDefault();
 
+    if (!validateValues()) {
+      return;
+    }
+
     formData.append("project", JSON.stringify(curateData()));
 
     await create(formData);
+
     formData.delete("logo");
     formData.delete("project");
+
+    setValues(initialState);
+    setErrors([]);
   };
 
   return (
@@ -73,6 +101,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="name">Name</LabelStyled>
         <InputStyled
+          className={errors.includes("name") ? "form__input--error" : ""}
           type="text"
           id="name"
           placeholder="John Doe"
@@ -85,6 +114,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="repository">Repository URL</LabelStyled>
         <InputStyled
+          className={errors.includes("repository") ? "form__input--error" : ""}
           type="text"
           id="repository"
           placeholder="Your Github, etc. repository"
@@ -97,6 +127,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="logo">Project logo</LabelStyled>
         <InputStyled
+          className={errors.includes("logo") ? "form__input--error" : ""}
           type="file"
           id="logo"
           name="logo"
@@ -111,6 +142,9 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
           Frontend main library or framework
         </LabelStyled>
         <InputStyled
+          className={
+            errors.includes("technologyFront") ? "form__input--error" : ""
+          }
           type="text"
           id="technologyFront"
           placeholder="React"
@@ -125,6 +159,9 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
           Backend main library or framework
         </LabelStyled>
         <InputStyled
+          className={
+            errors.includes("technologyBack") ? "form__input--error" : ""
+          }
           type="text"
           id="technologyBack"
           placeholder="Express"
@@ -137,6 +174,7 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="name">Description</LabelStyled>
         <InputStyled
+          className={errors.includes("description") ? "form__input--error" : ""}
           type="text"
           id="description"
           placeholder="Music app is a wonderful system to share music between its users."

@@ -92,6 +92,23 @@ describe("Given a SignForm component", () => {
 
       expect(submitEvent.defaultPrevented).toBe(true);
     });
+
+    test("If the user submits but there are fields with invalid values, the fields styles should change", async () => {
+      render(<SignForm isLogin={false} />);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Sign up",
+      });
+
+      await userEvent.click(submitButton);
+
+      const form = screen.getAllByRole("textbox");
+
+      form.forEach((element) => {
+        expect(element).toHaveStyle("border-color: rgb(179,120,120)");
+        expect(element).toHaveStyle("border-width: 2px");
+      });
+    });
   });
 
   describe("When instantiated as a sign up form and submitted with a valid user", () => {
