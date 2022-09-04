@@ -3,6 +3,7 @@ import ProjectStyled from "./ProjectStyled";
 import Button from "./../Button/Button";
 import { useNavigate } from "react-router-dom";
 
+const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {
   project: IProject;
 }
@@ -18,7 +19,7 @@ const Project = ({ project }: ProjectProps): JSX.Element => {
           <h3 className="project__title">{project.name}</h3>
         </div>
         <img
-          src={project.logo}
+          src={`${apiUrl}/uploads/${project.logo.slice(8)}`}
           alt={`${project.name} logo`}
           className="project__header-logo"
         />
