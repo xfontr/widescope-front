@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
 import {
   addProjectActionCreator,
@@ -21,6 +21,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const useProjects = () => {
   const dispatch = useAppDispatch();
+  const token = useAppSelector((state) => state.user.user.token);
 
   const getAll = useCallback(async (): Promise<void> => {
     try {
@@ -86,7 +87,10 @@ const useProjects = () => {
           `${apiUrl}${endpoints.createProject}`,
           project,
           {
-            headers: { "Content-Type": "multipart/form-data" },
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -106,7 +110,7 @@ const useProjects = () => {
         );
       }
     },
-    [dispatch]
+    [dispatch, token]
   );
 
   return { getAll, getById, create };

@@ -1,15 +1,15 @@
 import { configureStore, createReducer } from "@reduxjs/toolkit";
 import { ModalTypes } from "../../types/modal";
 import { Projects } from "../../types/project";
-import { UserBasicData, UserExtraData } from "../../types/user";
+import { UserExtraData } from "../../types/user";
 import { mockUserBasicData, mockUserExtraData } from "./mockUserData";
 
-const userInitialState = { ...mockUserBasicData, isLogged: true };
+const userInitialState = { user: mockUserBasicData, isLogged: true };
 
-const mockUserReducer = createReducer<UserBasicData>(
+const mockUserReducer = createReducer<typeof userInitialState>(
   userInitialState,
   (builder) => {
-    builder.addDefaultCase((state: UserBasicData) => state);
+    builder.addDefaultCase((state: typeof userInitialState) => state);
   }
 );
 

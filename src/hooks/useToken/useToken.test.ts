@@ -1,4 +1,4 @@
-import { waitFor } from "@testing-library/react";
+import { waitFor, renderHook as reactRenderHook } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import routes from "../../configs/routes";
 import {
@@ -159,7 +159,7 @@ describe("Given a getToken function returned from a useToken function", () => {
   describe("When called and the user is already logged in", () => {
     const {
       result: { current: getTokenLoggedOut },
-    } = renderHook(useToken, { wrapper: WrapperWithMockStore });
+    } = reactRenderHook(useToken, { wrapper: WrapperWithMockStore });
 
     test("Then it should not log the user again", async () => {
       await act(async () => {
