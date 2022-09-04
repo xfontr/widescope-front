@@ -42,15 +42,18 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
 
   const validateValues = (): boolean => {
     const validation = projectSchema.validate(values, { abortEarly: false });
-
+    debugger;
     if (validation.error) {
+      debugger;
       const errors = validation.error.details.map(
         (failedInput) => failedInput.path[0]
       );
-      console.log(errors);
+      debugger;
       setErrors(errors as string[]);
+      debugger;
       return false;
     } else {
+      debugger;
       return true;
     }
   };

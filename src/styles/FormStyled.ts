@@ -55,6 +55,7 @@ export const InputStyled = styled.input`
 
   &.form__input--error {
     border-color: ${(props) => props.theme.colors.error};
+    border-width: 2px;
   }
 `;
 
