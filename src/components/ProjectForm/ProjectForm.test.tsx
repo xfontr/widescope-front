@@ -118,6 +118,36 @@ describe("Given a ProjectForm component", () => {
         expect(element).toHaveStyle("border-width: 2px");
       });
     });
+
+    test("If the user submits, the fields should be emptied and the errors restored", async () => {
+      render(<ProjectForm isCreate={true} />);
+      const typedText = mockProject.name;
+
+      const form = screen.getAllByRole("textbox");
+
+      await form.reduce(async (previousPromise, element) => {
+        await previousPromise;
+        await userEvent.type(element, typedText);
+        return Promise.resolve();
+      }, Promise.resolve());
+
+      const inputFile = screen.getByLabelText(
+        "Project logo"
+      ) as HTMLInputElement;
+      await userEvent.upload(inputFile, mockFile);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Create project",
+      });
+
+      await userEvent.click(submitButton);
+
+      form.forEach((element) => expect(element).toHaveValue(""));
+
+      form.forEach((element) => {
+        expect(element).not.toHaveStyle("border-color: rgb(179,120,120)");
+      });
+    });
   });
 
   describe("When submitted as a create form", () => {
