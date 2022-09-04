@@ -25,8 +25,6 @@ const useProjects = () => {
 
   const getAll = useCallback(async (): Promise<void> => {
     try {
-      dispatch(setVisibilityActionCreator(true));
-
       const {
         data: { projects },
       }: AxiosResponse<GetAllProjects> = await axios.get(
@@ -34,13 +32,8 @@ const useProjects = () => {
       );
 
       dispatch(loadAllActionCreator(projects as Projects));
-      dispatch(
-        closeActionCreator({
-          message: `Projects loaded`,
-          type: "success",
-        })
-      );
     } catch (error) {
+      dispatch(setVisibilityActionCreator(true));
       dispatch(
         closeActionCreator({
           message: `Error while loading projects: ${error}`,

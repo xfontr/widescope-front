@@ -36,6 +36,10 @@ const NavigationStyled = styled.nav`
     padding: 8rem 7%;
     transform: translate(100%);
     transition: 0.4s;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+      width: 40%;
+    }
   }
 
   .navigation--in {
@@ -115,6 +119,10 @@ const NavigationStyled = styled.nav`
   .modal-close-area {
     width: 30%;
     height: 100%;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+      width: 60%;
+    }
   }
 
   .navigation__links {
