@@ -4,7 +4,9 @@ import { RootState } from "../../app/store";
 import useProjects from "../../hooks/useProjects/useProjects";
 import projectSchema from "../../schemas/projectSchema";
 import {
+  FooterStyled,
   GroupStyled,
+  HeaderStyled,
   InputStyled,
   LabelStyled,
   SignFormStyled,
@@ -92,9 +94,11 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
 
   return (
     <SignFormStyled onSubmit={handleSubmit} data-testid="form">
-      <h3 className="form__title">
-        {isCreate ? "Tell us about your project" : "Update your project"}
-      </h3>
+      <HeaderStyled>
+        <h3 className="form__title">
+          {isCreate ? "Tell us about your project" : "Update your project"}
+        </h3>
+      </HeaderStyled>
 
       <GroupStyled>
         <LabelStyled htmlFor="name">Name</LabelStyled>
@@ -182,10 +186,12 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
         />
       </GroupStyled>
 
-      <Button
-        content={isCreate ? "Create project" : "Update project"}
-        type="submit"
-      />
+      <FooterStyled>
+        <Button
+          content={isCreate ? "Create project" : "Update project"}
+          type="submit"
+        />
+      </FooterStyled>
     </SignFormStyled>
   );
 };

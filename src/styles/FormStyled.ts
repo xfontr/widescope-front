@@ -8,24 +8,43 @@ export const SignFormStyled = styled.form`
   padding: ${(props) => props.theme.spacing.paddingBig};
   border-radius: ${(props) => props.theme.shapes.radiusSmall};
   background-color: ${(props) => props.theme.colors.primary};
+
+  max-width: 33rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+    max-width: 80%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
 `;
 
 export const HeaderStyled = styled.header`
   margin-bottom: 0.5rem;
 
-  & .form__heading {
-    margin: 0 0 0.3rem 0;
-    font-size: 1.6rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+    width: 100%;
   }
 
-  & .form__cta-text {
-    color: ${(props) => props.theme.colors.secondaryBrigther};
+  .form {
+    &__heading {
+      margin: 0 0 0.3rem 0;
+      font-size: 1.6rem;
+    }
+
+    &__cta-text {
+      color: ${(props) => props.theme.colors.secondaryBrigther};
+    }
   }
 `;
 
 export const GroupStyled = styled.div`
   & * {
     display: block;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+    width: 45%;
   }
 `;
 
@@ -49,13 +68,15 @@ export const InputStyled = styled.input`
     background-color: ${(props) => props.theme.colors.primaryDarker};
   }
 
-  &.form__input--error-repeat {
-    background-color: ${(props) => props.theme.colors.error};
-  }
+  &.form__input {
+    &--error-repeat {
+      background-color: ${(props) => props.theme.colors.error};
+    }
 
-  &.form__input--error {
-    border-color: ${(props) => props.theme.colors.error};
-    border-width: 2px;
+    &--error {
+      border-color: ${(props) => props.theme.colors.error};
+      border-width: 2px;
+    }
   }
 `;
 
@@ -63,6 +84,10 @@ export const FooterStyled = styled.footer`
   display: flex;
   align-items: center;
   gap: ${(props) => props.theme.spacing.gapSmall};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+    width: 100%;
+  }
 
   & .form__sign-up-cta {
     display: block;
