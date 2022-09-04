@@ -10,6 +10,7 @@ import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
 import CreateProjectPage from "../../pages/CreateProjectPage/CreateProjectPage";
+import Validator from "../Validator/Validator";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -33,7 +34,14 @@ const App = (): JSX.Element => {
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.explore} element={<ExplorePage />} />
-          <Route path={routes.createProject} element={<CreateProjectPage />} />
+          <Route
+            path={routes.createProject}
+            element={
+              <Validator>
+                <CreateProjectPage />
+              </Validator>
+            }
+          />
           <Route
             path={routes.projectDetails}
             element={<ProjectDetailsPage />}
