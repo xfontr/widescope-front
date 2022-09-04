@@ -9,7 +9,6 @@ import {
   LabelStyled,
   SignFormStyled,
 } from "../../styles/FormStyled";
-import { IProject } from "../../types/project";
 import Button from "../Button/Button";
 
 interface ProjectFormProps {
@@ -30,7 +29,7 @@ const formData = new FormData();
 const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
   const [values, setValues] = useState(initialState);
   const { create } = useProjects();
-  const username = useAppSelector((state: RootState) => state.user.user.name);
+  const user = useAppSelector((state: RootState) => state.user.user);
   const [errors, setErrors] = useState([] as string[]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,18 +41,16 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
 
   const validateValues = (): boolean => {
     const validation = projectSchema.validate(values, { abortEarly: false });
-    debugger;
+
     if (validation.error) {
-      debugger;
       const errors = validation.error.details.map(
         (failedInput) => failedInput.path[0]
       );
-      debugger;
+
       setErrors(errors as string[]);
-      debugger;
+
       return false;
     } else {
-      debugger;
       return true;
     }
   };
@@ -66,8 +63,9 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
     handleChange(event);
   };
 
-  const curateData = (): Partial<IProject> => ({
-    author: username,
+  const curateData = () => ({
+    author: user.name,
+    authorId: user.id,
     name: values.name,
     repository: values.repository,
     technologies: [values.technologyBack, values.technologyFront],
