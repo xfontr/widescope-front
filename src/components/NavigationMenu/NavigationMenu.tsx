@@ -99,14 +99,16 @@ const NavigationMenu = (): JSX.Element => {
               )}
             </ul>
 
-            <Button
-              type="button"
-              content="Post a project"
-              action={() => {
-                navigate(routes.createProject);
-                toggleVisiblity();
-              }}
-            />
+            {isLogged && (
+              <Button
+                type="button"
+                content="Post a project"
+                action={() => {
+                  navigate(routes.createProject);
+                  toggleVisiblity();
+                }}
+              />
+            )}
           </section>
         </div>
       )}
