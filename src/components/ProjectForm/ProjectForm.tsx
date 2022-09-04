@@ -60,6 +60,8 @@ const ProjectForm = ({ isCreate }: ProjectFormProps): JSX.Element => {
     formData.append("project", JSON.stringify(curateData()));
 
     await create(formData);
+    formData.delete("logo");
+    formData.delete("project");
   };
 
   return (
