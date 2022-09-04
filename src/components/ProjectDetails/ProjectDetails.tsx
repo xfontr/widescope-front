@@ -1,6 +1,8 @@
 import { IProject } from "../../types/project";
 import ProjectDetailsStyled from "./ProjectDetailsStyled";
 import Button from "../Button/Button";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectDetailsProps {
   project: IProject;
 }
@@ -13,7 +15,14 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
         <span className="project__author">developed by {project.author}</span>
       </div>
 
-      <img src={project.logo} alt={`${project.name} logo`} />
+      <img
+        src={`${apiUrl}/uploads/${project.logo.slice(8)}`}
+        alt={`${project.name} logo`}
+        width="250"
+        height="250"
+        className="project__header-logo"
+        loading="lazy"
+      />
 
       <div className="project__body">
         <div className="project__body-data">
@@ -22,10 +31,10 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
 
           <h3 className="project__subheading">Built with</h3>
           <ul className="project__technologies">
-            {project.technologies.map((technology) => (
+            {project.technologies.map((technology, index) => (
               <li
                 className="project__technology"
-                key={`${project.id}-technology`}
+                key={`${project.id}-technology-${index}`}
               >
                 {`${technology.charAt(0).toUpperCase()}${technology.slice(1)}`}
               </li>

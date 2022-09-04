@@ -1,5 +1,5 @@
 import AppStyled from "./AppStyled";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, Link } from "react-router-dom";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
@@ -23,7 +23,9 @@ const App = (): JSX.Element => {
     <AppStyled>
       <Modal />
       <header className="header">
-        <h1>wideScope</h1>
+        <Link to="/">
+          <h1 className="header__title">wideScope</h1>
+        </Link>
         <NavigationMenu />
       </header>
       <main>
