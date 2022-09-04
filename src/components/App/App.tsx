@@ -11,6 +11,7 @@ import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
 import CreateProjectPage from "../../pages/CreateProjectPage/CreateProjectPage";
 import Validator from "../Validator/Validator";
+import { Link } from "react-router-dom";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -23,7 +24,9 @@ const App = (): JSX.Element => {
     <AppStyled>
       <Modal />
       <header className="header">
-        <h1>wideScope</h1>
+        <Link to="/">
+          <h1 className="header__title">wideScope</h1>
+        </Link>
         <NavigationMenu />
       </header>
       <main>

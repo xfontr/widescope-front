@@ -11,7 +11,7 @@ const ProjectsStyled = styled.article`
       flex-direction: row;
 
       .projects__project {
-        width: 30%;
+        width: 31.15%;
       }
     }
   }

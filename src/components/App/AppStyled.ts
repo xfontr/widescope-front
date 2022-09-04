@@ -21,15 +21,22 @@ const AppStyled = styled.div`
     justify-content: space-between;
     align-items: center;
     min-height: 5rem;
+
+    &__title {
+      font-size: 1.3rem;
+    }
   }
 
   .footer {
     position: absolute;
-    min-height: 2.5rem;
+    min-height: 9rem;
+    display: flex;
+    align-items: center;
 
     &__copyright {
-      display: block;
       padding-top: 2rem;
+      display: block;
+      color: ${(props) => props.theme.colors.secondaryBrigther};
     }
   }
 `;
