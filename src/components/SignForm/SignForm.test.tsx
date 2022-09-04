@@ -1,15 +1,13 @@
 import {
   createEvent,
   fireEvent,
-  renderHook,
   screen,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useLocation } from "react-router-dom";
 import routes from "../../configs/routes";
 import mockUser from "../../test-utils/mocks/mockUser";
-import { render } from "../../test-utils/render/customRender";
-import { Wrapper } from "../../test-utils/render/Wrapper";
+import { render, renderHook } from "../../test-utils/render/customRender";
 import SignForm from "./SignForm";
 
 const mockSignUp = jest.fn();
@@ -334,7 +332,7 @@ describe("Given a SignForm component", () => {
         result: {
           current: { pathname },
         },
-      } = renderHook(useLocation, { wrapper: Wrapper });
+      } = renderHook(useLocation);
 
       expect(pathname).toBe(routes.signUp);
     });

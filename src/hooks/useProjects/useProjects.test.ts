@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import endpoints from "../../configs/endpoints";
 import {
@@ -11,7 +11,7 @@ import {
 } from "../../store/slices/uiModal/uiModalSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
-import { Wrapper } from "../../test-utils/render/Wrapper";
+import { renderHook } from "../../test-utils/render/customRender";
 import useProjects from "./useProjects";
 
 describe("Given a getAll function returned by a useProjects function", () => {
@@ -20,7 +20,7 @@ describe("Given a getAll function returned by a useProjects function", () => {
       result: {
         current: { getAll },
       },
-    } = renderHook(useProjects, { wrapper: Wrapper });
+    } = renderHook(useProjects);
 
     test("Then it should dispatch the load projects action with the received data", async () => {
       endpoints.getAll = "/projects/all";
@@ -63,7 +63,7 @@ describe("Given a getById function returned by a useProjects function", () => {
     result: {
       current: { getById },
     },
-  } = renderHook(useProjects, { wrapper: Wrapper });
+  } = renderHook(useProjects);
 
   describe("When called", () => {
     test("Then it should open the ui modal for loading", async () => {
@@ -119,7 +119,7 @@ describe("Given a create function returned by a useProjects function", () => {
       result: {
         current: { create },
       },
-    } = renderHook(useProjects, { wrapper: Wrapper });
+    } = renderHook(useProjects);
 
     test("Then it should call the dispatch to open the loading modal", async () => {
       await act(async () => {
@@ -171,7 +171,7 @@ describe("Given a create function returned by a useProjects function", () => {
       result: {
         current: { create },
       },
-    } = renderHook(useProjects, { wrapper: Wrapper });
+    } = renderHook(useProjects);
 
     test("Then it should call the dispatch to open the error modal", async () => {
       endpoints.createProject = "/projects/newError";

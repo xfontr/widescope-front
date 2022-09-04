@@ -1,4 +1,4 @@
-import { renderHook, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { useAppDispatch } from "../../app/hooks";
 import {
@@ -6,8 +6,7 @@ import {
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
 import styledMainTheme from "../../styles/styledMainTheme";
-import { render } from "../../test-utils/render/customRender";
-import { Wrapper } from "../../test-utils/render/Wrapper";
+import { render, renderHook } from "../../test-utils/render/customRender";
 import Modal from "./Modal";
 
 jest.useFakeTimers();
@@ -18,7 +17,7 @@ describe("Given a Modal component", () => {
       const expectedMessage = "Loading";
       const {
         result: { current: dispatch },
-      } = renderHook(useAppDispatch, { wrapper: Wrapper });
+      } = renderHook(useAppDispatch);
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
@@ -40,7 +39,7 @@ describe("Given a Modal component", () => {
 
       const {
         result: { current: dispatch },
-      } = renderHook(useAppDispatch, { wrapper: Wrapper });
+      } = renderHook(useAppDispatch);
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
@@ -65,7 +64,7 @@ describe("Given a Modal component", () => {
 
       const {
         result: { current: dispatch },
-      } = renderHook(useAppDispatch, { wrapper: Wrapper });
+      } = renderHook(useAppDispatch);
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
@@ -87,7 +86,7 @@ describe("Given a Modal component", () => {
     test("Then it should not be visible", () => {
       const {
         result: { current: dispatch },
-      } = renderHook(useAppDispatch, { wrapper: Wrapper });
+      } = renderHook(useAppDispatch);
 
       act(() => {
         dispatch(setVisibilityActionCreator(false));
@@ -105,7 +104,7 @@ describe("Given a Modal component", () => {
     test("Then it should not be visible after 2300ms", async () => {
       const {
         result: { current: dispatch },
-      } = renderHook(useAppDispatch, { wrapper: Wrapper });
+      } = renderHook(useAppDispatch);
 
       act(() => {
         dispatch(setVisibilityActionCreator(true));
