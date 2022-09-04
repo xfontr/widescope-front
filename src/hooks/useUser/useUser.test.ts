@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import routes from "../../configs/routes";
 import {
@@ -14,6 +14,7 @@ import { loadUserDataActionCreator } from "../../store/slices/userData/userDataS
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
+import { renderHook } from "../../test-utils/render/customRender";
 import { Wrapper } from "../../test-utils/render/Wrapper";
 import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
 import useUser from "./useUser";
@@ -51,7 +52,7 @@ describe("Given a signUp function returned by a useUser function", () => {
         result: {
           current: { signUp },
         },
-      } = renderHook(useUser, { wrapper: Wrapper });
+      } = renderHook(useUser);
 
       let result: boolean = false;
 
@@ -72,7 +73,7 @@ describe("Given a signUp function returned by a useUser function", () => {
       result: {
         current: { signUp },
       },
-    } = renderHook(useUser, { wrapper: Wrapper });
+    } = renderHook(useUser);
 
     test("Then it should return false and call the modal dispatch with error", async () => {
       let result: boolean = false;
@@ -112,7 +113,7 @@ describe("Given a logIn function returned by a useUser function", () => {
       result: {
         current: { logIn },
       },
-    } = renderHook(useUser, { wrapper: Wrapper });
+    } = renderHook(useUser);
 
     test("Then it should call the dispatch to mark the user as logged in and to log it in", async () => {
       await act(async () => {
@@ -182,7 +183,7 @@ describe("Given a logIn function returned by a useUser function", () => {
       result: {
         current: { logIn },
       },
-    } = renderHook(useUser, { wrapper: Wrapper });
+    } = renderHook(useUser);
 
     test("Then it should call the dispatch only to open the modal error", async () => {
       await act(async () => {
@@ -214,7 +215,7 @@ describe("Given a getUserData function returned by a useUser function", () => {
     result: {
       current: { getUserData },
     },
-  } = renderHook(useUser, { wrapper: Wrapper });
+  } = renderHook(useUser);
 
   describe(`When called with a user ID of ${mockUser.id}`, () => {
     test("Then it should return the user with said id", async () => {
@@ -240,7 +241,7 @@ describe("Given a logOut function returned by a useUser function", () => {
     result: {
       current: { logOut },
     },
-  } = renderHook(useUser, { wrapper: Wrapper });
+  } = renderHook(useUser);
 
   describe(`When called`, () => {
     test("Then it should clear the local storage", () => {

@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react";
+import { waitFor, renderHook as reactRenderHook } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import routes from "../../configs/routes";
 import {
@@ -10,7 +10,8 @@ import { loadUserDataActionCreator } from "../../store/slices/userData/userDataS
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
-import { Wrapper, WrapperWithMockStore } from "../../test-utils/render/Wrapper";
+import { renderHook } from "../../test-utils/render/customRender";
+import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import { IUser } from "../../types/user";
 import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
 import useToken from "./useToken";
@@ -36,7 +37,7 @@ jest.mock("../../utils/auth", () => () => mockTokenContent);
 describe("Given a getToken function returned from a useToken function", () => {
   const {
     result: { current: getToken },
-  } = renderHook(useToken, { wrapper: Wrapper });
+  } = renderHook(useToken);
 
   const tokenContent = "###";
 
@@ -158,7 +159,7 @@ describe("Given a getToken function returned from a useToken function", () => {
   describe("When called and the user is already logged in", () => {
     const {
       result: { current: getTokenLoggedOut },
-    } = renderHook(useToken, { wrapper: WrapperWithMockStore });
+    } = reactRenderHook(useToken, { wrapper: WrapperWithMockStore });
 
     test("Then it should not log the user again", async () => {
       await act(async () => {
