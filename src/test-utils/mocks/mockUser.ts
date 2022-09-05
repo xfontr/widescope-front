@@ -3,7 +3,7 @@ import mockProject from "./mockProject";
 
 const mockUser: IUser = {
   id: "id",
-  name: "name",
+  name: "username",
   email: "email@email.com",
   friends: ["friend_one", "friend_two"],
   projects: [mockProject],

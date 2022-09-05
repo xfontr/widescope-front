@@ -1,8 +1,10 @@
-import { render as reactRender } from "@testing-library/react";
+import { render as reactRender, waitFor } from "@testing-library/react";
 import mockProject from "../../test-utils/mocks/mockProject";
+import mockUser from "../../test-utils/mocks/mockUser";
 import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import ExplorePage from "./ExplorePage";
+import userEvent from "@testing-library/user-event";
 
 describe("Given a ExplorePage component", () => {
   describe("When instantiated", () => {
@@ -36,6 +38,30 @@ describe("Given a ExplorePage component", () => {
 
       expect(cards).toBeNull();
       expect(message).toBeInTheDocument();
+    });
+  });
+
+  describe("When instantiated and the user clicks an author tag", () => {
+    test("Then it should show only the projects of the selected user", async () => {
+      render(<ExplorePage />);
+
+      const author = await screen.findByText(mockUser.name);
+
+      await userEvent.click(author);
+
+      const heading = await screen.findByRole("heading", {
+        name: `Projects by ${mockUser.name}`,
+      });
+
+      const projectByAnotherAuthor = screen.queryByText("Fake author");
+      const projectByThisAuthor = screen.getAllByText(mockProject.name);
+
+      expect(heading).toBeInTheDocument();
+      expect(projectByThisAuthor).toHaveLength(1);
+
+      await waitFor(() => {
+        expect(projectByAnotherAuthor).not.toBeInTheDocument();
+      });
     });
   });
 });

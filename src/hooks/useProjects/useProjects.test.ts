@@ -9,7 +9,6 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
-import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
@@ -33,7 +32,10 @@ describe("Given a getAll function returned by a useProjects function", () => {
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
-          loadAllActionCreator([mockProject])
+          loadAllActionCreator([
+            mockProject,
+            { ...mockProject, name: "Fake project", author: "Fake author" },
+          ])
         );
       });
     });

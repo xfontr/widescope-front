@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useLocation } from "react-router-dom";
 import routes from "../../configs/routes";
 import { render, renderHook } from "../../test-utils/render/customRender";
-import { Wrapper, WrapperWithMockStore } from "../../test-utils/render/Wrapper";
+import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import NavigationMenu from "./NavigationMenu";
 
 describe("Given a NavigationMenu component", () => {

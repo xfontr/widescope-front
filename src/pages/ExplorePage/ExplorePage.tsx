@@ -35,9 +35,6 @@ const ExplorePage = (): JSX.Element => {
           const byAuthor = await getByAuthor(filter.byAuthor.id);
           setProjects(byAuthor as IProjects);
           break;
-        default:
-          setProjects(state.projects);
-          break;
       }
     })();
   }, [filter.filter, filter.byAuthor, state.projects, getByAuthor]);
