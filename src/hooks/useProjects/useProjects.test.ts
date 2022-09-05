@@ -9,8 +9,10 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
+import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
+import mockUser from "../../test-utils/mocks/mockUser";
 import { renderHook } from "../../test-utils/render/customRender";
 import useProjects from "./useProjects";
 
@@ -184,6 +186,65 @@ describe("Given a create function returned by a useProjects function", () => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
             message: `Error while creating the project: AxiosError: Request failed with status code 400`,
+            type: "error",
+          })
+        );
+      });
+    });
+  });
+});
+
+describe("Given a getByAuthor function returned by a useProjects function", () => {
+  const {
+    result: {
+      current: { getByAuthor },
+    },
+  } = renderHook(useProjects);
+
+  describe("When called with a valid user id", () => {
+    test("Then it should call the dispatach to open the loading modal", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getByAuthor(mockUser.id);
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          setVisibilityActionCreator(true)
+        );
+      });
+    });
+
+    test("Then it should call the dispatch with the load user projects action", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getByAuthor(mockUser.id);
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          loadUserProjectsActionCreator([mockProject])
+        );
+      });
+    });
+
+    test("Then it should close the modal after the fetch is successful", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getByAuthor(mockUser.id);
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          setVisibilityActionCreator(false)
+        );
+      });
+    });
+  });
+
+  describe("When called with an invalid user id", () => {
+    test("Then it should call the dispatch to show the ui modal with an error", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getByAuthor("wrongId");
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: `Error while getting the projects: AxiosError: Request failed with status code 404`,
             type: "error",
           })
         );
