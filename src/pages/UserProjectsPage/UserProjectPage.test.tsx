@@ -21,6 +21,16 @@ describe("Given a UserProjectsPage component", () => {
       expect(heading).toBeInTheDocument();
       expect(cards).toHaveLength(1);
     });
+
+    test("Then it should instantiate the projects as not read only", () => {
+      reactRender(<UserProjectsPage />, {
+        wrapper: WrapperWithMockStore,
+      });
+
+      const deleteButton = screen.getByRole("button", { name: "Delete" });
+
+      expect(deleteButton).toBeInTheDocument();
+    });
   });
 
   describe("When intantiated but no projects are found or the user is not logged in", () => {

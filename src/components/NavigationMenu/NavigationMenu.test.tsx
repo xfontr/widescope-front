@@ -49,16 +49,18 @@ describe("Given a NavigationMenu component", () => {
       );
     });
 
-    test("If the user is logged, log out should appear instead of log in", async () => {
+    test("If the user is logged, log out should appear instead of log in and sign up", async () => {
       reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
 
       const burgerIcon = screen.getByTestId("burger-icon");
       await userEvent.click(burgerIcon);
 
       const logInLink = screen.queryByRole("link", { name: "Log in" });
+      const signUpLink = screen.queryByRole("link", { name: "SignUp" });
       const logOutLink = screen.getByRole("link", { name: "Log out" });
 
       expect(logInLink).not.toBeInTheDocument();
+      expect(signUpLink).not.toBeInTheDocument();
       expect(logOutLink).toBeInTheDocument();
     });
 
@@ -223,6 +225,29 @@ describe("Given the links of the NavigationMenu component", () => {
 
       expect(pathname).toBe(routes.explore);
       expect(exploreLink).not.toBeInTheDocument();
+    });
+  });
+
+  describe("When clicked the 'Personal projects' link", () => {
+    test(`Then it should route the page to '${routes.personalProjects}' and close the menu`, async () => {
+      reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const personalProjectsLink = screen.getByRole("link", {
+        name: "Your projects",
+      });
+      await userEvent.click(personalProjectsLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation);
+
+      expect(pathname).toBe(routes.personalProjects);
+      expect(personalProjectsLink).not.toBeInTheDocument();
     });
   });
 

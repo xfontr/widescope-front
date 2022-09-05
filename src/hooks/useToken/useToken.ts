@@ -37,14 +37,9 @@ const useToken = () => {
         dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
         dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
         dispatch(toggleStatusActionCreator(true));
-        dispatch(
-          closeActionCreator({
-            message: "Log in successful",
-            type: "success",
-          })
-        );
 
-        navigate(routes.home);
+        dispatch(setVisibilityActionCreator(false));
+        navigate(routes.explore);
       } catch (error) {
         localStorage.clear();
         dispatch(

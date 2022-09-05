@@ -61,6 +61,11 @@ const ProjectStyled = styled.article`
       height: 4.5rem;
       overflow: hidden;
     }
+
+    &__options {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 `;
 

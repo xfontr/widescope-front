@@ -14,7 +14,7 @@ const Modal = (): JSX.Element => {
     if (isVisible && isClosing) {
       setTimeout(() => {
         dispatch(setVisibilityActionCreator(false));
-      }, 1);
+      }, 2250);
     }
   }, [dispatch, isVisible, isClosing]);
 

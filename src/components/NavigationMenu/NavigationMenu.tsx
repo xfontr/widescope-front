@@ -73,15 +73,17 @@ const NavigationMenu = (): JSX.Element => {
                 </li>
               )}
 
-              <li className="navigation__link">
-                <Link
-                  to={routes.signUp}
-                  className="navigation__link"
-                  onClick={toggleVisiblity}
-                >
-                  Sign up
-                </Link>
-              </li>
+              {!isLogged && (
+                <li className="navigation__link">
+                  <Link
+                    to={routes.signUp}
+                    className="navigation__link"
+                    onClick={toggleVisiblity}
+                  >
+                    Sign up
+                  </Link>
+                </li>
+              )}
 
               {!isLogged && (
                 <li className="navigation__link">

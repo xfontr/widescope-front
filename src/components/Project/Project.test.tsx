@@ -74,4 +74,16 @@ describe("Given a Project component", () => {
       });
     });
   });
+
+  describe("When instantiated as readOnly", () => {
+    test("Then it should also show a delete button", () => {
+      render(<Project project={mockProject} isReadOnly={false} />);
+
+      const deleteButton = screen.getByRole("button", {
+        name: "Delete",
+      });
+
+      expect(deleteButton).toBeInTheDocument();
+    });
+  });
 });

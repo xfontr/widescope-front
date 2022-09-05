@@ -8,9 +8,14 @@ const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {
   project: IProject;
   setFilter?: React.Dispatch<React.SetStateAction<Filter>>;
+  isReadOnly?: boolean;
 }
 
-const Project = ({ project, setFilter }: ProjectProps): JSX.Element => {
+const Project = ({
+  project,
+  setFilter,
+  isReadOnly = true,
+}: ProjectProps): JSX.Element => {
   const navigate = useNavigate();
 
   return (
@@ -57,14 +62,17 @@ const Project = ({ project, setFilter }: ProjectProps): JSX.Element => {
 
       <p className="project__description">{project.description}</p>
 
-      <Button
-        content="View full project"
-        type="button"
-        customStyle="outline"
-        action={() => {
-          navigate(`/project/${project.id}`);
-        }}
-      />
+      <div className="project__options">
+        <Button
+          content="View full project"
+          type="button"
+          customStyle="outline"
+          action={() => {
+            navigate(`/project/${project.id}`);
+          }}
+        />
+        {!isReadOnly && <Button content="Delete" type="button" />}
+      </div>
     </ProjectStyled>
   );
 };
