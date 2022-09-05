@@ -8,14 +8,12 @@ const userDataSlice = createSlice({
   name: "userData",
   initialState: userDataInitialState,
   reducers: {
-    loadUserData: (previousState, action: PayloadAction<UserExtraData>) => ({
-      ...previousState,
-      userData: action.payload,
-    }),
+    loadUserData: (previousState, action: PayloadAction<UserExtraData>) =>
+      action.payload,
 
     loadUserProjects: (previousState, action: PayloadAction<Projects>) => ({
       ...previousState,
-      userData: { ...previousState.userData, projects: action.payload },
+      projects: action.payload,
     }),
   },
 });
