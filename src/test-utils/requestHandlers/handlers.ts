@@ -59,7 +59,10 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json<GetAllProjects>({
-        projects: [mockProject],
+        projects: [
+          mockProject,
+          { ...mockProject, name: "Fake project", author: "Fake author" },
+        ],
       })
     );
   }),
