@@ -49,15 +49,24 @@ const ExplorePage = (): JSX.Element => {
       )}
 
       {filter.filter === "byAuthor" && (
-        <h2 className="page__title">
-          Projects by
-          <span className="page__title--bold"> {filter.byAuthor.name}</span>
-        </h2>
+        <>
+          <span
+            className="page__breadcrumbs"
+            onClick={() => setFilter({ ...filter, filter: "all" })}
+          >
+            « Keep exploring
+          </span>
+          <h2 className="page__title">
+            Projects by
+            <span className="page__title--bold"> {filter.byAuthor.name}</span>
+          </h2>
+        </>
       )}
 
       {projects.length && (
         <Projects projects={projects} setFilter={setFilter} />
       )}
+
       {!projects.length && <span>No projects found.</span>}
     </>
   );

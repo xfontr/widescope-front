@@ -30,7 +30,9 @@ const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 
-  .page__title{
+  .page{
+  
+  &__title{
     font-size: 2.8rem;
     font-weight: normal;
 
@@ -43,11 +45,22 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .page-container {
+  &-container {
     background-color: ${styledMainTheme.colors.primary};
     border-radius: ${styledMainTheme.shapes.radiusSmall};
     padding: ${styledMainTheme.spacing.paddingBig};
   }
+
+  &__breadcrumbs {
+    color: ${styledMainTheme.colors.secondaryBrigther};
+    margin-bottom: -1.6rem;
+    margin-top: 1.6rem;
+    display: block;
+    letter-spacing: 0.2px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
 `;
 
 export default GlobalStyles;
