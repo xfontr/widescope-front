@@ -60,10 +60,6 @@ describe("Given a getToken function returned from a useToken function", () => {
       expect(mockUseDispatch).toHaveBeenCalledWith(
         loadUserDataActionCreator(setUserExtraData(mockUser as IUser))
       );
-
-      expect(mockUseDispatch).toHaveBeenCalledWith(
-        loadUserDataActionCreator(setUserExtraData(mockUser as IUser))
-      );
     });
 
     test("Then it should dispatch the ui modal actions", async () => {
