@@ -3,7 +3,6 @@ import ProjectStyled from "./ProjectStyled";
 import Button from "./../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { Filter } from "../../types/filter";
-import { useAppSelector } from "../../app/hooks";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {

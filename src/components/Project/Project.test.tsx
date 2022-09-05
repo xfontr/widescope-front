@@ -1,6 +1,12 @@
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 import mockProject from "../../test-utils/mocks/mockProject";
-import { render, screen } from "../../test-utils/render/customRender";
+import {
+  render,
+  renderHook,
+  screen,
+} from "../../test-utils/render/customRender";
+import { Filter } from "../../types/filter";
 import Project from "./Project";
 
 const mockNavigate = jest.fn().mockReturnThis();
@@ -48,6 +54,24 @@ describe("Given a Project component", () => {
       await userEvent.click(viewDetailsButton);
 
       expect(mockNavigate).toHaveBeenCalledWith(`/project/${mockProject.id}`);
+    });
+  });
+
+  describe("When instantiated with a useState setter and clicked the author tag", () => {
+    test("Then it should call the setter function with a filter object", async () => {
+      const mockUseState = jest.fn() as React.Dispatch<
+        React.SetStateAction<Filter>
+      >;
+
+      render(<Project project={mockProject} setFilter={mockUseState} />);
+
+      const authorTag = screen.getByText(mockProject.author);
+      await userEvent.click(authorTag);
+
+      expect(mockUseState).toHaveBeenCalledWith({
+        filter: "byAuthor",
+        byAuthor: { id: mockProject.authorId, name: mockProject.author },
+      });
     });
   });
 });
