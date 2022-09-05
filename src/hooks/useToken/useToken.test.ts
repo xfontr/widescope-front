@@ -76,15 +76,12 @@ describe("Given a getToken function returned from a useToken function", () => {
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
-          closeActionCreator({
-            message: "Log in successful",
-            type: "success",
-          })
+          setVisibilityActionCreator(false)
         );
       });
     });
 
-    test(`Then it should redirect the user to '${routes.home}'`, async () => {
+    test(`Then it should redirect the user to '${routes.explore}'`, async () => {
       await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
 
@@ -92,7 +89,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       });
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(routes.home);
+        expect(mockNavigate).toHaveBeenCalledWith(routes.explore);
       });
     });
   });
