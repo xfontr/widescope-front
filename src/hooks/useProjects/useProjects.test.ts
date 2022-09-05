@@ -213,14 +213,12 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
       });
     });
 
-    test("Then it should call the dispatch with the load user projects action", async () => {
+    test("Then it should return the projects fetched", async () => {
       // eslint-disable-next-line testing-library/no-await-sync-query
-      await getByAuthor(mockUser.id);
+      const projects = await getByAuthor(mockUser.id);
 
       await waitFor(() => {
-        expect(mockUseDispatch).toHaveBeenCalledWith(
-          loadUserProjectsActionCreator([mockProject])
-        );
+        expect(projects).toStrictEqual(mockUser.projects);
       });
     });
 

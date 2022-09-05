@@ -26,15 +26,14 @@ const useToken = () => {
     if (isLogged) {
       return;
     }
-
     const token = localStorage.getItem("token");
-
     if (token) {
       dispatch(setVisibilityActionCreator(true));
       const decodedToken = getTokenData(token);
 
       try {
         const user = await getUserData(decodedToken.id);
+
         dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
         dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
         dispatch(toggleStatusActionCreator(true));
@@ -44,6 +43,7 @@ const useToken = () => {
             type: "success",
           })
         );
+
         navigate(routes.home);
       } catch (error) {
         localStorage.clear();
