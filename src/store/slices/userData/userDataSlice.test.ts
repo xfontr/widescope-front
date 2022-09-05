@@ -42,11 +42,9 @@ describe("Given a loadUserProjectsActionCreator", () => {
 describe("Given a userDataReducer function", () => {
   describe("When called with a loadUser action with a new user as a payload", () => {
     test("Then it should replace the previous user with the passed one", () => {
-      const previousState = { userData: {} as UserExtraData };
-      const expectedResult = {
-        ...previousState,
-        userData: mockUserExtraData,
-      };
+      const previousState = {} as UserExtraData;
+      const expectedResult = mockUserExtraData;
+
       const action = loadUserDataActionCreator(mockUserExtraData);
 
       const result = userDataReducer(previousState, action);
@@ -57,13 +55,10 @@ describe("Given a userDataReducer function", () => {
 
   describe("When called with a loadUserProjects action with a list of projects as a payload", () => {
     test("Then it should replace the previous user project list with the passed one", () => {
-      const previousState = { userData: mockUserExtraData };
+      const previousState = mockUserExtraData;
       const expectedResult = {
-        ...previousState,
-        userData: {
-          ...mockUserExtraData,
-          projects: [mockProject, mockProject],
-        },
+        ...mockUserExtraData,
+        projects: [mockProject, mockProject],
       };
       const action = loadUserProjectsActionCreator([mockProject, mockProject]);
 

@@ -20,7 +20,9 @@ const ExplorePage = (): JSX.Element => {
   const [projects, setProjects] = useState([] as IProjects);
 
   useEffect(() => {
-    getAll();
+    (async () => {
+      await getAll();
+    })();
   }, [getAll]);
 
   const state = useAppSelector((state: RootState) => state);

@@ -20,7 +20,7 @@ describe("Given a setUserBasicData function", () => {
 describe("Given a setUserExtraData function", () => {
   describe("When called with a user as an argument", () => {
     test("Then it should return only the email an friends of the user", () => {
-      const expectedResult = mockUserExtraData;
+      const expectedResult = { ...mockUserExtraData, projects: [] };
 
       const result = setUserExtraData(mockUser);
 

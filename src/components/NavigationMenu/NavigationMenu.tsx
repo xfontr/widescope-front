@@ -61,6 +61,18 @@ const NavigationMenu = (): JSX.Element => {
                 </Link>
               </li>
 
+              {isLogged && (
+                <li className="navigation__link">
+                  <Link
+                    to={routes.personalProjects}
+                    className="navigation__link"
+                    onClick={toggleVisiblity}
+                  >
+                    Your projects
+                  </Link>
+                </li>
+              )}
+
               <li className="navigation__link">
                 <Link
                   to={routes.signUp}

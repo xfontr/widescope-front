@@ -11,6 +11,7 @@ import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
 import CreateProjectPage from "../../pages/CreateProjectPage/CreateProjectPage";
 import Validator from "../Validator/Validator";
+import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
@@ -41,6 +42,14 @@ const App = (): JSX.Element => {
             element={
               <Validator>
                 <CreateProjectPage />
+              </Validator>
+            }
+          />
+          <Route
+            path={routes.personalProjects}
+            element={
+              <Validator>
+                <UserProjectsPage />
               </Validator>
             }
           />

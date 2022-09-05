@@ -10,6 +10,7 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
+import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
 import { IProject, Projects } from "../../types/project";
 import {
   GetAllProjects,
@@ -22,7 +23,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const useProjects = () => {
   const dispatch = useAppDispatch();
-  const { token } = useAppSelector((state) => state.user.user);
+  const { token, id } = useAppSelector((state) => state.user.user);
 
   const getAll = useCallback(async (): Promise<void> => {
     try {
@@ -84,6 +85,11 @@ const useProjects = () => {
         );
 
         dispatch(setVisibilityActionCreator(false));
+
+        if (id === userId) {
+          dispatch(loadUserProjectsActionCreator(projects));
+        }
+
         return projects;
       } catch (error) {
         dispatch(
@@ -94,7 +100,7 @@ const useProjects = () => {
         );
       }
     },
-    [dispatch]
+    [dispatch, id]
   );
 
   const create = useCallback(
