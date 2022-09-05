@@ -5,13 +5,20 @@ import useProjects from "../../hooks/useProjects/useProjects";
 
 const UserProjectsPage = (): JSX.Element => {
   const { getByAuthor } = useProjects();
-  const userId = useAppSelector((state) => state.user.user.id);
+  const { id, isLogged } = useAppSelector((state) => ({
+    id: state.user.user.id,
+    isLogged: state.user.isLogged,
+  }));
 
   useEffect(() => {
-    getByAuthor(userId);
-  }, [getByAuthor, userId]);
+    (async () => {
+      await getByAuthor(id);
+    })();
+  }, [getByAuthor, id]);
 
-  const projects = useAppSelector((state) => state.userData.userData.projects);
+  const projects = useAppSelector((state) =>
+    isLogged ? state.userData.projects : []
+  );
 
   return (
     <>

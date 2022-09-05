@@ -2,9 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Projects } from "../../../types/project";
 import { UserExtraData } from "../../../types/user";
 
-const userDataInitialState = {
-  userData: {} as UserExtraData,
-};
+const userDataInitialState = {} as UserExtraData;
 
 const userDataSlice = createSlice({
   name: "userData",

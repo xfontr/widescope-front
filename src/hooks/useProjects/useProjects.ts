@@ -100,7 +100,7 @@ const useProjects = () => {
         );
       }
     },
-    [dispatch]
+    [dispatch, id]
   );
 
   const create = useCallback(
