@@ -35,6 +35,7 @@ const ProjectStyled = styled.article`
 
     &__author {
       color: ${(props) => props.theme.colors.secondaryBrigther};
+      cursor: pointer;
     }
 
     &__technologies {

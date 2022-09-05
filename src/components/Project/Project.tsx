@@ -2,20 +2,31 @@ import { IProject } from "../../types/project";
 import ProjectStyled from "./ProjectStyled";
 import Button from "./../Button/Button";
 import { useNavigate } from "react-router-dom";
+import { Filter } from "../../types/filter";
+import { useAppSelector } from "../../app/hooks";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {
   project: IProject;
+  setFilter?: React.Dispatch<React.SetStateAction<Filter>>;
 }
 
-const Project = ({ project }: ProjectProps): JSX.Element => {
+const Project = ({ project, setFilter }: ProjectProps): JSX.Element => {
   const navigate = useNavigate();
+  const userId = useAppSelector((state) => state.user.user.id);
 
   return (
     <ProjectStyled>
       <div className="project__header">
         <div className="project__main-data">
-          <span className="project__author">{project.author}</span>
+          <span
+            className="project__author"
+            onClick={() =>
+              setFilter && setFilter({ filter: "byAuthor", byAuthor: userId })
+            }
+          >
+            {project.author}
+          </span>
           <h3 className="project__title">{project.name}</h3>
         </div>
         <img
