@@ -199,6 +199,12 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
             <Link to={routes.signUp}>Sign up for free</Link>
           </span>
         )}
+        {!isLogin && (
+          <span className="form__sign-up-cta">
+            Already have an account?
+            <Link to={routes.logIn}>Log in</Link>
+          </span>
+        )}
       </FooterStyled>
     </SignFormStyled>
   );

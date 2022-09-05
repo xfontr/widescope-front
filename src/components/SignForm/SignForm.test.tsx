@@ -1,8 +1,4 @@
-import {
-  createEvent,
-  fireEvent,
-  screen,
-} from "@testing-library/react";
+import { createEvent, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useLocation } from "react-router-dom";
 import routes from "../../configs/routes";
@@ -325,8 +321,8 @@ describe("Given a SignForm component", () => {
     test(`Then it should redirect the user to ${routes.signUp}`, async () => {
       render(<SignForm isLogin={true} />);
 
-      const logOutLink = screen.getByRole("link", { name: "Sign up for free" });
-      await userEvent.click(logOutLink);
+      const signUpLink = screen.getByRole("link", { name: "Sign up for free" });
+      await userEvent.click(signUpLink);
 
       const {
         result: {
@@ -335,6 +331,23 @@ describe("Given a SignForm component", () => {
       } = renderHook(useLocation);
 
       expect(pathname).toBe(routes.signUp);
+    });
+  });
+
+  describe("When instantiated as a sign up form and clicked 'Log in'", () => {
+    test(`Then it should redirect the user to ${routes.logIn}`, async () => {
+      render(<SignForm isLogin={false} />);
+
+      const logInLink = screen.getByRole("link", { name: "Log in" });
+      await userEvent.click(logInLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation);
+
+      expect(pathname).toBe(routes.logIn);
     });
   });
 });
