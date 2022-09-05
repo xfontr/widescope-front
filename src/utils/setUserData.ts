@@ -12,4 +12,5 @@ export const setUserBasicData = (
 export const setUserExtraData = (user: IUser): UserExtraData => ({
   email: user.email,
   friends: user.friends,
+  projects: user.projects,
 });

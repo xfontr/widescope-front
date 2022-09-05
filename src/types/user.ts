@@ -1,3 +1,5 @@
+import { Projects } from "./project";
+
 export interface UserBasicData {
   id: string;
   name: string;
@@ -7,6 +9,7 @@ export interface UserBasicData {
 export interface UserExtraData {
   email: string;
   friends: string[];
+  projects: Projects;
 }
 
 interface CompleteUser extends UserExtraData, UserBasicData {}
