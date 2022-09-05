@@ -22,7 +22,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 const useProjects = () => {
   const dispatch = useAppDispatch();
-  const { token, id } = useAppSelector((state) => state.user.user);
+  const { token } = useAppSelector((state) => state.user.user);
 
   const getAll = useCallback(async (): Promise<void> => {
     try {

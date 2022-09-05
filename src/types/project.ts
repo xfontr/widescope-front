@@ -5,6 +5,7 @@ export interface IProject {
   technologies: string[];
   creationDate: string;
   author: string;
+  authorId: string;
   description: string;
   logo: string;
 }

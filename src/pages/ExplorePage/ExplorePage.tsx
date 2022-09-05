@@ -8,7 +8,10 @@ import { Projects as IProjects } from "../../types/project";
 
 const filterInitialState: Filter = {
   filter: "all",
-  byAuthor: "",
+  byAuthor: {
+    id: "",
+    name: "",
+  },
 };
 
 const ExplorePage = (): JSX.Element => {
@@ -29,7 +32,7 @@ const ExplorePage = (): JSX.Element => {
           setProjects(state.projects);
           break;
         case "byAuthor":
-          const byAuthor = await getByAuthor(filter.byAuthor);
+          const byAuthor = await getByAuthor(filter.byAuthor.id);
           setProjects(byAuthor as IProjects);
           break;
         default:
@@ -37,21 +40,21 @@ const ExplorePage = (): JSX.Element => {
           break;
       }
     })();
-  }, [filter, state.projects, getByAuthor]);
+  }, [filter.filter, filter.byAuthor, state.projects, getByAuthor]);
 
   return (
     <>
       {filter.filter === "all" && (
         <h2 className="page__title">
-          These are the{" "}
-          <span className="page__title--bold">latest projects</span>
+          These are the
+          <span className="page__title--bold"> latest projects</span>
         </h2>
       )}
 
       {filter.filter === "byAuthor" && (
         <h2 className="page__title">
           Projects by
-          <span className="page__title--bold"> {projects[0].author}</span>
+          <span className="page__title--bold"> {filter.byAuthor.name}</span>
         </h2>
       )}
 

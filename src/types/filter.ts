@@ -2,5 +2,8 @@ export type Filters = "all" | "byAuthor";
 
 export interface Filter {
   filter: Filters;
-  byAuthor: string;
+  byAuthor: {
+    id: string;
+    name: string;
+  };
 }

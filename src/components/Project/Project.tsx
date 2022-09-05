@@ -13,7 +13,6 @@ interface ProjectProps {
 
 const Project = ({ project, setFilter }: ProjectProps): JSX.Element => {
   const navigate = useNavigate();
-  const userId = useAppSelector((state) => state.user.user.id);
 
   return (
     <ProjectStyled>
@@ -22,7 +21,14 @@ const Project = ({ project, setFilter }: ProjectProps): JSX.Element => {
           <span
             className="project__author"
             onClick={() =>
-              setFilter && setFilter({ filter: "byAuthor", byAuthor: userId })
+              setFilter &&
+              setFilter({
+                filter: "byAuthor",
+                byAuthor: {
+                  id: project.authorId,
+                  name: project.author,
+                },
+              })
             }
           >
             {project.author}
