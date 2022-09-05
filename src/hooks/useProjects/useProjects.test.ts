@@ -1,4 +1,4 @@
-import { waitFor } from "@testing-library/react";
+import { renderHook as reactRenderHook, waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import endpoints from "../../configs/endpoints";
 import {
@@ -9,11 +9,13 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
+import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { renderHook } from "../../test-utils/render/customRender";
 import useProjects from "./useProjects";
+import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 
 describe("Given a getAll function returned by a useProjects function", () => {
   describe("When called", () => {
@@ -197,13 +199,13 @@ describe("Given a create function returned by a useProjects function", () => {
 });
 
 describe("Given a getByAuthor function returned by a useProjects function", () => {
-  const {
-    result: {
-      current: { getByAuthor },
-    },
-  } = renderHook(useProjects);
-
   describe("When called with a valid user id", () => {
+    const {
+      result: {
+        current: { getByAuthor },
+      },
+    } = renderHook(useProjects);
+
     test("Then it should call the dispatach to open the loading modal", async () => {
       // eslint-disable-next-line testing-library/no-await-sync-query
       await getByAuthor(mockUser.id);
@@ -237,6 +239,12 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
   });
 
   describe("When called with an invalid user id", () => {
+    const {
+      result: {
+        current: { getByAuthor },
+      },
+    } = renderHook(useProjects);
+
     test("Then it should call the dispatch to show the ui modal with an error", async () => {
       // eslint-disable-next-line testing-library/no-await-sync-query
       await getByAuthor("wrongId");
@@ -247,6 +255,36 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
             message: `Error while getting the projects: AxiosError: Request failed with status code 404`,
             type: "error",
           })
+        );
+      });
+    });
+
+    test("Then it should not call the dispatch to load the projects if the requesting user is not the logged in", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getByAuthor(mockUser.id);
+
+      await waitFor(() => {
+        expect(mockUseDispatch).not.toHaveBeenCalledWith(
+          loadUserProjectsActionCreator(mockUser.projects)
+        );
+      });
+    });
+  });
+
+  describe("When called and the user is logged in", () => {
+    const {
+      result: {
+        current: { getByAuthor },
+      },
+    } = reactRenderHook(useProjects, { wrapper: WrapperWithMockStore });
+
+    test("Then it should call the dispatch to load the user projects, if its id matches the requested one", async () => {
+      // eslint-disable-next-line testing-library/no-await-sync-query
+      await getByAuthor(mockUser.id);
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          loadUserProjectsActionCreator(mockUser.projects)
         );
       });
     });
