@@ -10,11 +10,13 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
+import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
 import { IProject, Projects } from "../../types/project";
 import {
   GetAllProjects,
   GetProjectById,
   NewProject,
+  UserProjects,
 } from "../types/useProjectTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -69,6 +71,33 @@ const useProjects = () => {
     [dispatch]
   );
 
+  const getByAuthor = useCallback(
+    async (userId: string): Promise<void> => {
+      try {
+        dispatch(setVisibilityActionCreator(true));
+
+        const {
+          data: {
+            projectsByAuthor: { projects },
+          },
+        }: AxiosResponse<UserProjects> = await axios.get(
+          `${apiUrl}${endpoints.projectsByAuthor}${userId}`
+        );
+
+        dispatch(loadUserProjectsActionCreator(projects));
+        dispatch(setVisibilityActionCreator(false));
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: `Error while getting the projects: ${error}`,
+            type: "error",
+          })
+        );
+      }
+    },
+    [dispatch]
+  );
+
   const create = useCallback(
     async (project: FormData) => {
       try {
@@ -106,7 +135,7 @@ const useProjects = () => {
     [dispatch, token]
   );
 
-  return { getAll, getById, create };
+  return { getAll, getById, create, getByAuthor };
 };
 
 export default useProjects;

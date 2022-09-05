@@ -6,6 +6,7 @@ const endpoints = {
   projectsRoot: "/projects",
   getAll: "/projects/all",
   projectById: "/projects/",
+  projectsByAuthor: "/projects/author/",
   createProject: "/projects/new",
 };
 

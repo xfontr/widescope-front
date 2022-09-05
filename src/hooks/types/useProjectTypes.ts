@@ -11,3 +11,11 @@ export interface GetProjectById {
 export interface NewProject {
   projectCreated: IProject;
 }
+
+export interface UserProjects {
+  projectsByAuthor: {
+    author: string;
+    total: number | string;
+    projects: Projects;
+  };
+}
