@@ -4,6 +4,7 @@ import {
   GetAllProjects,
   GetProjectById,
   NewProject,
+  UserProjects,
 } from "../../hooks/types/useProjectTypes";
 import { SignUpResponse, UserToken } from "../../hooks/types/useUserTypes";
 import mockProject from "../mocks/mockProject";
@@ -116,6 +117,37 @@ const handlers = [
       })
     );
   }),
+
+  rest.get(
+    `${apiUrl}${endpoints.projectsByAuthor}${mockUser.id}`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json<UserProjects>({
+          projectsByAuthor: {
+            author: mockUser.id,
+            total: mockUser.projects.length,
+            projects: mockUser.projects,
+          },
+        })
+      );
+    }
+  ),
+
+  rest.get(
+    `${apiUrl}${endpoints.projectsByAuthor}wrongId`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          projectsByAuthor: {
+            author: mockUser.id,
+            total: "0 projects",
+          },
+        })
+      );
+    }
+  ),
 ];
 
 export default handlers;

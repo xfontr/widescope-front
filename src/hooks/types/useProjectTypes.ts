@@ -13,5 +13,9 @@ export interface NewProject {
 }
 
 export interface UserProjects {
-  projectsByAuthor: { author: string; total: number; projects: Projects };
+  projectsByAuthor: {
+    author: string;
+    total: number | string;
+    projects: Projects;
+  };
 }
