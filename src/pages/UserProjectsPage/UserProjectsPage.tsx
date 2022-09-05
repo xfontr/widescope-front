@@ -27,7 +27,7 @@ const UserProjectsPage = (): JSX.Element => {
         <span className="page__title--bold"> Thanks for sharing!</span>
       </h2>
 
-      {projects.length && <Projects projects={projects} />}
+      {projects.length && <Projects projects={projects} isReadOnly={false} />}
 
       {!projects.length && (
         <span>
