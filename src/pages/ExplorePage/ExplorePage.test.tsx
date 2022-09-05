@@ -46,7 +46,6 @@ describe("Given a ExplorePage component", () => {
       render(<ExplorePage />);
 
       const author = await screen.findByText(mockUser.name);
-
       await userEvent.click(author);
 
       const heading = await screen.findByRole("heading", {
@@ -62,6 +61,30 @@ describe("Given a ExplorePage component", () => {
       await waitFor(() => {
         expect(projectByAnotherAuthor).not.toBeInTheDocument();
       });
+    });
+
+    test("Then it should appear a link to reset the filters and see all projects again", async () => {
+      render(<ExplorePage />);
+
+      const author = await screen.findByText(mockUser.name);
+      await userEvent.click(author);
+      const navigationLink = screen.getByText("« Keep exploring");
+
+      expect(navigationLink).toBeInTheDocument();
+
+      await userEvent.click(navigationLink);
+
+      expect(navigationLink).not.toBeInTheDocument();
+
+      const heading = await screen.findByRole("heading", {
+        name: "These are the latest projects",
+      });
+      const projectByAnotherAuthor = screen.queryByText("Fake author");
+      const projectByThisAuthor = screen.getByText(mockProject.name);
+
+      expect(heading).toBeInTheDocument();
+      expect(projectByAnotherAuthor).toBeInTheDocument();
+      expect(projectByThisAuthor).toBeInTheDocument();
     });
   });
 });
