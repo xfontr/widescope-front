@@ -1,6 +1,5 @@
 import { waitFor, renderHook as reactRenderHook } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -19,13 +18,6 @@ import useToken from "./useToken";
 Object.defineProperty(window, "localStorage", {
   value: mockLocalStorage,
 });
-
-const mockNavigate = jest.fn().mockReturnThis();
-
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: () => mockNavigate,
-}));
 
 let mockTokenContent = {
   id: mockUser.id,
@@ -80,18 +72,6 @@ describe("Given a getToken function returned from a useToken function", () => {
         );
       });
     });
-
-    test(`Then it should redirect the user to '${routes.explore}'`, async () => {
-      await act(async () => {
-        mockLocalStorage.setItem("token", tokenContent);
-
-        await getToken();
-      });
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(routes.explore);
-      });
-    });
   });
 
   describe("When called with an invalid token in the localStorage", () => {
@@ -130,21 +110,6 @@ describe("Given a getToken function returned from a useToken function", () => {
             type: "error",
           })
         );
-      });
-    });
-
-    test(`Then it should redirect the user to '${routes.logIn}'`, async () => {
-      localStorage.clear = jest.fn();
-      mockTokenContent = {};
-
-      await act(async () => {
-        mockLocalStorage.setItem("token", tokenContent);
-
-        await getToken();
-      });
-
-      await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(routes.logIn);
       });
     });
   });

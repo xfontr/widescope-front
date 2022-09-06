@@ -1,7 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -19,39 +17,36 @@ import useUser from "../useUser/useUser";
 const useToken = () => {
   const { getUserData } = useUser();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const isLogged = useAppSelector((state) => state.user.isLogged);
 
   const getToken = useCallback(async () => {
-    if (isLogged) {
+    const token = localStorage.getItem("token");
+
+    if (isLogged || !token) {
       return;
     }
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(setVisibilityActionCreator(true));
-      const decodedToken = getTokenData(token);
 
-      try {
-        const user = await getUserData(decodedToken.id);
+    dispatch(setVisibilityActionCreator(true));
+    const decodedToken = getTokenData(token);
 
-        dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
-        dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
-        dispatch(toggleStatusActionCreator(true));
+    try {
+      const user = await getUserData(decodedToken.id);
 
-        dispatch(setVisibilityActionCreator(false));
-        navigate(routes.explore);
-      } catch (error) {
-        localStorage.clear();
-        dispatch(
-          closeActionCreator({
-            message: `Log in error: ${error}`,
-            type: "error",
-          })
-        );
-        navigate(routes.logIn);
-      }
+      dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
+      dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
+      dispatch(toggleStatusActionCreator(true));
+
+      dispatch(setVisibilityActionCreator(false));
+    } catch (error) {
+      localStorage.clear();
+      dispatch(
+        closeActionCreator({
+          message: `Log in error: ${error}`,
+          type: "error",
+        })
+      );
     }
-  }, [getUserData, dispatch, navigate, isLogged]);
+  }, [getUserData, dispatch, isLogged]);
 
   return getToken;
 };

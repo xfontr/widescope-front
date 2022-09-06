@@ -23,11 +23,10 @@ const ManageProjectPage = ({
         {isCreate ? "New project" : "Update project"}
       </h2>
 
-      {!isCreate && project ? (
+      {!isCreate && project && (
         <ProjectForm isCreate={isCreate} project={project} />
-      ) : (
-        <span>Loading the requested project...</span>
       )}
+      {!isCreate && !project && <span>Loading the requested project...</span>}
       {isCreate && <ProjectForm isCreate={isCreate} />}
     </>
   );
