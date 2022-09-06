@@ -74,13 +74,22 @@ const Project = ({
           }}
         />
         {!isReadOnly && (
-          <Button
-            content="Delete"
-            type="button"
-            action={async () => {
-              await deleteProject(project.id);
-            }}
-          />
+          <>
+            <Button
+              content="Delete"
+              type="button"
+              action={async () => {
+                await deleteProject(project.id);
+              }}
+            />
+            <Button
+              content="Update"
+              type="button"
+              action={() => {
+                navigate(`/projects/update/${project.id}`);
+              }}
+            />
+          </>
         )}
       </div>
     </ProjectStyled>

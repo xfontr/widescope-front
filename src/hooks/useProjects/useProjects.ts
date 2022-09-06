@@ -177,14 +177,14 @@ const useProjects = () => {
   );
 
   const update = useCallback(
-    async (project: FormData) => {
+    async (project: FormData, projectId: string) => {
       try {
         dispatch(setVisibilityActionCreator(true));
 
         const {
           data: { projectUpdated },
         }: AxiosResponse<UpdatedProject> = await axios.put(
-          `${apiUrl}${endpoints.updateProject}`,
+          `${apiUrl}${endpoints.updateProject}${projectId}`,
           project,
           {
             headers: {

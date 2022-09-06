@@ -21,7 +21,7 @@ describe("Given a ManageProjectPage component", () => {
 
   describe("When instantiated as a update project page", () => {
     test("Then it should show a title and the create a project form", () => {
-      render(<ManageProjectPage isCreate={false} project={mockProject} />);
+      render(<ManageProjectPage isCreate={false} />);
 
       const page = [
         screen.getByRole("heading", { name: "Update project", level: 2 }),

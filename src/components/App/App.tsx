@@ -54,6 +54,14 @@ const App = (): JSX.Element => {
             }
           />
           <Route
+            path={routes.updateProject}
+            element={
+              <Validator>
+                <ManageProjectPage isCreate={false} />
+              </Validator>
+            }
+          />
+          <Route
             path={routes.projectDetails}
             element={<ProjectDetailsPage />}
           />

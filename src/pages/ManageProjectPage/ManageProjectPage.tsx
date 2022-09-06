@@ -1,22 +1,36 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 import ProjectForm from "../../components/ProjectForm/ProjectForm";
-import { IProject } from "../../types/project";
 
 interface ManageProjectPageProps {
   isCreate: boolean;
-  project?: IProject;
 }
 
 const ManageProjectPage = ({
   isCreate,
-  project,
-}: ManageProjectPageProps): JSX.Element => (
-  <>
-    <h2 className="page__title">
-      {isCreate ? "New project" : "Update project"}
-    </h2>
+}: ManageProjectPageProps): JSX.Element => {
+  const { projectId } = useParams();
+  const requestedProject = useAppSelector((state) =>
+    state.userData.projects.find(({ id }) => id === projectId)
+  );
 
-    <ProjectForm isCreate={isCreate} project={project} />
-  </>
-);
+  const [project] = useState(requestedProject);
+
+  return (
+    <>
+      <h2 className="page__title">
+        {isCreate ? "New project" : "Update project"}
+      </h2>
+
+      {!isCreate && project ? (
+        <ProjectForm isCreate={isCreate} project={project} />
+      ) : (
+        <span>Loading the requested project...</span>
+      )}
+      {isCreate && <ProjectForm isCreate={isCreate} />}
+    </>
+  );
+};
 
 export default ManageProjectPage;

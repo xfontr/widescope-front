@@ -177,14 +177,17 @@ const handlers = [
       )
   ),
 
-  rest.put(`${apiUrl}${endpoints.updateProject}`, async (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json<UpdatedProject>({
-        projectUpdated: mockProject,
-      })
-    );
-  }),
+  rest.put(
+    `${apiUrl}${endpoints.updateProject}${mockProject.id}`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json<UpdatedProject>({
+          projectUpdated: mockProject,
+        })
+      );
+    }
+  ),
 ];
 
 export default handlers;
