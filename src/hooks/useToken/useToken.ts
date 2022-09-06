@@ -20,31 +20,31 @@ const useToken = () => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
 
   const getToken = useCallback(async () => {
-    if (isLogged) {
+    const token = localStorage.getItem("token");
+
+    if (isLogged || !token) {
       return;
     }
-    const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(setVisibilityActionCreator(true));
-      const decodedToken = getTokenData(token);
 
-      try {
-        const user = await getUserData(decodedToken.id);
+    dispatch(setVisibilityActionCreator(true));
+    const decodedToken = getTokenData(token);
 
-        dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
-        dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
-        dispatch(toggleStatusActionCreator(true));
+    try {
+      const user = await getUserData(decodedToken.id);
 
-        dispatch(setVisibilityActionCreator(false));
-      } catch (error) {
-        localStorage.clear();
-        dispatch(
-          closeActionCreator({
-            message: `Log in error: ${error}`,
-            type: "error",
-          })
-        );
-      }
+      dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
+      dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
+      dispatch(toggleStatusActionCreator(true));
+
+      dispatch(setVisibilityActionCreator(false));
+    } catch (error) {
+      localStorage.clear();
+      dispatch(
+        closeActionCreator({
+          message: `Log in error: ${error}`,
+          type: "error",
+        })
+      );
     }
   }, [getUserData, dispatch, isLogged]);
 
