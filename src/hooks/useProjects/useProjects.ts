@@ -140,7 +140,31 @@ const useProjects = () => {
     [dispatch, token]
   );
 
-  return { getAll, getById, create, getByAuthor };
+  const deleteProject = useCallback(
+    async (projectId: string) => {
+      dispatch(setVisibilityActionCreator(true));
+
+      try {
+        axios.delete(`${apiUrl}${endpoints.deleteProject}${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        dispatch(setVisibilityActionCreator(false));
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: "Error while deleting the project",
+            type: "error",
+          })
+        );
+      }
+    },
+    [token]
+  );
+
+  return { getAll, getById, create, getByAuthor, deleteProject };
 };
 
 export default useProjects;
