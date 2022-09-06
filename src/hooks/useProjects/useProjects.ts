@@ -6,6 +6,7 @@ import {
   addProjectActionCreator,
   deleteProjectActionCreator,
   loadAllActionCreator,
+  updateProjectActionCreator,
 } from "../../store/slices/projects/projectsSlice";
 import {
   closeActionCreator,
@@ -14,12 +15,14 @@ import {
 import {
   deleteUserProjectActionCreator,
   loadUserProjectsActionCreator,
+  updateUserProjectActionCreator,
 } from "../../store/slices/userData/userDataSlice";
 import { IProject, Projects } from "../../types/project";
 import {
   GetAllProjects,
   GetProjectById,
   NewProject,
+  UpdatedProject,
   UserProjects,
 } from "../types/useProjectTypes";
 
@@ -171,7 +174,42 @@ const useProjects = () => {
     [token, dispatch]
   );
 
-  return { getAll, getById, create, getByAuthor, deleteProject };
+  const updateProject = useCallback(async (project: FormData) => {
+    try {
+      dispatch(setVisibilityActionCreator(true));
+
+      const {
+        data: { projectUpdated },
+      }: AxiosResponse<UpdatedProject> = await axios.put(
+        `${apiUrl}${endpoints.updateProject}`,
+        project,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      dispatch(updateProjectActionCreator(projectUpdated));
+      dispatch(updateUserProjectActionCreator(projectUpdated));
+      dispatch(
+        closeActionCreator({
+          message: "Project created successfully",
+          type: "success",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        closeActionCreator({
+          message: `Error while creating the project: ${error}`,
+          type: "error",
+        })
+      );
+    }
+  }, []);
+
+  return { getAll, getById, create, getByAuthor, deleteProject, updateProject };
 };
 
 export default useProjects;

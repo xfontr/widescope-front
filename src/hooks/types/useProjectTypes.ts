@@ -12,6 +12,10 @@ export interface NewProject {
   projectCreated: IProject;
 }
 
+export interface UpdatedProject {
+  projectUpdated: IProject;
+}
+
 export interface UserProjects {
   projectsByAuthor: {
     author: string;
