@@ -11,7 +11,10 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
-import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
+import {
+  deleteUserProjectActionCreator,
+  loadUserProjectsActionCreator,
+} from "../../store/slices/userData/userDataSlice";
 import { IProject, Projects } from "../../types/project";
 import {
   GetAllProjects,
@@ -153,6 +156,8 @@ const useProjects = () => {
         });
 
         dispatch(deleteProjectActionCreator(projectId));
+        dispatch(deleteUserProjectActionCreator(projectId));
+
         dispatch(setVisibilityActionCreator(false));
       } catch (error) {
         dispatch(

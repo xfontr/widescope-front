@@ -10,7 +10,10 @@ import {
   closeActionCreator,
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
-import { loadUserProjectsActionCreator } from "../../store/slices/userData/userDataSlice";
+import {
+  deleteUserProjectActionCreator,
+  loadUserProjectsActionCreator,
+} from "../../store/slices/userData/userDataSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
@@ -322,6 +325,9 @@ describe("Given a deleteProject function returned by a useProjects function", ()
           deleteProjectActionCreator(mockProject.id)
         );
       });
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        deleteUserProjectActionCreator(mockProject.id)
+      );
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(false)
