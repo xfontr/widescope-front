@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Projects } from "../../../types/project";
+import { IProject, Projects } from "../../../types/project";
 import { UserExtraData } from "../../../types/user";
 
 const userDataInitialState = {} as UserExtraData;
@@ -22,6 +22,13 @@ const userDataSlice = createSlice({
         (project) => project.id !== action.payload
       ),
     }),
+
+    updateUserProject: (previousState, action: PayloadAction<IProject>) => ({
+      ...previousState,
+      projects: previousState.projects.map((project) =>
+        project.id === action.payload.id ? action.payload : project
+      ),
+    }),
   },
 });
 
@@ -34,4 +41,7 @@ export const { loadUserProjects: loadUserProjectsActionCreator } =
   userDataSlice.actions;
 
 export const { deleteUserProject: deleteUserProjectActionCreator } =
+  userDataSlice.actions;
+
+export const { updateUserProject: updateUserProjectActionCreator } =
   userDataSlice.actions;

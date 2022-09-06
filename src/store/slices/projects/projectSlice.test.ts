@@ -5,6 +5,7 @@ import {
   deleteProjectActionCreator,
   loadAllActionCreator,
   projectsReducer,
+  updateProjectActionCreator,
 } from "./projectsSlice";
 
 describe("Given a loadAllActionCreator function", () => {
@@ -41,7 +42,7 @@ describe("Given a addProjectActionCreator function", () => {
 
 describe("Given a deleteProjectActionCreator function", () => {
   describe("When called with a project id as a payload", () => {
-    test("Then it should return an action with a type 'projects/deleteProject' and an said id as payload", () => {
+    test("Then it should return an action with a type 'projects/deleteProject' and said id as payload", () => {
       const actionType = "projects/deleteProject";
       const expectedAction = {
         type: actionType,
@@ -49,6 +50,22 @@ describe("Given a deleteProjectActionCreator function", () => {
       };
 
       const action = deleteProjectActionCreator(expectedAction.payload);
+
+      expect(action).toStrictEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given a updateProjectActionCreator function", () => {
+  describe("When called with a project as a payload", () => {
+    test("Then it should return an action with a type 'projects/updateProject' and said project as payload", () => {
+      const actionType = "projects/updateProject";
+      const expectedAction = {
+        type: actionType,
+        payload: mockProject,
+      };
+
+      const action = updateProjectActionCreator(expectedAction.payload);
 
       expect(action).toStrictEqual(expectedAction);
     });
@@ -92,6 +109,29 @@ describe("Given a projectsReducer function", () => {
 
       const expectedResult = [] as Projects;
       const action = deleteProjectActionCreator(mockProject.id);
+
+      const result = projectsReducer(initialState, action);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a updateProject action", () => {
+    test("Then it should update the project in the state that matches payload's object", () => {
+      const initialState = [
+        mockProject,
+        { mockProject, id: "random id" },
+      ] as Projects;
+
+      const expectedResult = [
+        { ...mockProject, name: "Updated project" },
+        { mockProject, id: "random id" },
+      ] as Projects;
+
+      const action = updateProjectActionCreator({
+        ...mockProject,
+        name: "Updated project",
+      });
 
       const result = projectsReducer(initialState, action);
 

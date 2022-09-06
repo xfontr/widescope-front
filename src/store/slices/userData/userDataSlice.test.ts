@@ -1,10 +1,12 @@
 import mockProject from "../../../test-utils/mocks/mockProject";
 import { mockUserExtraData } from "../../../test-utils/mocks/mockUserData";
+import { Projects } from "../../../types/project";
 import { UserExtraData } from "../../../types/user";
 import {
   deleteUserProjectActionCreator,
   loadUserDataActionCreator,
   loadUserProjectsActionCreator,
+  updateUserProjectActionCreator,
   userDataReducer,
 } from "./userDataSlice";
 
@@ -56,6 +58,22 @@ describe("Given a deleteUserProject function", () => {
   });
 });
 
+describe("Given a updateUserProjectActionCreator function", () => {
+  describe("When called with a project as a payload", () => {
+    test("Then it should return an action with a type 'userData/updateUserProject' and said project as payload", () => {
+      const actionType = "userData/updateUserProject";
+      const expectedAction = {
+        type: actionType,
+        payload: mockProject,
+      };
+
+      const action = updateUserProjectActionCreator(expectedAction.payload);
+
+      expect(action).toStrictEqual(expectedAction);
+    });
+  });
+});
+
 describe("Given a userDataReducer function", () => {
   describe("When called with a loadUser action with a new user as a payload", () => {
     test("Then it should replace the previous user with the passed one", () => {
@@ -95,6 +113,32 @@ describe("Given a userDataReducer function", () => {
       const action = deleteUserProjectActionCreator(mockProject.id);
 
       const result = userDataReducer(previousState, action);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a updateUserProject action", () => {
+    test("Then it should update the project in the state that matches payload's object", () => {
+      const initialState = {
+        ...mockUserExtraData,
+        projects: [mockProject, { ...mockProject, id: "random id" }],
+      };
+
+      const expectedResult = {
+        ...mockUserExtraData,
+        projects: [
+          { ...mockProject, name: "Updated project" },
+          { ...mockProject, id: "random id" },
+        ],
+      };
+
+      const action = updateUserProjectActionCreator({
+        ...mockProject,
+        name: "Updated project",
+      });
+
+      const result = userDataReducer(initialState, action);
 
       expect(result).toStrictEqual(expectedResult);
     });
