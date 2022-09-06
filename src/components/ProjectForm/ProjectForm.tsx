@@ -32,7 +32,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
   const initialState = {
     name: project ? project.name : "",
     repository: project ? project.repository : "",
-    logo: project ? project.logo : "",
+    logo: "",
     technologyFront: project ? project.technologies[0] : "",
     technologyBack: project ? project.technologies[1] : "",
     description: project ? project.description : "",
@@ -95,10 +95,6 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
 
     if (!validateValues()) {
       return;
-    }
-
-    if (initialState.logo === values.logo) {
-      formData.delete("logo");
     }
 
     formData.append("project", JSON.stringify(curateData()));

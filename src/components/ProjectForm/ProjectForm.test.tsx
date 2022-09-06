@@ -1,4 +1,5 @@
 import userEvent from "@testing-library/user-event";
+import routes from "../../configs/routes";
 import mockProject from "../../test-utils/mocks/mockProject";
 import {
   createEvent,
@@ -11,10 +12,19 @@ import ProjectForm from "./ProjectForm";
 const mockFile = new File([""], mockProject.logo);
 
 const mockCreate = jest.fn();
+const mockUpdate = jest.fn();
 
 jest.mock("../../hooks/useProjects/useProjects", () => () => ({
   ...jest.requireActual("../../hooks/useProjects/useProjects"),
   create: mockCreate,
+  update: mockUpdate,
+}));
+
+const mockNavigate = jest.fn().mockReturnThis();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
 }));
 
 describe("Given a ProjectForm component", () => {
@@ -42,17 +52,46 @@ describe("Given a ProjectForm component", () => {
 
   describe("When instantiated as an update form", () => {
     test("Then it should show all the inputs of the create form, but different title and button text", () => {
-      render(<ProjectForm isCreate={false} />);
+      render(<ProjectForm isCreate={false} project={mockProject} />);
 
       const form = [
         screen.getByRole("heading", {
-          name: "Update your project",
+          name: `Update ${mockProject.name}`,
           level: 3,
         }),
         screen.getByRole("button", { name: "Update project" }),
       ];
 
       form.forEach((element) => expect(element).toBeInTheDocument());
+    });
+
+    test("Then the fields should be filled with the project details", () => {
+      render(<ProjectForm isCreate={false} project={mockProject} />);
+
+      const formValues = {
+        name: (screen.getByLabelText("Name") as HTMLInputElement).value,
+        repository: (
+          screen.getByLabelText("Repository URL") as HTMLInputElement
+        ).value,
+        technologies: [
+          (
+            screen.getByLabelText(
+              "Frontend main library or framework"
+            ) as HTMLInputElement
+          ).value,
+          (
+            screen.getByLabelText(
+              "Backend main library or framework"
+            ) as HTMLInputElement
+          ).value,
+        ],
+        description: (screen.getByLabelText("Description") as HTMLInputElement)
+          .value,
+      };
+
+      expect(formValues.name).toBe(mockProject.name);
+      expect(formValues.repository).toBe(mockProject.repository);
+      expect(formValues.technologies).toEqual(mockProject.technologies);
     });
   });
 
@@ -119,7 +158,7 @@ describe("Given a ProjectForm component", () => {
       });
     });
 
-    test("If the user submits, the fields should be emptied and the errors restored", async () => {
+    test("If the user submits, the fields should be emptied, the errors restored and sent back to the list", async () => {
       render(<ProjectForm isCreate={true} />);
       const typedText = mockProject.name;
 
@@ -147,6 +186,8 @@ describe("Given a ProjectForm component", () => {
       form.forEach((element) => {
         expect(element).not.toHaveStyle("border-color: rgb(179,120,120)");
       });
+
+      expect(mockNavigate).toHaveBeenCalledWith(routes.personalProjects);
     });
   });
 
@@ -187,6 +228,25 @@ describe("Given a ProjectForm component", () => {
       await userEvent.click(submitButton);
 
       expect(mockCreate).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("When submitted as a update form", () => {
+    test("Then it should call the create function with the form data", async () => {
+      render(<ProjectForm isCreate={false} project={mockProject} />);
+
+      const inputFile = screen.getByLabelText(
+        "Project logo"
+      ) as HTMLInputElement;
+      await userEvent.upload(inputFile, mockFile);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Update project",
+      });
+
+      await userEvent.click(submitButton);
+
+      expect(mockUpdate).toHaveBeenCalled();
     });
   });
 });
