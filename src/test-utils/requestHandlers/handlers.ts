@@ -139,8 +139,8 @@ const handlers = [
 
   rest.get(
     `${apiUrl}${endpoints.projectsByAuthor}wrongId`,
-    async (req, res, ctx) => {
-      return res(
+    async (req, res, ctx) =>
+      res(
         ctx.status(404),
         ctx.json({
           projectsByAuthor: {
@@ -148,8 +148,32 @@ const handlers = [
             total: "0 projects",
           },
         })
-      );
-    }
+      )
+  ),
+
+  rest.delete(
+    `${apiUrl}${endpoints.deleteProject}${mockProject.id}`,
+    async (req, res, ctx) =>
+      res(
+        ctx.status(200),
+        ctx.json({
+          projectDeleted: {
+            id: mockProject.id,
+            status: "Deleted",
+          },
+        })
+      )
+  ),
+
+  rest.delete(
+    `${apiUrl}${endpoints.deleteProject}wrongId`,
+    async (req, res, ctx) =>
+      res(
+        ctx.status(404),
+        ctx.json({
+          error: "Project not found",
+        })
+      )
   ),
 ];
 
