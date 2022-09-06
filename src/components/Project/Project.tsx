@@ -3,6 +3,7 @@ import ProjectStyled from "./ProjectStyled";
 import Button from "./../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { Filter } from "../../types/filter";
+import useProjects from "../../hooks/useProjects/useProjects";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {
@@ -17,6 +18,7 @@ const Project = ({
   isReadOnly = true,
 }: ProjectProps): JSX.Element => {
   const navigate = useNavigate();
+  const { deleteProject } = useProjects();
 
   return (
     <ProjectStyled>
@@ -71,7 +73,15 @@ const Project = ({
             navigate(`/project/${project.id}`);
           }}
         />
-        {!isReadOnly && <Button content="Delete" type="button" />}
+        {!isReadOnly && (
+          <Button
+            content="Delete"
+            type="button"
+            action={async () => {
+              await deleteProject(project.id);
+            }}
+          />
+        )}
       </div>
     </ProjectStyled>
   );

@@ -2,6 +2,7 @@ import mockProject from "../../../test-utils/mocks/mockProject";
 import { mockUserExtraData } from "../../../test-utils/mocks/mockUserData";
 import { UserExtraData } from "../../../types/user";
 import {
+  deleteUserProjectActionCreator,
   loadUserDataActionCreator,
   loadUserProjectsActionCreator,
   userDataReducer,
@@ -39,6 +40,22 @@ describe("Given a loadUserProjectsActionCreator", () => {
   });
 });
 
+describe("Given a deleteUserProject function", () => {
+  describe("When called with a project id as a payload", () => {
+    test("Then it should return an action with a type userData/deleteUserProject and said id as payload", () => {
+      const actionType = "userData/deleteUserProject";
+      const expectedAction = {
+        type: actionType,
+        payload: mockProject.id,
+      };
+
+      const action = deleteUserProjectActionCreator(mockProject.id);
+
+      expect(action).toStrictEqual(expectedAction);
+    });
+  });
+});
+
 describe("Given a userDataReducer function", () => {
   describe("When called with a loadUser action with a new user as a payload", () => {
     test("Then it should replace the previous user with the passed one", () => {
@@ -61,6 +78,21 @@ describe("Given a userDataReducer function", () => {
         projects: [mockProject, mockProject],
       };
       const action = loadUserProjectsActionCreator([mockProject, mockProject]);
+
+      const result = userDataReducer(previousState, action);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a deleteUserProject action with a project id as a payload", () => {
+    test("Then it should delete the project from the list of projects", () => {
+      const previousState = mockUserExtraData;
+      const expectedResult = {
+        ...mockUserExtraData,
+        projects: [],
+      };
+      const action = deleteUserProjectActionCreator(mockProject.id);
 
       const result = userDataReducer(previousState, action);
 
