@@ -12,6 +12,7 @@ import {
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
 import {
+  addUserProjectActionCreator,
   deleteUserProjectActionCreator,
   loadUserProjectsActionCreator,
   updateUserProjectActionCreator,
@@ -155,6 +156,10 @@ describe("Given a create function returned by a useProjects function", () => {
           addProjectActionCreator(mockProject)
         );
       });
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        addUserProjectActionCreator(mockProject)
+      );
     });
 
     test("Then it should call the dispatch to open the success modal", async () => {

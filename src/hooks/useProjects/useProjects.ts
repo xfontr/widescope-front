@@ -13,6 +13,7 @@ import {
   setVisibilityActionCreator,
 } from "../../store/slices/uiModal/uiModalSlice";
 import {
+  addUserProjectActionCreator,
   deleteUserProjectActionCreator,
   loadUserProjectsActionCreator,
   updateUserProjectActionCreator,
@@ -129,6 +130,7 @@ const useProjects = () => {
         );
 
         dispatch(addProjectActionCreator(projectCreated));
+        dispatch(addUserProjectActionCreator(projectCreated));
         dispatch(
           closeActionCreator({
             message: "Project created successfully",
