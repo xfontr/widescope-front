@@ -16,6 +16,11 @@ const userDataSlice = createSlice({
       projects: action.payload,
     }),
 
+    addUserProject: (previousState, action: PayloadAction<IProject>) => ({
+      ...previousState,
+      projects: [...previousState.projects, action.payload],
+    }),
+
     deleteUserProject: (previousState, action: PayloadAction<string>) => ({
       ...previousState,
       projects: previousState.projects.filter(
@@ -38,6 +43,9 @@ export const { loadUserData: loadUserDataActionCreator } =
   userDataSlice.actions;
 
 export const { loadUserProjects: loadUserProjectsActionCreator } =
+  userDataSlice.actions;
+
+export const { addUserProject: addUserProjectActionCreator } =
   userDataSlice.actions;
 
 export const { deleteUserProject: deleteUserProjectActionCreator } =

@@ -1,8 +1,8 @@
 import mockProject from "../../../test-utils/mocks/mockProject";
 import { mockUserExtraData } from "../../../test-utils/mocks/mockUserData";
-import { Projects } from "../../../types/project";
 import { UserExtraData } from "../../../types/user";
 import {
+  addUserProjectActionCreator,
   deleteUserProjectActionCreator,
   loadUserDataActionCreator,
   loadUserProjectsActionCreator,
@@ -36,6 +36,22 @@ describe("Given a loadUserProjectsActionCreator", () => {
       };
 
       const action = loadUserProjectsActionCreator([mockProject]);
+
+      expect(action).toStrictEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given a addUserProjectActionCreator", () => {
+  describe("When called with a project as a payload", () => {
+    test("Then it should return an action with a type userData/addUserProject and said project as payload", () => {
+      const actionType = "userData/addUserProject";
+      const expectedAction = {
+        type: actionType,
+        payload: mockProject,
+      };
+
+      const action = addUserProjectActionCreator(mockProject);
 
       expect(action).toStrictEqual(expectedAction);
     });
@@ -96,6 +112,21 @@ describe("Given a userDataReducer function", () => {
         projects: [mockProject, mockProject],
       };
       const action = loadUserProjectsActionCreator([mockProject, mockProject]);
+
+      const result = userDataReducer(previousState, action);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a addUserProject action with a project as a payload", () => {
+    test("Then it should add the passed project to the previous state", () => {
+      const previousState = mockUserExtraData;
+      const expectedResult = {
+        ...mockUserExtraData,
+        projects: [mockProject, mockProject],
+      };
+      const action = addUserProjectActionCreator(mockProject);
 
       const result = userDataReducer(previousState, action);
 
