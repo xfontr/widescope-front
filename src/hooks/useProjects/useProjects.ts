@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
 import {
   addProjectActionCreator,
+  deleteProjectActionCreator,
   loadAllActionCreator,
 } from "../../store/slices/projects/projectsSlice";
 import {
@@ -140,7 +141,32 @@ const useProjects = () => {
     [dispatch, token]
   );
 
-  return { getAll, getById, create, getByAuthor };
+  const deleteProject = useCallback(
+    async (projectId: string) => {
+      dispatch(setVisibilityActionCreator(true));
+
+      try {
+        await axios.delete(`${apiUrl}${endpoints.deleteProject}${projectId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        dispatch(deleteProjectActionCreator(projectId));
+        dispatch(setVisibilityActionCreator(false));
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: "Error while deleting the project",
+            type: "error",
+          })
+        );
+      }
+    },
+    [token, dispatch]
+  );
+
+  return { getAll, getById, create, getByAuthor, deleteProject };
 };
 
 export default useProjects;

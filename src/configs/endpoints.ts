@@ -8,6 +8,7 @@ const endpoints = {
   projectById: "/projects/",
   projectsByAuthor: "/projects/author/",
   createProject: "/projects/new",
+  deleteProject: "/projects/delete/",
 };
 
 export default endpoints;
