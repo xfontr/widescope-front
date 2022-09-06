@@ -1,11 +1,6 @@
 import userEvent from "@testing-library/user-event";
-import { useState } from "react";
 import mockProject from "../../test-utils/mocks/mockProject";
-import {
-  render,
-  renderHook,
-  screen,
-} from "../../test-utils/render/customRender";
+import { render, screen, waitFor } from "../../test-utils/render/customRender";
 import { Filter } from "../../types/filter";
 import Project from "./Project";
 
@@ -14,6 +9,12 @@ const mockNavigate = jest.fn().mockReturnThis();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => mockNavigate,
+}));
+
+const mockDeleteProject = jest.fn();
+
+jest.mock("../../hooks/useProjects/useProjects", () => () => ({
+  deleteProject: mockDeleteProject,
 }));
 
 describe("Given a Project component", () => {
@@ -75,7 +76,7 @@ describe("Given a Project component", () => {
     });
   });
 
-  describe("When instantiated as readOnly", () => {
+  describe("When instantiated as not readOnly", () => {
     test("Then it should also show a delete button", () => {
       render(<Project project={mockProject} isReadOnly={false} />);
 
@@ -84,6 +85,20 @@ describe("Given a Project component", () => {
       });
 
       expect(deleteButton).toBeInTheDocument();
+    });
+
+    test("Then, on clicking the delete button, a delete function should be called with the project id", async () => {
+      render(<Project project={mockProject} isReadOnly={false} />);
+
+      const deleteButton = screen.getByRole("button", {
+        name: "Delete",
+      });
+
+      await userEvent.click(deleteButton);
+
+      await waitFor(() => {
+        expect(mockDeleteProject).toHaveBeenCalledWith(mockProject.id);
+      });
     });
   });
 });
