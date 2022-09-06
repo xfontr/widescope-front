@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { IProject, Projects } from "../../../types/project";
 
 const projectsInitialState: Projects = [];
@@ -16,6 +16,14 @@ const projectsSlice = createSlice({
 
     deleteProject: (previousState, action: PayloadAction<string>) =>
       previousState.filter((project) => project.id !== action.payload),
+
+    updateProject: (previousState, action: PayloadAction<IProject>) =>
+      previousState.map((project, index, array) => {
+        if (project.id === action.payload.id) {
+          return action.payload;
+        }
+        return project;
+      }),
   },
 });
 
@@ -26,4 +34,7 @@ export const { loadAll: loadAllActionCreator } = projectsSlice.actions;
 export const { addProject: addProjectActionCreator } = projectsSlice.actions;
 
 export const { deleteProject: deleteProjectActionCreator } =
+  projectsSlice.actions;
+
+export const { updateProject: updateProjectActionCreator } =
   projectsSlice.actions;
