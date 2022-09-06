@@ -102,7 +102,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
     if (isCreate) {
       await create(formData);
     } else {
-      await update(formData);
+      await update(formData, project!.id);
     }
 
     clearForm();

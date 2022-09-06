@@ -177,14 +177,29 @@ const handlers = [
       )
   ),
 
-  rest.put(`${apiUrl}${endpoints.updateProject}`, async (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json<UpdatedProject>({
-        projectUpdated: mockProject,
-      })
-    );
-  }),
+  rest.put(
+    `${apiUrl}${endpoints.updateProject}${mockProject.id}`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json<UpdatedProject>({
+          projectUpdated: mockProject,
+        })
+      );
+    }
+  ),
+
+  rest.put(
+    `${apiUrl}${endpoints.updateProject}wrongId`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          error: "Could't update the project",
+        })
+      );
+    }
+  ),
 ];
 
 export default handlers;

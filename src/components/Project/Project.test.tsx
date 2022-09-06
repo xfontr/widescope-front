@@ -100,5 +100,21 @@ describe("Given a Project component", () => {
         expect(mockDeleteProject).toHaveBeenCalledWith(mockProject.id);
       });
     });
+
+    test("Then, on clicking the update button, it should navigate to the update page", async () => {
+      render(<Project project={mockProject} isReadOnly={false} />);
+
+      const updateButton = screen.getByRole("button", {
+        name: "Update",
+      });
+
+      await userEvent.click(updateButton);
+
+      await waitFor(() => {
+        expect(mockNavigate).toHaveBeenCalledWith(
+          `/projects/update/${mockProject.id}`
+        );
+      });
+    });
   });
 });
