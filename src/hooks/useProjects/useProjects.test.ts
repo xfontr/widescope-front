@@ -3,6 +3,7 @@ import { act } from "react-dom/test-utils";
 import endpoints from "../../configs/endpoints";
 import {
   addProjectActionCreator,
+  deleteProjectActionCreator,
   loadAllActionCreator,
 } from "../../store/slices/projects/projectsSlice";
 import {
@@ -285,6 +286,67 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           loadUserProjectsActionCreator(mockUser.projects)
+        );
+      });
+    });
+  });
+});
+
+describe("Given a deleteProject function returned by a useProjects function", () => {
+  const {
+    result: {
+      current: { deleteProject },
+    },
+  } = renderHook(useProjects);
+
+  describe("When called with a valid project id", () => {
+    test("Then it should call the dispatch to open the loading modal", async () => {
+      await act(async () => {
+        await deleteProject(mockProject.id);
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          setVisibilityActionCreator(true)
+        );
+      });
+    });
+
+    test("Then it should call the dispatch with the delete action creator and close the modal", async () => {
+      await act(async () => {
+        await deleteProject(mockProject.id);
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          deleteProjectActionCreator(mockProject.id)
+        );
+      });
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(false)
+      );
+    });
+  });
+
+  describe("When called with an invalid project id", () => {
+    test("Then it should not dispatch the delete action and should close the modal with an error", async () => {
+      await act(async () => {
+        await deleteProject("wrongId");
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).not.toHaveBeenCalledWith(
+          deleteProjectActionCreator(mockProject.id)
+        );
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Error while deleting the project",
+            type: "error",
+          })
         );
       });
     });

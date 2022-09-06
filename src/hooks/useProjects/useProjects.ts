@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
 import {
   addProjectActionCreator,
+  deleteProjectActionCreator,
   loadAllActionCreator,
 } from "../../store/slices/projects/projectsSlice";
 import {
@@ -145,12 +146,13 @@ const useProjects = () => {
       dispatch(setVisibilityActionCreator(true));
 
       try {
-        axios.delete(`${apiUrl}${endpoints.deleteProject}${projectId}`, {
+        await axios.delete(`${apiUrl}${endpoints.deleteProject}${projectId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
+        dispatch(deleteProjectActionCreator(projectId));
         dispatch(setVisibilityActionCreator(false));
       } catch (error) {
         dispatch(
@@ -161,7 +163,7 @@ const useProjects = () => {
         );
       }
     },
-    [token]
+    [token, dispatch]
   );
 
   return { getAll, getById, create, getByAuthor, deleteProject };
