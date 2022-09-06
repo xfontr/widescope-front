@@ -13,6 +13,9 @@ const projectsSlice = createSlice({
       ...previousState,
       action.payload,
     ],
+
+    deleteProject: (previousState, action: PayloadAction<string>) =>
+      previousState.filter((project) => project.id !== action.payload),
   },
 });
 
@@ -21,3 +24,6 @@ export const projectsReducer = projectsSlice.reducer;
 export const { loadAll: loadAllActionCreator } = projectsSlice.actions;
 
 export const { addProject: addProjectActionCreator } = projectsSlice.actions;
+
+export const { deleteProject: deleteProjectActionCreator } =
+  projectsSlice.actions;

@@ -2,6 +2,7 @@ import mockProject from "../../../test-utils/mocks/mockProject";
 import { Projects } from "../../../types/project";
 import {
   addProjectActionCreator,
+  deleteProjectActionCreator,
   loadAllActionCreator,
   projectsReducer,
 } from "./projectsSlice";
@@ -24,7 +25,7 @@ describe("Given a loadAllActionCreator function", () => {
 
 describe("Given a addProjectActionCreator function", () => {
   describe("When called with a project as payload", () => {
-    test("Then it should return an action with a type 'projects/addProject' and an said as payload", () => {
+    test("Then it should return an action with a type 'projects/addProject' and an said project as payload", () => {
       const actionType = "projects/addProject";
       const expectedAction = {
         type: actionType,
@@ -32,6 +33,22 @@ describe("Given a addProjectActionCreator function", () => {
       };
 
       const action = addProjectActionCreator(expectedAction.payload);
+
+      expect(action).toStrictEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given a deleteProjectActionCreator function", () => {
+  describe("When called with a project id as a payload", () => {
+    test("Then it should return an action with a type 'projects/deleteProject' and an said id as payload", () => {
+      const actionType = "projects/deleteProject";
+      const expectedAction = {
+        type: actionType,
+        payload: mockProject.id,
+      };
+
+      const action = deleteProjectActionCreator(expectedAction.payload);
 
       expect(action).toStrictEqual(expectedAction);
     });
@@ -66,6 +83,19 @@ describe("Given a projectsReducer function", () => {
 
       expect(result).toStrictEqual(expectedResult);
       expect(result).toHaveLength(2);
+    });
+  });
+
+  describe("When called with a deleteProject action", () => {
+    test("Then it should remove the project passed in the action from the state", () => {
+      const initialState = [mockProject] as Projects;
+
+      const expectedResult = [] as Projects;
+      const action = deleteProjectActionCreator(mockProject.id);
+
+      const result = projectsReducer(initialState, action);
+
+      expect(result).toStrictEqual(expectedResult);
     });
   });
 });
