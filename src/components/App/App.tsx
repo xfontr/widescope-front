@@ -9,7 +9,7 @@ import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
 import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
-import CreateProjectPage from "../../pages/CreateProjectPage/CreateProjectPage";
+import ManageProjectPage from "../../pages/ManageProjectPage/ManageProjectPage";
 import Validator from "../Validator/Validator";
 import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
 
@@ -41,7 +41,7 @@ const App = (): JSX.Element => {
             path={routes.createProject}
             element={
               <Validator>
-                <CreateProjectPage />
+                <ManageProjectPage isCreate={true} />
               </Validator>
             }
           />
