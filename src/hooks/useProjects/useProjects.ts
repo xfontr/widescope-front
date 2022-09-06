@@ -174,42 +174,45 @@ const useProjects = () => {
     [token, dispatch]
   );
 
-  const updateProject = useCallback(async (project: FormData) => {
-    try {
-      dispatch(setVisibilityActionCreator(true));
+  const update = useCallback(
+    async (project: FormData) => {
+      try {
+        dispatch(setVisibilityActionCreator(true));
 
-      const {
-        data: { projectUpdated },
-      }: AxiosResponse<UpdatedProject> = await axios.put(
-        `${apiUrl}${endpoints.updateProject}`,
-        project,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        const {
+          data: { projectUpdated },
+        }: AxiosResponse<UpdatedProject> = await axios.put(
+          `${apiUrl}${endpoints.updateProject}`,
+          project,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      dispatch(updateProjectActionCreator(projectUpdated));
-      dispatch(updateUserProjectActionCreator(projectUpdated));
-      dispatch(
-        closeActionCreator({
-          message: "Project created successfully",
-          type: "success",
-        })
-      );
-    } catch (error) {
-      dispatch(
-        closeActionCreator({
-          message: `Error while creating the project: ${error}`,
-          type: "error",
-        })
-      );
-    }
-  }, []);
+        dispatch(updateProjectActionCreator(projectUpdated));
+        dispatch(updateUserProjectActionCreator(projectUpdated));
+        dispatch(
+          closeActionCreator({
+            message: "Project updated successfully",
+            type: "success",
+          })
+        );
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: "Error while updating the project",
+            type: "error",
+          })
+        );
+      }
+    },
+    [dispatch, token]
+  );
 
-  return { getAll, getById, create, getByAuthor, deleteProject, updateProject };
+  return { getAll, getById, create, getByAuthor, deleteProject, update };
 };
 
 export default useProjects;

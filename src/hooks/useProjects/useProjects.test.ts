@@ -5,6 +5,7 @@ import {
   addProjectActionCreator,
   deleteProjectActionCreator,
   loadAllActionCreator,
+  updateProjectActionCreator,
 } from "../../store/slices/projects/projectsSlice";
 import {
   closeActionCreator,
@@ -13,6 +14,7 @@ import {
 import {
   deleteUserProjectActionCreator,
   loadUserProjectsActionCreator,
+  updateUserProjectActionCreator,
 } from "../../store/slices/userData/userDataSlice";
 import mockProject from "../../test-utils/mocks/mockProject";
 import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
@@ -351,6 +353,94 @@ describe("Given a deleteProject function returned by a useProjects function", ()
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
             message: "Error while deleting the project",
+            type: "error",
+          })
+        );
+      });
+    });
+  });
+});
+
+describe("Given a update function returned by a useProjects function", () => {
+  describe("When called with a valid project in a formData as an argument", () => {
+    const project = new FormData();
+
+    project.append("project", JSON.stringify(mockProject));
+    project.append("logo", new File([""], ""));
+
+    const {
+      result: {
+        current: { update },
+      },
+    } = renderHook(useProjects);
+
+    test("Then it should call the dispatch to open the loading modal", async () => {
+      await act(async () => {
+        await update(project);
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          setVisibilityActionCreator(true)
+        );
+      });
+    });
+
+    test("Then it should call the projects dispatch an add the returned project from the API", async () => {
+      await act(async () => {
+        await update(project);
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          updateProjectActionCreator(mockProject)
+        );
+      });
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        updateUserProjectActionCreator(mockProject)
+      );
+    });
+
+    test("Then it should call the dispatch to open the success modal", async () => {
+      await act(async () => {
+        await update(project);
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Project updated successfully",
+            type: "success",
+          })
+        );
+      });
+    });
+  });
+
+  describe("When called but the update fetch fails", () => {
+    const project = new FormData();
+
+    project.append("project", JSON.stringify(mockProject));
+    project.append("logo", new File([""], ""));
+
+    const {
+      result: {
+        current: { update },
+      },
+    } = renderHook(useProjects);
+
+    test("Then it should call the dispatch to open the error modal", async () => {
+      endpoints.updateProject = "/projects/newError";
+
+      await act(async () => {
+        await update(project);
+      });
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Error while updating the project",
             type: "error",
           })
         );
