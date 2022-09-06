@@ -1,5 +1,12 @@
 import AppStyled from "./AppStyled";
-import { Navigate, Route, Routes, Link } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
@@ -15,10 +22,15 @@ import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getToken();
-  }, [getToken]);
+    (async () => {
+      await getToken();
+    })();
+    navigate(pathname);
+  }, [getToken, navigate, pathname]);
 
   return (
     <AppStyled>
@@ -32,9 +44,8 @@ const App = (): JSX.Element => {
       <main>
         <Routes>
           <Route path={routes.root} element={<Navigate to={routes.home} />} />
-          <Route path={routes.home} element={<LogInPage />} />
+          <Route path={routes.home} element={<ExplorePage />} />
           <Route path={routes.signUp} element={<SignUpPage />} />
-          <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.logIn} element={<LogInPage />} />
           <Route path={routes.explore} element={<ExplorePage />} />
           <Route

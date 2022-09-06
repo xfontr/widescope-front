@@ -1,7 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import routes from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -19,7 +17,6 @@ import useUser from "../useUser/useUser";
 const useToken = () => {
   const { getUserData } = useUser();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const isLogged = useAppSelector((state) => state.user.isLogged);
 
   const getToken = useCallback(async () => {
@@ -39,7 +36,6 @@ const useToken = () => {
         dispatch(toggleStatusActionCreator(true));
 
         dispatch(setVisibilityActionCreator(false));
-        navigate(routes.explore);
       } catch (error) {
         localStorage.clear();
         dispatch(
@@ -48,10 +44,9 @@ const useToken = () => {
             type: "error",
           })
         );
-        navigate(routes.logIn);
       }
     }
-  }, [getUserData, dispatch, navigate, isLogged]);
+  }, [getUserData, dispatch, isLogged]);
 
   return getToken;
 };
