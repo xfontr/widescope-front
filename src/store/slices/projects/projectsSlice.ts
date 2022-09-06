@@ -17,13 +17,11 @@ const projectsSlice = createSlice({
     deleteProject: (previousState, action: PayloadAction<string>) =>
       previousState.filter((project) => project.id !== action.payload),
 
-    updateProject: (previousState, action: PayloadAction<IProject>) =>
-      previousState.map((project, index, array) => {
-        if (project.id === action.payload.id) {
-          return action.payload;
-        }
-        return project;
-      }),
+    updateProject: (previousState, action: PayloadAction<IProject>) => {
+      return previousState.map((project) =>
+        project.id === action.payload.id ? action.payload : project
+      );
+    },
   },
 });
 

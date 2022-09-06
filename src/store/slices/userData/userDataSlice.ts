@@ -25,12 +25,9 @@ const userDataSlice = createSlice({
 
     updateUserProject: (previousState, action: PayloadAction<IProject>) => ({
       ...previousState,
-      projects: previousState.projects.map((project, index, array) => {
-        if (project.id === action.payload.id) {
-          return action.payload;
-        }
-        return project;
-      }),
+      projects: previousState.projects.map((project) =>
+        project.id === action.payload.id ? action.payload : project
+      ),
     }),
   },
 });

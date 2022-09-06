@@ -118,10 +118,14 @@ describe("Given a projectsReducer function", () => {
 
   describe("When called with a updateProject action", () => {
     test("Then it should update the project in the state that matches payload's object", () => {
-      const initialState = [mockProject] as Projects;
+      const initialState = [
+        mockProject,
+        { mockProject, id: "random id" },
+      ] as Projects;
 
       const expectedResult = [
         { ...mockProject, name: "Updated project" },
+        { mockProject, id: "random id" },
       ] as Projects;
 
       const action = updateProjectActionCreator({

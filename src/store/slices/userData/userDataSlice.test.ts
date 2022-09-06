@@ -120,11 +120,17 @@ describe("Given a userDataReducer function", () => {
 
   describe("When called with a updateUserProject action", () => {
     test("Then it should update the project in the state that matches payload's object", () => {
-      const initialState = mockUserExtraData;
+      const initialState = {
+        ...mockUserExtraData,
+        projects: [mockProject, { ...mockProject, id: "random id" }],
+      };
 
       const expectedResult = {
         ...mockUserExtraData,
-        projects: [{ ...mockProject, name: "Updated project" }],
+        projects: [
+          { ...mockProject, name: "Updated project" },
+          { ...mockProject, id: "random id" },
+        ],
       };
 
       const action = updateUserProjectActionCreator({
