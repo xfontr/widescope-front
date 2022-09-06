@@ -14,9 +14,9 @@ const ManageProjectPage = ({
   const requestedProject = useAppSelector((state) =>
     state.userData.projects.find(({ id }) => id === projectId)
   );
-
+  debugger;
   const [project] = useState(requestedProject);
-
+  debugger;
   return (
     <>
       <h2 className="page__title">

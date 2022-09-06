@@ -381,7 +381,7 @@ describe("Given a update function returned by a useProjects function", () => {
 
     test("Then it should call the dispatch to open the loading modal", async () => {
       await act(async () => {
-        await update(project);
+        await update(project, mockProject.id);
       });
 
       await waitFor(() => {
@@ -393,7 +393,7 @@ describe("Given a update function returned by a useProjects function", () => {
 
     test("Then it should call the projects dispatch an add the returned project from the API", async () => {
       await act(async () => {
-        await update(project);
+        await update(project, mockProject.id);
       });
 
       await waitFor(() => {
@@ -409,7 +409,7 @@ describe("Given a update function returned by a useProjects function", () => {
 
     test("Then it should call the dispatch to open the success modal", async () => {
       await act(async () => {
-        await update(project);
+        await update(project, mockProject.id);
       });
 
       await waitFor(() => {
@@ -436,10 +436,8 @@ describe("Given a update function returned by a useProjects function", () => {
     } = renderHook(useProjects);
 
     test("Then it should call the dispatch to open the error modal", async () => {
-      endpoints.updateProject = "/projects/newError";
-
       await act(async () => {
-        await update(project);
+        await update(project, "wrongId");
       });
 
       await waitFor(() => {
