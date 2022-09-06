@@ -4,6 +4,7 @@ import {
   GetAllProjects,
   GetProjectById,
   NewProject,
+  UpdatedProject,
   UserProjects,
 } from "../../hooks/types/useProjectTypes";
 import { SignUpResponse, UserToken } from "../../hooks/types/useUserTypes";
@@ -175,6 +176,15 @@ const handlers = [
         })
       )
   ),
+
+  rest.put(`${apiUrl}${endpoints.updateProject}`, async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json<UpdatedProject>({
+        projectUpdated: mockProject,
+      })
+    );
+  }),
 ];
 
 export default handlers;
