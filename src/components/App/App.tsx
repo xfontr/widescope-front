@@ -1,17 +1,10 @@
 import AppStyled from "./AppStyled";
-import {
-  Navigate,
-  Route,
-  Routes,
-  Link,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Navigate, Route, Routes, Link } from "react-router-dom";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import Modal from "../Modal/Modal";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
@@ -22,18 +15,12 @@ import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
-  const [hasChecked, setCheck] = useState(false);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-
-  if (!hasChecked) {
-    getToken();
-    setCheck(true);
-  }
 
   useEffect(() => {
-    navigate(pathname);
-  }, [navigate, pathname]);
+    (async () => {
+      await getToken();
+    })();
+  }, [getToken]);
 
   return (
     <AppStyled>

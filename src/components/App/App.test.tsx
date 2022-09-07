@@ -31,11 +31,10 @@ describe("Given an App component", () => {
       expect(footer).toBeInTheDocument();
     });
 
-    test("Then it should call the getToken function and navigate to the requested path", () => {
+    test("Then it should call the getToken function", () => {
       render(<App />);
 
       expect(mockGetToken).toHaveBeenCalled();
-      expect(mockNavigate).toHaveBeenCalledWith("/");
     });
   });
 });
