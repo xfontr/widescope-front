@@ -1,7 +1,11 @@
 import { IProject, Projects } from "../../types/project";
 
 export interface GetAllProjects {
-  projects: Projects | "No projects found";
+  projects: {
+    offset: number;
+    limit: number;
+    list: Projects;
+  };
 }
 
 export interface GetProjectById {

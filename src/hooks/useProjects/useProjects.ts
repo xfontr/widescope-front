@@ -41,7 +41,7 @@ const useProjects = () => {
         `${apiUrl}${endpoints.getAll}`
       );
 
-      dispatch(loadAllActionCreator(projects as Projects));
+      dispatch(loadAllActionCreator(projects.list as Projects));
     } catch (error) {
       dispatch(setVisibilityActionCreator(true));
       dispatch(
