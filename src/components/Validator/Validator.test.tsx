@@ -1,50 +1,41 @@
 import { render as reactRender, screen } from "@testing-library/react";
-import mockProject from "../../test-utils/mocks/mockProject";
-import { render } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
-import Button from "../Button/Button";
-import Project from "../Project/Project";
 import Validator from "./Validator";
-
-const mockGetToken = jest.fn();
-
-jest.mock("../../hooks/useToken/useToken", () => () => mockGetToken);
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   Navigate: () => {
-    const MockComponent = ({ to }: { to: string }): JSX.Element => (
-      <button>{to}</button>
-    );
-    return <MockComponent to={""} />;
+    const MockNavigate = (): JSX.Element => <>Navigate</>;
+    return <MockNavigate />;
+  },
+  Outlet: () => {
+    const MockOutlet = (): JSX.Element => <>Outlet</>;
+    return <MockOutlet />;
   },
 }));
 
-describe("Given a validator component", () => {
-  describe("When instantiated with another component as a child", () => {
-    test("Then it should render the component if the user is logged", () => {
-      reactRender(
-        <Validator>
-          <Project project={mockProject} />
-        </Validator>,
-        { wrapper: WrapperWithMockStore }
-      );
+describe("Given a Validator component", () => {
+  describe("When instantiated with option as true", () => {
+    test("Then it should render the Outlet, which will render a component passed by the router", () => {
+      reactRender(<Validator option={true} />, {
+        wrapper: WrapperWithMockStore,
+      });
 
-      const projectName = screen.getByText(mockProject.name);
+      const Outlet = screen.getByText("Outlet");
 
-      expect(projectName).toBeInTheDocument();
+      expect(Outlet).toBeInTheDocument();
     });
 
-    test("Then it should not render the component if the user is not logged", () => {
-      render(
-        <Validator>
-          <Button content="Hello" type="button" />
-        </Validator>
-      );
+    describe("When instantiated with option as false", () => {
+      test("Then it should render the Navigate, which will send the user to the specified route", () => {
+        reactRender(<Validator option={false} />, {
+          wrapper: WrapperWithMockStore,
+        });
 
-      const button = screen.queryByRole("button", { name: "Hello" });
+        const Navigate = screen.getByText("Navigate");
 
-      expect(button).not.toBeInTheDocument();
+        expect(Navigate).toBeInTheDocument();
+      });
     });
   });
 });

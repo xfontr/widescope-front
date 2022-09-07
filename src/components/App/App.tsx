@@ -12,8 +12,10 @@ import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPag
 import ManageProjectPage from "../../pages/ManageProjectPage/ManageProjectPage";
 import Validator from "../Validator/Validator";
 import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
+import { useAppSelector } from "../../app/hooks";
 
 const App = (): JSX.Element => {
+  const isLogged = useAppSelector((state) => state.user.isLogged);
   const getToken = useToken();
 
   useEffect(() => {
@@ -40,51 +42,49 @@ const App = (): JSX.Element => {
           <Route path={routes.home} element={<ExplorePage />} />
 
           <Route
-            path={routes.signUp}
             element={
-              <Validator isReverse={true}>
-                <SignUpPage />
-              </Validator>
+              <Validator option={!isLogged} rejectPath={routes.explore} />
             }
-          />
+          >
+            <Route path={routes.signUp} element={<SignUpPage />} />
+          </Route>
 
           <Route
-            path={routes.logIn}
             element={
-              <Validator isReverse={true}>
-                <LogInPage />
-              </Validator>
+              <Validator option={!isLogged} rejectPath={routes.explore} />
             }
-          />
+          >
+            <Route path={routes.logIn} element={<LogInPage />} />
+          </Route>
 
           <Route path={routes.explore} element={<ExplorePage />} />
 
           <Route
-            path={routes.createProject}
-            element={
-              <Validator>
-                <ManageProjectPage isCreate={true} />
-              </Validator>
-            }
-          />
+            element={<Validator option={isLogged} rejectPath={routes.logIn} />}
+          >
+            <Route
+              path={routes.createProject}
+              element={<ManageProjectPage isCreate={true} />}
+            />
+          </Route>
 
           <Route
-            path={routes.personalProjects}
-            element={
-              <Validator>
-                <UserProjectsPage />
-              </Validator>
-            }
-          />
+            element={<Validator option={isLogged} rejectPath={routes.logIn} />}
+          >
+            <Route
+              path={routes.personalProjects}
+              element={<UserProjectsPage />}
+            />
+          </Route>
 
           <Route
-            path={routes.updateProject}
-            element={
-              <Validator>
-                <ManageProjectPage isCreate={false} />
-              </Validator>
-            }
-          />
+            element={<Validator option={isLogged} rejectPath={routes.logIn} />}
+          >
+            <Route
+              path={routes.updateProject}
+              element={<ManageProjectPage isCreate={false} />}
+            />
+          </Route>
 
           <Route
             path={routes.projectDetails}
