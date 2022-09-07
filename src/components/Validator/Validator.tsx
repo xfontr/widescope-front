@@ -1,12 +1,16 @@
-import { PropsWithChildren } from "react";
-import { Navigate } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
+import { Navigate, Outlet } from "react-router-dom";
 import routes from "../../configs/routes";
 
-const Validator = ({ children }: PropsWithChildren): JSX.Element => {
-  const isLogged = useAppSelector((state) => state.user.isLogged);
+interface ValidatorProps {
+  rejectPath?: string;
+  option: boolean;
+}
 
-  return <>{isLogged ? children : <Navigate to={routes.logIn} />}</>;
+const Validator = ({
+  rejectPath = routes.logIn,
+  option,
+}: ValidatorProps): JSX.Element => {
+  return <>{option ? <Outlet /> : <Navigate to={rejectPath} />}</>;
 };
 
 export default Validator;
