@@ -60,10 +60,14 @@ const handlers = [
     return res(
       ctx.status(200),
       ctx.json<GetAllProjects>({
-        projects: [
-          mockProject,
-          { ...mockProject, name: "Fake project", author: "Fake author" },
-        ],
+        projects: {
+          offset: 0,
+          limit: 0,
+          list: [
+            mockProject,
+            { ...mockProject, name: "Fake project", author: "Fake author" },
+          ],
+        },
       })
     );
   }),
@@ -73,8 +77,8 @@ const handlers = [
     async (req, res, ctx) => {
       return res(
         ctx.status(404),
-        ctx.json<GetAllProjects>({
-          projects: [],
+        ctx.json({
+          projects: "No projects found",
         })
       );
     }
