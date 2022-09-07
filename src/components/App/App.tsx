@@ -25,19 +25,40 @@ const App = (): JSX.Element => {
   return (
     <AppStyled>
       <Modal />
+
       <header className="header">
         <Link to="/">
           <h1 className="header__title">wideScope</h1>
         </Link>
         <NavigationMenu />
       </header>
+
       <main>
         <Routes>
           <Route path={routes.root} element={<Navigate to={routes.home} />} />
+
           <Route path={routes.home} element={<ExplorePage />} />
-          <Route path={routes.signUp} element={<SignUpPage />} />
-          <Route path={routes.logIn} element={<LogInPage />} />
+
+          <Route
+            path={routes.signUp}
+            element={
+              <Validator isReverse={true}>
+                <SignUpPage />
+              </Validator>
+            }
+          />
+
+          <Route
+            path={routes.logIn}
+            element={
+              <Validator isReverse={true}>
+                <LogInPage />
+              </Validator>
+            }
+          />
+
           <Route path={routes.explore} element={<ExplorePage />} />
+
           <Route
             path={routes.createProject}
             element={
@@ -46,6 +67,7 @@ const App = (): JSX.Element => {
               </Validator>
             }
           />
+
           <Route
             path={routes.personalProjects}
             element={
@@ -54,6 +76,7 @@ const App = (): JSX.Element => {
               </Validator>
             }
           />
+
           <Route
             path={routes.updateProject}
             element={
@@ -62,12 +85,14 @@ const App = (): JSX.Element => {
               </Validator>
             }
           />
+
           <Route
             path={routes.projectDetails}
             element={<ProjectDetailsPage />}
           />
         </Routes>
       </main>
+
       <footer className="footer">
         <span className="footer__copyright">wideScope © 2022</span>
       </footer>
