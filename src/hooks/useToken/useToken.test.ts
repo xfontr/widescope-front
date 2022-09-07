@@ -22,7 +22,7 @@ Object.defineProperty(window, "localStorage", {
 let mockTokenContent = {
   id: mockUser.id,
   name: mockUser.name,
-} as any;
+};
 
 jest.mock("../../utils/auth", () => () => mockTokenContent);
 
@@ -77,7 +77,7 @@ describe("Given a getToken function returned from a useToken function", () => {
   describe("When called with an invalid token in the localStorage", () => {
     test("Then it should clear the local storage", async () => {
       localStorage.clear = jest.fn();
-      mockTokenContent = {};
+      mockTokenContent = {} as typeof mockTokenContent;
 
       await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
@@ -95,7 +95,7 @@ describe("Given a getToken function returned from a useToken function", () => {
         "TypeError: Cannot read properties of undefined (reading 'id')";
 
       localStorage.clear = jest.fn();
-      mockTokenContent = {};
+      mockTokenContent = {} as typeof mockTokenContent;
 
       await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);

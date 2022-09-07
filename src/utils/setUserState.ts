@@ -1,19 +1,18 @@
 import { DecodedToken } from "../hooks/types/useUserTypes";
 import getTokenData from "./auth";
 
-const setUserState = () => {
-  const token = localStorage.getItem("token");
-  let decodedToken: DecodedToken | undefined = undefined;
+let token: string | null;
+let decodedToken: DecodedToken | undefined = undefined;
 
-  if (token) {
-    decodedToken = getTokenData(token);
-  }
+const setUserState = () => {
+  token = localStorage.getItem("token");
+  decodedToken = token ? getTokenData(token) : undefined;
 
   return {
     isLogged: token ? true : false,
     user: {
-      id: decodedToken ? decodedToken!.id : undefined,
-      name: decodedToken ? decodedToken!.name : undefined,
+      id: decodedToken ? decodedToken.id : undefined,
+      name: decodedToken ? decodedToken.name : undefined,
       token: token ? token : undefined,
     },
   };
