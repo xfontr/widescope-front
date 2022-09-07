@@ -117,7 +117,9 @@ describe("Given a Modal component", () => {
 
       expect(modal).toBeInTheDocument();
 
-      await jest.advanceTimersByTime(2300);
+      await act(async () => {
+        await jest.advanceTimersByTime(2300);
+      });
 
       expect(modal).not.toBeInTheDocument();
     });

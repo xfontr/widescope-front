@@ -8,13 +8,13 @@ describe("Given a Pagination component", () => {
       const mockSetter = jest.fn() as React.Dispatch<
         React.SetStateAction<number>
       >;
-      const page = 1;
+      const page = 0;
       render(<Pagination page={page} setPage={mockSetter} />);
 
       const pagination = [
         screen.getByRole("button", { name: "»" }),
         screen.getByRole("button", { name: "«" }),
-        screen.getByText(page),
+        screen.getByText(page + 1),
       ];
 
       pagination.forEach((page) => expect(page).toBeInTheDocument());

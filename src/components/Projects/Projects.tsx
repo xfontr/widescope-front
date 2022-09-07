@@ -16,9 +16,9 @@ const Projects = ({
 }: ProjectsProps): JSX.Element => {
   return (
     <ProjectsStyled>
-      <ul className="projects__list" key="project-list">
-        {projects.map((project) => (
-          <li className="projects__project">
+      <ul className="projects__list">
+        {projects.map((project, index) => (
+          <li className="projects__project" key={index}>
             <Project
               project={project}
               setFilter={setFilter}

@@ -23,7 +23,7 @@ describe("Given a ProjectDetailsPage component", () => {
   });
 
   describe("When instantiated with an invalid param", () => {
-    test("Then it should display a not found message", async () => {
+    test.only("Then it should display a not found message", async () => {
       mockProjectId = "falseId";
 
       render(<ProjectDetailsPage />);

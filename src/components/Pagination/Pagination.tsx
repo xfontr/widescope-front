@@ -1,3 +1,4 @@
+import { useAppSelector } from "../../app/hooks";
 import Button from "../Button/Button";
 import PaginationStyled from "./PaginationStyled";
 
@@ -6,22 +7,29 @@ interface PaginationProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const minPage = (page: number) => (page < 1 ? 1 : page);
+const maxPage = (page: number, total: number) => (page > total ? total : page);
+
 const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
+  const total = useAppSelector((state) =>
+    state.projects.length < 10 ? page : page + 1
+  );
+
   return (
     <PaginationStyled>
       <Button
         content="«"
         type="button"
         action={() => {
-          setPage(page - 1);
+          setPage(minPage(page) - 1);
         }}
       />
-      <div className="pagination__page">{page}</div>
+      <div className="pagination__page">{page + 1}</div>
       <Button
         content="»"
         type="button"
         action={() => {
-          setPage(page + 1);
+          setPage(maxPage(page + 1, total));
         }}
       />
     </PaginationStyled>

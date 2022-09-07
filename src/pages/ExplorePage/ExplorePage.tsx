@@ -20,13 +20,13 @@ const ExplorePage = (): JSX.Element => {
 
   const [filter, setFilter] = useState(filterInitialState);
   const [projects, setProjects] = useState([] as IProjects);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     (async () => {
-      await getAll();
+      await getAll(page);
     })();
-  }, [getAll]);
+  }, [getAll, page]);
 
   const state = useAppSelector((state: RootState) => state);
 
