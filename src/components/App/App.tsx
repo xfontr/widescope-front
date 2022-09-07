@@ -11,7 +11,7 @@ import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import Modal from "../Modal/Modal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useToken from "../../hooks/useToken/useToken";
 import routes from "../../configs/routes";
 import ExplorePage from "../../pages/ExplorePage/ExplorePage";
@@ -22,15 +22,18 @@ import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
 
 const App = (): JSX.Element => {
   const getToken = useToken();
+  const [hasChecked, setCheck] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  if (!hasChecked) {
+    getToken();
+    setCheck(true);
+  }
+
   useEffect(() => {
-    (async () => {
-      await getToken();
-    })();
     navigate(pathname);
-  }, [getToken, navigate, pathname]);
+  }, [navigate, pathname]);
 
   return (
     <AppStyled>
