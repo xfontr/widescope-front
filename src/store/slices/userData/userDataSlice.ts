@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProject, Projects } from "../../../types/project";
 import { UserExtraData } from "../../../types/user";
 
-const userDataInitialState = {} as UserExtraData;
+const userDataInitialState = {
+  email: "",
+  friends: [],
+  projects: [],
+} as UserExtraData;
 
 const userDataSlice = createSlice({
   name: "userData",

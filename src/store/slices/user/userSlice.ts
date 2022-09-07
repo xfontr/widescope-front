@@ -1,14 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserBasicData } from "../../../types/user";
-
-const userInitialState = {
-  isLogged: false,
-  user: {} as UserBasicData,
-};
+import setUserState from "../../../utils/setUserState";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: userInitialState,
+  initialState: setUserState(),
   reducers: {
     toggleStatus: (previousState, action: PayloadAction<boolean>) => ({
       ...previousState,
@@ -20,7 +16,7 @@ const userSlice = createSlice({
       user: action.payload,
     }),
 
-    logOut: () => userInitialState,
+    logOut: () => setUserState(),
   },
 });
 

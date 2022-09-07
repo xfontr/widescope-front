@@ -46,15 +46,5 @@ describe("Given a validator component", () => {
 
       expect(button).not.toBeInTheDocument();
     });
-
-    test("Then it should call the getToken function if the token hasn't been loaded yet", () => {
-      render(
-        <Validator>
-          <Button content="Hello" type="button" />
-        </Validator>
-      );
-
-      expect(mockGetToken).toHaveBeenCalled();
-    });
   });
 });

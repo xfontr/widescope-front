@@ -12,7 +12,7 @@ const UserProjectsPage = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      await getByAuthor(id);
+      await getByAuthor(id!);
     })();
   }, [getByAuthor, id]);
 

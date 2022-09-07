@@ -1,5 +1,6 @@
 import { mockUserBasicData } from "../../../test-utils/mocks/mockUserData";
 import { UserBasicData } from "../../../types/user";
+import setUserState from "../../../utils/setUserState";
 import {
   loadUserActionCreator,
   logOutActionCreator,
@@ -88,10 +89,7 @@ describe("Given a userReducer function", () => {
 
   describe("When called with a logOut action", () => {
     test("Then it should change the user previous data to the initial one", () => {
-      const userInitialState = {
-        isLogged: false,
-        user: {} as UserBasicData,
-      };
+      const userInitialState = setUserState();
 
       const previousState = {
         isLogged: true,
