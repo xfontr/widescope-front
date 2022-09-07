@@ -5,6 +5,7 @@ import Projects from "../../components/Projects/Projects";
 import useProjects from "../../hooks/useProjects/useProjects";
 import { Filter } from "../../types/filter";
 import { Projects as IProjects } from "../../types/project";
+import Pagination from "../../components/Pagination/Pagination";
 
 const filterInitialState: Filter = {
   filter: "all",
@@ -16,8 +17,10 @@ const filterInitialState: Filter = {
 
 const ExplorePage = (): JSX.Element => {
   const { getAll, getByAuthor } = useProjects();
+
   const [filter, setFilter] = useState(filterInitialState);
   const [projects, setProjects] = useState([] as IProjects);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     (async () => {
@@ -66,7 +69,10 @@ const ExplorePage = (): JSX.Element => {
       )}
 
       {projects.length && (
-        <Projects projects={projects} setFilter={setFilter} />
+        <>
+          <Projects projects={projects} setFilter={setFilter} />
+          <Pagination page={page} setPage={setPage} />
+        </>
       )}
 
       {!projects.length && <span>No projects found.</span>}

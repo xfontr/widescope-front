@@ -8,7 +8,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("Given a ExplorePage component", () => {
   describe("When instantiated", () => {
-    test("Then it should show a title and the projects retreived", async () => {
+    test("Then it should show a title, the projects retreived and the pagination", async () => {
       render(<ExplorePage />);
 
       const heading = screen.getByRole("heading", {
@@ -22,6 +22,13 @@ describe("Given a ExplorePage component", () => {
 
       expect(heading).toBeInTheDocument();
       expect(cards).toHaveLength(1);
+
+      const pagination = [
+        screen.getByRole("button", { name: "»" }),
+        screen.getByRole("button", { name: "«" }),
+      ];
+
+      pagination.forEach((page) => expect(page).toBeInTheDocument());
     });
   });
 
