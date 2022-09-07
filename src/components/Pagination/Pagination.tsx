@@ -1,4 +1,5 @@
 import Button from "../Button/Button";
+import PaginationStyled from "./PaginationStyled";
 
 interface PaginationProps {
   page: number;
@@ -7,11 +8,10 @@ interface PaginationProps {
 
 const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
   return (
-    <div className="pagination">
+    <PaginationStyled>
       <Button
         content="«"
         type="button"
-        customStyle="pagination"
         action={() => {
           setPage(page - 1);
         }}
@@ -20,12 +20,11 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
       <Button
         content="»"
         type="button"
-        customStyle="pagination"
         action={() => {
           setPage(page + 1);
         }}
       />
-    </div>
+    </PaginationStyled>
   );
 };
 

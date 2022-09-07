@@ -1,7 +1,7 @@
 import ButtonStyled from "./ButtonStyled";
 
 type ButtonTypes = "submit" | "button" | "link";
-type ButtonStyles = "default" | "outline" | "pagination";
+type ButtonStyles = "default" | "outline";
 
 interface ButtonProps {
   content: string;
