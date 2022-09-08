@@ -66,24 +66,25 @@ const Project = ({
 
       <div className="project__options">
         <Button
-          content="View full project"
-          type="button"
+          renderAs="a"
           customStyle="outline"
           action={() => {
             navigate(`/project/${project.id}`);
           }}
-        />
+        >
+          View full project
+        </Button>
         {!isReadOnly && (
           <>
             <Button
-              content="Delete"
+              children="Delete"
               type="button"
               action={async () => {
                 await deleteProject(project.id);
               }}
             />
             <Button
-              content="Update"
+              children="Update"
               type="button"
               action={() => {
                 navigate(`/projects/update/${project.id}`);

@@ -64,7 +64,7 @@ const NavigationMenu = (): JSX.Element => {
             {isLogged && (
               <Button
                 type="button"
-                content="Post a project"
+                children="Post a project"
                 action={() => {
                   navigate("/project/new");
                   toggleVisiblity();

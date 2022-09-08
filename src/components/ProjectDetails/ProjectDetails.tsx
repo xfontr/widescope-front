@@ -52,9 +52,9 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
           </span>
 
           <Button
-            type="link"
-            content="Take me to the code (free)"
-            link="https://www.google.com/"
+            renderAs="a"
+            children="Take me to the code (free)"
+            link={project.repository}
           />
         </div>
       </div>
