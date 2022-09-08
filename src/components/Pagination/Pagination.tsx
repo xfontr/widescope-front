@@ -7,13 +7,12 @@ interface PaginationProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const minPage = (page: number) => (page < 1 ? 1 : page);
-const maxPage = (page: number, total: number) => (page > total ? total : page);
-
 const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
-  const total = useAppSelector((state) =>
-    state.projects.length < 10 ? page : page + 1
-  );
+  const total = useAppSelector((state) => state.projects.length);
+  const lastPage = total < 10 ? page : page + 1;
+
+  const minPage = page - 1 <= 0 ? 0 : page - 1;
+  const maxPage = page >= lastPage ? page : page + 1;
 
   return (
     <PaginationStyled>
@@ -21,7 +20,7 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         content="«"
         type="button"
         action={() => {
-          setPage(minPage(page) - 1);
+          setPage(minPage);
         }}
       />
       <div className="pagination__page">{page + 1}</div>
@@ -29,7 +28,7 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         content="»"
         type="button"
         action={() => {
-          setPage(maxPage(page + 1, total));
+          setPage(maxPage);
         }}
       />
     </PaginationStyled>
