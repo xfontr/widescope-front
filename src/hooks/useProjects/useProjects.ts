@@ -34,7 +34,7 @@ const useProjects = () => {
   const { token, id } = useAppSelector((state) => state.user.user);
 
   const getAll = useCallback(
-    async (offset = 0): Promise<void> => {
+    async (offset = 0, technology = ""): Promise<void> => {
       const limit = 10;
 
       try {
@@ -43,7 +43,7 @@ const useProjects = () => {
         }: AxiosResponse<GetAllProjects> = await axios.get(
           `${apiUrl}${endpoints.getAll}?offset=${offset * limit}&limit=${
             offset * limit + limit
-          }`
+          }${technology && "&technology="}${technology}`
         );
 
         dispatch(loadAllActionCreator(projects.list as Projects));

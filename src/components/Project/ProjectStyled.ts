@@ -55,6 +55,13 @@ const ProjectStyled = styled.article`
       padding: 0.25rem 0.8rem;
       font-weight: bold;
       font-size: 1rem;
+      transition: 0.4s;
+      cursor: pointer;
+    }
+
+    &__technology:hover {
+      background-color: ${(props) => props.theme.colors.secondary};
+      color: ${(props) => props.theme.colors.primary};
     }
 
     &__description {

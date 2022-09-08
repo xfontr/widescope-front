@@ -4,6 +4,7 @@ import Button from "./../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { Filter } from "../../types/filter";
 import useProjects from "../../hooks/useProjects/useProjects";
+import { filterInitialState } from "../../pages/ExplorePage/ExplorePage";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {
@@ -29,6 +30,7 @@ const Project = ({
             onClick={() =>
               setFilter &&
               setFilter({
+                ...filterInitialState,
                 filter: "byAuthor",
                 byAuthor: {
                   id: project.authorId,
@@ -56,6 +58,14 @@ const Project = ({
           <li
             className="project__technology"
             key={`${project.id}-technology-${index}`}
+            onClick={() => {
+              setFilter &&
+                setFilter({
+                  ...filterInitialState,
+                  filter: "byTechnology",
+                  byTechnology: technology,
+                });
+            }}
           >
             {`${technology.charAt(0).toUpperCase()}${technology.slice(1)}`}
           </li>

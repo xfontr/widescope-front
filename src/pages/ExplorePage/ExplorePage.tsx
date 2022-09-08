@@ -7,65 +7,76 @@ import { Filter } from "../../types/filter";
 import { Projects as IProjects } from "../../types/project";
 import Pagination from "../../components/Pagination/Pagination";
 
-const filterInitialState: Filter = {
+export const filterInitialState: Filter = {
   filter: "all",
   byAuthor: {
     id: "",
     name: "",
   },
+  byTechnology: "",
 };
 
 const ExplorePage = (): JSX.Element => {
   const { getAll, getByAuthor } = useProjects();
 
-  const [filter, setFilter] = useState(filterInitialState);
+  const [{ filter, byAuthor, byTechnology }, setFilter] =
+    useState(filterInitialState);
   const [projects, setProjects] = useState([] as IProjects);
   const [page, setPage] = useState(0);
 
   useEffect(() => {
     (async () => {
-      await getAll(page);
+      await getAll(page, byTechnology);
     })();
-  }, [getAll, page]);
+  }, [getAll, page, byTechnology]);
 
   const state = useAppSelector((state: RootState) => state);
 
   useEffect(() => {
     (async () => {
-      switch (filter.filter) {
-        case "all":
-          setProjects(state.projects);
-          break;
+      switch (filter) {
         case "byAuthor":
-          const byAuthor = await getByAuthor(filter.byAuthor.id);
-          setProjects(byAuthor as IProjects);
+          const projectsByAuthor = await getByAuthor(byAuthor.id);
+          setProjects(projectsByAuthor as IProjects);
+          break;
+
+        default:
+          setProjects(state.projects);
           break;
       }
     })();
-  }, [filter.filter, filter.byAuthor, state.projects, getByAuthor]);
+  }, [filter, byAuthor, state.projects, getByAuthor]);
 
   return (
     <>
-      {filter.filter === "all" && (
-        <h2 className="page__title">
-          These are the
-          <span className="page__title--bold"> latest projects</span>
-        </h2>
+      {filter !== "all" && (
+        <span
+          className="page__breadcrumbs"
+          onClick={() => setFilter(filterInitialState)}
+        >
+          « Keep exploring
+        </span>
       )}
 
-      {filter.filter === "byAuthor" && (
+      {filter !== "byAuthor" && (
         <>
-          <span
-            className="page__breadcrumbs"
-            onClick={() => setFilter({ ...filter, filter: "all" })}
-          >
-            « Keep exploring
-          </span>
           <h2 className="page__title">
-            Projects by
-            <span className="page__title--bold"> {filter.byAuthor.name}</span>
+            These are the
+            <span className="page__title--bold"> latest projects</span>
           </h2>
+          {filter === "byTechnology" && (
+            <span className="page__title-subheading">
+              Searching by: Technology ({byTechnology})
+            </span>
+          )}
         </>
+      )}
+
+      {filter === "byAuthor" && (
+        <h2 className="page__title">
+          Projects by
+          <span className="page__title--bold"> {byAuthor.name}</span>
+        </h2>
       )}
 
       {projects.length && (
