@@ -36,6 +36,10 @@ const ButtonStyled = styled.button`
     color: ${(props) => props.theme.colors.primary};
     border: 1px solid transparent;
   }
+
+  &.button--disabled {
+    opacity: 50%;
+  }
 `;
 
 export default ButtonStyled;

@@ -1,58 +1,39 @@
+import { ButtonHTMLAttributes, ReactNode, SyntheticEvent } from "react";
 import ButtonStyled from "./ButtonStyled";
 
-type ButtonTypes = "submit" | "button" | "link";
 type ButtonStyles = "default" | "outline";
 
-interface ButtonProps {
-  content: string;
+interface ButtonProps extends ButtonHTMLAttributes<unknown> {
+  children: ReactNode;
+  renderAs?: "button" | "a";
   action?: () => void;
-  type: ButtonTypes;
   customStyle?: ButtonStyles;
   link?: string;
 }
 
 const Button = ({
-  content,
+  children,
+  renderAs,
   action,
-  type,
   customStyle = "default",
   link,
+  ...props
 }: ButtonProps): JSX.Element => {
-  const handleButtonAction = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    if (!action) {
-      return;
-    }
-
-    event.preventDefault();
-
-    action();
+  const handleButtonAction = (event: SyntheticEvent) => {
+    action && event.preventDefault();
+    action && action();
   };
 
   return (
-    <>
-      {type !== "link" && (
-        <ButtonStyled
-          type={type}
-          onClick={(event) => handleButtonAction(event)}
-          className={`button--${customStyle}`}
-        >
-          {content}
-        </ButtonStyled>
-      )}
-      {type === "link" && (
-        <ButtonStyled
-          as={"a"}
-          className={`button--${customStyle}`}
-          href={link}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {content}
-        </ButtonStyled>
-      )}
-    </>
+    <ButtonStyled
+      as={renderAs}
+      href={link}
+      onClick={handleButtonAction}
+      className={`button--${customStyle}`}
+      {...props}
+    >
+      {children}
+    </ButtonStyled>
   );
 };
 
