@@ -1,6 +1,6 @@
 import { waitFor } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -12,11 +12,12 @@ import {
 } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
-import mockUseDispatch from "../../test-utils/mocks/mockUseAppDispatch";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { renderHook } from "../../test-utils/render/customRender";
-import { Wrapper } from "../../test-utils/render/Wrapper";
-import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
+import {
+  setUserBasicData,
+  setUserExtraData,
+} from "../../utils/setUserData/setUserData";
 import useUser from "./useUser";
 
 const signUpData = {
@@ -25,7 +26,7 @@ const signUpData = {
   email: mockUser.email,
 };
 
-jest.mock("../../utils/auth", () => () => ({
+jest.mock("../../utils/auth/auth", () => () => ({
   id: mockUser.id,
   name: mockUser.name,
 }));
@@ -41,6 +42,13 @@ const mockNavigate = jest.fn().mockReturnThis();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: () => mockNavigate,
+}));
+
+const mockUseDispatch = jest.fn();
+
+jest.mock("../../app/hooks", () => ({
+  ...jest.requireActual("../../app/hooks"),
+  useAppDispatch: () => mockUseDispatch,
 }));
 
 const axiosErrorMessage = "AxiosError: Request failed with status code 400";
@@ -64,7 +72,9 @@ describe("Given a signUp function returned by a useUser function", () => {
         expect(result).toBe(true);
       });
 
-      expect(mockUseDispatch).toHaveBeenCalledTimes(6);
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledTimes(6);
+      });
     });
   });
 
@@ -167,13 +177,13 @@ describe("Given a logIn function returned by a useUser function", () => {
       });
     });
 
-    test(`Then it should redirect the user to the page ${routes.explore}`, async () => {
+    test(`Then it should redirect the user to the page ${navRoutes.explore.path}`, async () => {
       await act(async () => {
         await logIn(logInData);
       });
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith(routes.explore);
+        expect(mockNavigate).toHaveBeenCalledWith(navRoutes.explore.path);
       });
     });
   });
@@ -265,7 +275,7 @@ describe("Given a logOut function returned by a useUser function", () => {
         logOut();
       });
 
-      expect(mockNavigate).toHaveBeenCalledWith(routes.logIn);
+      expect(mockNavigate).toHaveBeenCalledWith(navRoutes.logIn.path);
     });
   });
 });

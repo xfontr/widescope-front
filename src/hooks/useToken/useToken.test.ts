@@ -12,7 +12,10 @@ import mockUser from "../../test-utils/mocks/mockUser";
 import { renderHook } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import { IUser } from "../../types/user";
-import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
+import {
+  setUserBasicData,
+  setUserExtraData,
+} from "../../utils/setUserData/setUserData";
 import useToken from "./useToken";
 
 Object.defineProperty(window, "localStorage", {
@@ -24,7 +27,7 @@ let mockTokenContent = {
   name: mockUser.name,
 };
 
-jest.mock("../../utils/auth", () => () => mockTokenContent);
+jest.mock("../../utils/auth/auth", () => () => mockTokenContent);
 
 describe("Given a getToken function returned from a useToken function", () => {
   const {

@@ -10,8 +10,11 @@ import {
 } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import { IUser } from "../../types/user";
-import getTokenData from "../../utils/auth";
-import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
+import getTokenData from "../../utils/auth/auth";
+import {
+  setUserBasicData,
+  setUserExtraData,
+} from "../../utils/setUserData/setUserData";
 import useUser from "../useUser/useUser";
 
 const useToken = () => {
