@@ -2,30 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import { NavRoute, navRoutes } from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import useUser from "../../hooks/useUser/useUser";
+import renderLinks from "../../utils/renderLinks/renderLinks";
 import Button from "../Button/Button";
 import NavigationStyled from "./NavigationMenuStyled";
-
-const showItem = (isLogged: boolean, route: NavRoute) => {
-  if (route.skip) {
-    return false;
-  }
-
-  switch (route.display) {
-    case "never":
-      return false;
-
-    case "always":
-      return true;
-
-    case "notLogged":
-      return isLogged ? false : true;
-
-    case "logged":
-      return isLogged ? true : false;
-  }
-};
 
 const NavigationMenu = (): JSX.Element => {
   const [isMenuVisible, setVisibility] = useState(false);
@@ -63,7 +44,7 @@ const NavigationMenu = (): JSX.Element => {
             <ul className="navigation__links">
               {Object.values(navRoutes).map(
                 (route) =>
-                  showItem(isLogged, route) && (
+                  renderLinks(isLogged, route) && (
                     <li className="navigation__link">
                       <Link
                         to={route.path}

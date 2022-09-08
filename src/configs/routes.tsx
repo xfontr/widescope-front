@@ -69,7 +69,7 @@ export const navRoutes: NavRoutes = {
     render: () => <UserProjectsPage />,
   },
 
-  createProjet: {
+  createProject: {
     path: "/project/new",
     display: "logged",
     skip: true,
