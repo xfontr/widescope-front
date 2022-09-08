@@ -1,5 +1,5 @@
-import { DecodedToken } from "../hooks/types/useUserTypes";
-import getTokenData from "./auth";
+import { DecodedToken } from "../../hooks/types/useUserTypes";
+import getTokenData from "../auth/auth";
 
 let token: string | null;
 let decodedToken: DecodedToken | undefined = undefined;

@@ -1,5 +1,5 @@
-import mockLocalStorage from "../test-utils/mocks/mockLocalStorage";
-import mockUser from "../test-utils/mocks/mockUser";
+import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
+import mockUser from "../../test-utils/mocks/mockUser";
 import setUserState from "./setUserState";
 
 Object.defineProperty(window, "localStorage", {
@@ -11,7 +11,7 @@ let mockTokenContent = {
   name: mockUser.name,
 } as unknown;
 
-jest.mock("./auth", () => () => mockTokenContent);
+jest.mock("../auth/auth", () => () => mockTokenContent);
 
 describe("Given a setUserState function", () => {
   describe("When called and there is a valid token at the local storage", () => {
