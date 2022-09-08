@@ -1,4 +1,4 @@
-export type Filters = "all" | "byAuthor";
+export type Filters = "all" | "byAuthor" | "byTechnology";
 
 export interface Filter {
   filter: Filters;
@@ -6,4 +6,5 @@ export interface Filter {
     id: string;
     name: string;
   };
+  byTechnology: string;
 }
