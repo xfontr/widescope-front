@@ -42,6 +42,15 @@ const GlobalStyles = createGlobalStyle`
     
     @media (min-width: ${styledMainTheme.breakpoints.large}) {
       max-width: 30%;
+
+    &--wide {
+      max-width: 60%;
+    }
+    }
+
+    &-subheading {
+      display: block;
+      margin-bottom: ${styledMainTheme.spacing.paddingSmall};
     }
   }
 

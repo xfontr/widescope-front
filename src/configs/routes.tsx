@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import LogInPage from "../pages/LogInPage/LogInPage";
 import ManageProjectPage from "../pages/ManageProjectPage/ManageProjectPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import ProjectDetailsPage from "../pages/ProjectDetailsPage/ProjectDetailsPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import UserProjectsPage from "../pages/UserProjectsPage/UserProjectsPage";
@@ -20,6 +21,13 @@ export interface NavRoutes {
 }
 
 export const navRoutes: NavRoutes = {
+  notFound: {
+    path: "*",
+    display: "never",
+    name: "Not found",
+    render: () => <NotFoundPage />,
+  },
+
   root: {
     path: "/",
     display: "never",
