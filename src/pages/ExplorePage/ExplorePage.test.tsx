@@ -6,6 +6,28 @@ import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import ExplorePage from "./ExplorePage";
 import userEvent from "@testing-library/user-event";
 
+let mockAmoutOfProjects = 9;
+const mockListOfProjects = new Array(mockAmoutOfProjects).fill(mockProject);
+
+jest.mock("axios", () => ({
+  get: () => ({
+    data: {
+      projects: {
+        offset: 0,
+        limit: 0,
+        list: [
+          ...mockListOfProjects,
+          {
+            ...mockProject,
+            name: "Fake author",
+            technologies: ["false", "false"],
+          },
+        ],
+      },
+    },
+  }),
+}));
+
 describe("Given a ExplorePage component", () => {
   describe("When instantiated", () => {
     test("Then it should show a title, the projects retreived and the pagination", async () => {
@@ -21,7 +43,7 @@ describe("Given a ExplorePage component", () => {
       });
 
       expect(heading).toBeInTheDocument();
-      expect(cards).toHaveLength(1);
+      expect(cards).toHaveLength(mockAmoutOfProjects);
 
       const pagination = [
         screen.getByRole("button", { name: "»" }),
@@ -52,8 +74,8 @@ describe("Given a ExplorePage component", () => {
     test("Then it should show only the projects of the selected user", async () => {
       render(<ExplorePage />);
 
-      const author = await screen.findByText(mockUser.name);
-      await userEvent.click(author);
+      const author = await screen.findAllByText(mockUser.name);
+      await userEvent.click(author[0]);
 
       const heading = await screen.findByRole("heading", {
         name: `Projects by ${mockUser.name}`,
@@ -63,7 +85,7 @@ describe("Given a ExplorePage component", () => {
       const projectByThisAuthor = screen.getAllByText(mockProject.name);
 
       expect(heading).toBeInTheDocument();
-      expect(projectByThisAuthor).toHaveLength(1);
+      expect(projectByThisAuthor).toHaveLength(mockAmoutOfProjects - 1);
 
       await waitFor(() => {
         expect(projectByAnotherAuthor).not.toBeInTheDocument();
@@ -80,10 +102,12 @@ describe("Given a ExplorePage component", () => {
         const currentQuery = screen.queryByText(
           `Searching by: Technology (${mockProject.technologies[0]})`
         );
-        const projects = screen.getAllByText(mockProject.name);
+        const projectTechnologies = screen.getAllByText(
+          mockProject.technologies[0]
+        );
 
         expect(currentQuery).toBeInTheDocument();
-        expect(projects).toHaveLength(1);
+        expect(projectTechnologies).toHaveLength(mockAmoutOfProjects);
       });
     });
 
@@ -91,8 +115,8 @@ describe("Given a ExplorePage component", () => {
       test("Then it should appear a link to reset the filters and see all projects again", async () => {
         render(<ExplorePage />);
 
-        const author = await screen.findByText(mockUser.name);
-        await userEvent.click(author);
+        const author = await screen.findAllByText(mockUser.name);
+        await userEvent.click(author[0]);
         const navigationLink = screen.getByText("« Keep exploring");
 
         expect(navigationLink).toBeInTheDocument();

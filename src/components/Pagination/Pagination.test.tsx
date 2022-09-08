@@ -34,10 +34,23 @@ describe("Given a Pagination component", () => {
       pagination.forEach((page) => expect(page).toBeInTheDocument());
     });
 
+    test("Then it should show nothing if the number of projects is less than 10 and it's the first page", () => {
+      const page = 0;
+      mockTotalProjects = 1;
+      render(<Pagination page={page} setPage={mockSetter} />);
+
+      const pagination = [
+        screen.queryByRole("button", { name: "»" }),
+        screen.queryByRole("button", { name: "«" }),
+        screen.queryByRole("button", { name: "1" }),
+        screen.queryByRole("button", { name: "3" }),
+        screen.queryByText(page + 1),
+      ];
+
+      pagination.forEach((page) => expect(page).not.toBeInTheDocument());
+    });
+
     test("When clicking the backward button, it should call the setter function with one page less", async () => {
-      const mockSetter = jest.fn() as React.Dispatch<
-        React.SetStateAction<number>
-      >;
       const page = 2;
       render(<Pagination page={page} setPage={mockSetter} />);
 
@@ -49,9 +62,7 @@ describe("Given a Pagination component", () => {
     });
 
     test("When clicking the backward button, if it's the first page, it should not call the setter", () => {
-      const mockSetter = jest.fn() as React.Dispatch<
-        React.SetStateAction<number>
-      >;
+      mockTotalProjects = 10;
       const page = 0;
       render(<Pagination page={page} setPage={mockSetter} />);
 
@@ -74,10 +85,10 @@ describe("Given a Pagination component", () => {
       expect(mockSetter).toHaveBeenCalledWith(page + 1);
     });
 
-    test("When clicking the forward button, it should call the setter function with the same page if it's the last one", () => {
+    test("When clicking the forward button, it should not call the setter function if it's the last page", () => {
       mockTotalProjects = 9;
 
-      const page = 0;
+      const page = 1;
 
       render(<Pagination page={page} setPage={mockSetter} />);
 
@@ -101,6 +112,8 @@ describe("Given a Pagination component", () => {
     });
 
     test("When clicking the previous page, it should do nothing if it's the first page", () => {
+      mockTotalProjects = 10;
+
       const page = 0;
 
       render(<Pagination page={page} setPage={mockSetter} />);
@@ -131,7 +144,7 @@ describe("Given a Pagination component", () => {
 
     test("When clicking the next page, it should do nothing if it's the last page", () => {
       mockTotalProjects = 9;
-      const page = 0;
+      const page = 1;
 
       render(<Pagination page={page} setPage={mockSetter} />);
 
