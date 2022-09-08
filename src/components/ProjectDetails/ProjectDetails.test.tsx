@@ -37,5 +37,18 @@ describe("Given a ProjectDetails component", () => {
 
       details.forEach((detail) => expect(detail).toBeInTheDocument());
     });
+    test("Then it should convert its date to yyyy/m/d and display it", () => {
+      render(<ProjectDetails project={mockProject} />);
+
+      const creationDate = [
+        new Date(mockProject.creationDate).getFullYear(),
+        new Date(mockProject.creationDate).getDate(),
+        new Date(mockProject.creationDate).getMonth(),
+      ].join("/");
+
+      const date = screen.getByText(creationDate);
+
+      expect(date).toBeInTheDocument();
+    });
   });
 });

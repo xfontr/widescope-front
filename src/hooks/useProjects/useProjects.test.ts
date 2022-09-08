@@ -60,8 +60,7 @@ describe("Given a getAll function returned by a useProjects function", () => {
         await waitFor(() => {
           expect(mockUseDispatch).toHaveBeenCalledWith(
             closeActionCreator({
-              message:
-                "Error while loading projects: AxiosError: Request failed with status code 404",
+              message: "Error while loading projects",
               type: "error",
             })
           );
@@ -112,8 +111,7 @@ describe("Given a getById function returned by a useProjects function", () => {
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         closeActionCreator({
-          message:
-            "Error while loading projects: AxiosError: Request failed with status code 404",
+          message: "Error while loading projects",
           type: "error",
         })
       );
@@ -200,7 +198,7 @@ describe("Given a create function returned by a useProjects function", () => {
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: `Error while creating the project: AxiosError: Request failed with status code 400`,
+            message: "Error while creating the project",
             type: "error",
           })
         );
@@ -263,7 +261,7 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: `Error while getting the projects: AxiosError: Request failed with status code 404`,
+            message: "Error while getting the projects",
             type: "error",
           })
         );

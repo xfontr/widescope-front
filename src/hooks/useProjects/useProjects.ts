@@ -51,7 +51,7 @@ const useProjects = () => {
         dispatch(setVisibilityActionCreator(true));
         dispatch(
           closeActionCreator({
-            message: `Error while loading projects: ${error}`,
+            message: "Error while loading projects",
             type: "error",
           })
         );
@@ -77,7 +77,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: `Error while loading projects: ${error}`,
+            message: "Error while loading projects",
             type: "error",
           })
         );
@@ -109,7 +109,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: `Error while getting the projects: ${error}`,
+            message: "Error while getting the projects",
             type: "error",
           })
         );
@@ -147,7 +147,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: `Error while creating the project: ${error}`,
+            message: "Error while creating the project",
             type: "error",
           })
         );
