@@ -34,16 +34,13 @@ const ExplorePage = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      switch (filter) {
-        case "byAuthor":
-          const projectsByAuthor = await getByAuthor(byAuthor.id);
-          setProjects(projectsByAuthor as IProjects);
-          break;
-
-        default:
-          setProjects(state.projects);
-          break;
+      if (filter === "byAuthor") {
+        const projectsByAuthor = await getByAuthor(byAuthor.id);
+        setProjects(projectsByAuthor as IProjects);
+        return;
       }
+
+      setProjects(state.projects);
     })();
   }, [filter, byAuthor, state.projects, getByAuthor]);
 
@@ -82,7 +79,9 @@ const ExplorePage = (): JSX.Element => {
       {projects.length && (
         <>
           <Projects projects={projects} setFilter={setFilter} />
-          <Pagination page={page} setPage={setPage} />
+          {filter !== "byAuthor" && (
+            <Pagination page={page} setPage={setPage} />
+          )}
         </>
       )}
 

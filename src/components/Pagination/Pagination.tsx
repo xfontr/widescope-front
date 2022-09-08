@@ -14,6 +14,10 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
   const minPage = page - 1 <= 0 ? 0 : page - 1;
   const maxPage = page >= lastPage ? page : page + 1;
 
+  if (page === 0 && total < 10) {
+    return <>{total}</>;
+  }
+
   return (
     <PaginationStyled>
       <Button
