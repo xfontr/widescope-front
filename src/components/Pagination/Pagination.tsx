@@ -25,7 +25,25 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         }}
       />
 
+      <Button
+        children={page}
+        type="button"
+        disabled={minPage === page}
+        action={() => {
+          setPage(page - 1);
+        }}
+      />
+
       <div className="pagination__page">{page + 1}</div>
+
+      <Button
+        children={page + 2}
+        type="button"
+        disabled={maxPage === page}
+        action={() => {
+          setPage(page + 1);
+        }}
+      />
 
       <Button
         children="»"

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const PaginationStyled = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing.gapSmall};
+  gap: calc(${({ theme }) => theme.spacing.gapSmall} - 1rem);
   justify-content: center;
   align-items: center;
   min-height: 7rem;
