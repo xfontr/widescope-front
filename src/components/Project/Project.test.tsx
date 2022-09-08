@@ -37,7 +37,7 @@ describe("Given a Project component", () => {
             .toUpperCase()}${mockProject.technologies[1].slice(1)}`
         ),
         screen.getByText(mockProject.description),
-        screen.getByRole("button", { name: "View full project" }),
+        screen.getByText("View full project"),
       ];
 
       project.forEach((element) => expect(element).toBeInTheDocument());
@@ -48,9 +48,7 @@ describe("Given a Project component", () => {
     test("Then it should send the user to the details page", async () => {
       render(<Project project={mockProject} />);
 
-      const viewDetailsButton = screen.getByRole("button", {
-        name: "View full project",
-      });
+      const viewDetailsButton = screen.getByText("View full project");
 
       await userEvent.click(viewDetailsButton);
 

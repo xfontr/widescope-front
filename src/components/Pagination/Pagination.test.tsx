@@ -1,4 +1,8 @@
-import { render, screen } from "../../test-utils/render/customRender";
+import {
+  fireEvent,
+  render,
+  screen,
+} from "../../test-utils/render/customRender";
 import userEvent from "@testing-library/user-event";
 import Pagination from "./Pagination";
 
@@ -41,7 +45,7 @@ describe("Given a Pagination component", () => {
       expect(mockSetter).toHaveBeenCalledWith(page - 1);
     });
 
-    test("When clicking the backward button, if it's the first page, it should call the setter function with the same page", async () => {
+    test("When clicking the backward button, if it's the first page, it should not call the setter", () => {
       const mockSetter = jest.fn() as React.Dispatch<
         React.SetStateAction<number>
       >;
@@ -50,9 +54,9 @@ describe("Given a Pagination component", () => {
 
       const backwardsButton = screen.getByRole("button", { name: "«" });
 
-      await userEvent.click(backwardsButton);
+      fireEvent.click(backwardsButton);
 
-      expect(mockSetter).toHaveBeenCalledWith(page);
+      expect(mockSetter).not.toHaveBeenCalled();
     });
 
     test("When clicking the forward button, it should call the setter function with the next page number", async () => {
@@ -70,7 +74,7 @@ describe("Given a Pagination component", () => {
       expect(mockSetter).toHaveBeenCalledWith(page + 1);
     });
 
-    test("When clicking the forward button, it should call the setter function with the same page if it's the last one", async () => {
+    test("When clicking the forward button, it should call the setter function with the same page if it's the last one", () => {
       mockTotalProjects = 9;
 
       const mockSetter = jest.fn() as React.Dispatch<
@@ -82,9 +86,9 @@ describe("Given a Pagination component", () => {
 
       const forwardButton = screen.getByRole("button", { name: "»" });
 
-      await userEvent.click(forwardButton);
+      fireEvent.click(forwardButton);
 
-      expect(mockSetter).toHaveBeenCalledWith(page);
+      expect(mockSetter).not.toHaveBeenCalled();
     });
   });
 });

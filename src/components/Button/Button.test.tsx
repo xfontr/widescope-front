@@ -8,7 +8,7 @@ describe("Given a Button component", () => {
 
   describe("When instantiated", () => {
     test("Then it should show a button with the specified text", () => {
-      render(<Button content={buttonText} type={buttonType} />);
+      render(<Button children={buttonText} type={buttonType} />);
 
       const button = screen.getByRole("button", { name: buttonText });
 
@@ -19,7 +19,9 @@ describe("Given a Button component", () => {
   describe("When instantiated with an action and clicked", () => {
     test("Then it should prevent its default action", () => {
       const action = jest.fn();
-      render(<Button content={buttonText} type={buttonType} action={action} />);
+      render(
+        <Button children={buttonText} type={buttonType} action={action} />
+      );
 
       const button = screen.getByRole("button", { name: buttonText });
       const clickEvent = createEvent.click(button);
@@ -31,7 +33,9 @@ describe("Given a Button component", () => {
 
     test("Then it should call the function passed as props", () => {
       const action = jest.fn();
-      render(<Button content={buttonText} type={buttonType} action={action} />);
+      render(
+        <Button children={buttonText} type={buttonType} action={action} />
+      );
 
       const button = screen.getByRole("button", { name: buttonText });
       fireEvent.click(button);
@@ -42,7 +46,7 @@ describe("Given a Button component", () => {
 
   describe("When instantiated without an action and clicked", () => {
     test("Then it should not prevent its default action", () => {
-      render(<Button content={buttonText} type={buttonType} />);
+      render(<Button children={buttonText} type={buttonType} />);
 
       const button = screen.getByRole("button", { name: buttonText });
       const clickEvent = createEvent.click(button);
@@ -57,8 +61,8 @@ describe("Given a Button component", () => {
     test("Then it should render as link instead of a button", () => {
       render(
         <Button
-          content={buttonText}
-          type="link"
+          children={buttonText}
+          renderAs="a"
           link="https://www.google.com"
         />
       );

@@ -192,7 +192,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       )}
 
       <FooterStyled>
-        <Button type="submit" content={`${isLogin ? "Log in" : "Sign up"}`} />
+        <Button type="submit" children={`${isLogin ? "Log in" : "Sign up"}`} />
         {isLogin && (
           <span className="form__sign-up-cta">
             Don't have an account?

@@ -15,7 +15,7 @@ const NotFoundPage = (): JSX.Element => {
         But hey, what about exploring some of our projects?
       </span>
       <Button
-        content="Explore"
+        children="Explore"
         type="button"
         action={() => {
           navigate(navRoutes.explore.path);

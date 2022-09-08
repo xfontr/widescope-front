@@ -204,7 +204,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
 
       <FooterStyled>
         <Button
-          content={isCreate ? "Create project" : "Update project"}
+          children={isCreate ? "Create project" : "Update project"}
           type="submit"
         />
       </FooterStyled>
