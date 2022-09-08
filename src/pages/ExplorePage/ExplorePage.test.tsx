@@ -70,28 +70,47 @@ describe("Given a ExplorePage component", () => {
       });
     });
 
-    test("Then it should appear a link to reset the filters and see all projects again", async () => {
-      render(<ExplorePage />);
+    describe("When instantiated and the user clicks a technology tag", () => {
+      test("Then it should show only the projects of the selected technology", async () => {
+        render(<ExplorePage />);
 
-      const author = await screen.findByText(mockUser.name);
-      await userEvent.click(author);
-      const navigationLink = screen.getByText("« Keep exploring");
+        const technologyTag = screen.getAllByText(mockProject.technologies[0]);
+        await userEvent.click(technologyTag[0]);
 
-      expect(navigationLink).toBeInTheDocument();
+        const currentQuery = screen.queryByText(
+          `Searching by: Technology (${mockProject.technologies[0]})`
+        );
+        const projects = screen.getAllByText(mockProject.name);
 
-      await userEvent.click(navigationLink);
-
-      expect(navigationLink).not.toBeInTheDocument();
-
-      const heading = await screen.findByRole("heading", {
-        name: "These are the latest projects",
+        expect(currentQuery).toBeInTheDocument();
+        expect(projects).toHaveLength(1);
       });
-      const projectByAnotherAuthor = screen.queryByText("Fake author");
-      const projectByThisAuthor = screen.getByText(mockProject.name);
+    });
 
-      expect(heading).toBeInTheDocument();
-      expect(projectByAnotherAuthor).toBeInTheDocument();
-      expect(projectByThisAuthor).toBeInTheDocument();
+    describe("When instantiated and the user sets a filter", () => {
+      test("Then it should appear a link to reset the filters and see all projects again", async () => {
+        render(<ExplorePage />);
+
+        const author = await screen.findByText(mockUser.name);
+        await userEvent.click(author);
+        const navigationLink = screen.getByText("« Keep exploring");
+
+        expect(navigationLink).toBeInTheDocument();
+
+        await userEvent.click(navigationLink);
+
+        expect(navigationLink).not.toBeInTheDocument();
+
+        const heading = await screen.findByRole("heading", {
+          name: "These are the latest projects",
+        });
+        const projectByAnotherAuthor = screen.queryByText("Fake author");
+        const projectByThisAuthor = screen.getByText(mockProject.name);
+
+        expect(heading).toBeInTheDocument();
+        expect(projectByAnotherAuthor).toBeInTheDocument();
+        expect(projectByThisAuthor).toBeInTheDocument();
+      });
     });
   });
 });
