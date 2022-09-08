@@ -1,18 +1,12 @@
 import AppStyled from "./AppStyled";
-import { Navigate, Route, Routes, Link } from "react-router-dom";
-import SignUpPage from "../../pages/SignUpPage/SignUpPage";
-import LogInPage from "../../pages/LogInPage/LogInPage";
 import NavigationMenu from "../NavigationMenu/NavigationMenu";
 import Modal from "../Modal/Modal";
-import { useEffect } from "react";
-import useToken from "../../hooks/useToken/useToken";
-import routes from "../../configs/routes";
-import ExplorePage from "../../pages/ExplorePage/ExplorePage";
-import ProjectDetailsPage from "../../pages/ProjectDetailsPage/ProjectDetailsPage";
-import ManageProjectPage from "../../pages/ManageProjectPage/ManageProjectPage";
-import Validator from "../Validator/Validator";
-import UserProjectsPage from "../../pages/UserProjectsPage/UserProjectsPage";
+import { navRoutes } from "../../configs/routes";
 import { useAppSelector } from "../../app/hooks";
+import { Link, Routes } from "react-router-dom";
+import useToken from "../../hooks/useToken/useToken";
+import { useEffect } from "react";
+import renderRoutes from "../../utils/renderRoutes/renderRoutes";
 
 const App = (): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
@@ -37,59 +31,9 @@ const App = (): JSX.Element => {
 
       <main>
         <Routes>
-          <Route path={routes.root} element={<Navigate to={routes.home} />} />
-
-          <Route path={routes.home} element={<ExplorePage />} />
-
-          <Route
-            element={
-              <Validator option={!isLogged} rejectPath={routes.explore} />
-            }
-          >
-            <Route path={routes.signUp} element={<SignUpPage />} />
-          </Route>
-
-          <Route
-            element={
-              <Validator option={!isLogged} rejectPath={routes.explore} />
-            }
-          >
-            <Route path={routes.logIn} element={<LogInPage />} />
-          </Route>
-
-          <Route path={routes.explore} element={<ExplorePage />} />
-
-          <Route
-            element={<Validator option={isLogged} rejectPath={routes.logIn} />}
-          >
-            <Route
-              path={routes.createProject}
-              element={<ManageProjectPage isCreate={true} />}
-            />
-          </Route>
-
-          <Route
-            element={<Validator option={isLogged} rejectPath={routes.logIn} />}
-          >
-            <Route
-              path={routes.personalProjects}
-              element={<UserProjectsPage />}
-            />
-          </Route>
-
-          <Route
-            element={<Validator option={isLogged} rejectPath={routes.logIn} />}
-          >
-            <Route
-              path={routes.updateProject}
-              element={<ManageProjectPage isCreate={false} />}
-            />
-          </Route>
-
-          <Route
-            path={routes.projectDetails}
-            element={<ProjectDetailsPage />}
-          />
+          {Object.values(navRoutes).map((route) =>
+            renderRoutes(isLogged, route)
+          )}
         </Routes>
       </main>
 

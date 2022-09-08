@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import {
   closeActionCreator,
   setVisibilityActionCreator,
@@ -20,8 +20,11 @@ import {
   UserLogInData,
   UserSignUpData,
 } from "../../types/user";
-import getTokenData from "../../utils/auth";
-import { setUserBasicData, setUserExtraData } from "../../utils/setUserData";
+import getTokenData from "../../utils/auth/auth";
+import {
+  setUserBasicData,
+  setUserExtraData,
+} from "../../utils/setUserData/setUserData";
 import { UserToken } from "../types/useUserTypes";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -75,7 +78,7 @@ const useUser = () => {
             type: "success",
           })
         );
-        navigate(routes.explore);
+        navigate(navRoutes.explore.path);
       } catch (error) {
         dispatch(
           closeActionCreator({
@@ -91,6 +94,7 @@ const useUser = () => {
   const signUp = useCallback(
     async ({ name, password, email }: UserSignUpData): Promise<boolean> => {
       dispatch(setVisibilityActionCreator(true));
+
       try {
         await axios.post(`${apiUrl}${endpoints.signUp}`, {
           name,
@@ -118,7 +122,7 @@ const useUser = () => {
     localStorage.clear();
     dispatch(logOutActionCreator());
 
-    navigate(routes.logIn);
+    navigate(navRoutes.logIn.path);
   };
 
   return { signUp, logIn, getUserData, logOut };

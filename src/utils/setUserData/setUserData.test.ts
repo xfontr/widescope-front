@@ -1,8 +1,9 @@
-import mockUser from "../test-utils/mocks/mockUser";
+import mockUser from "../../test-utils/mocks/mockUser";
 import {
   mockUserBasicData,
   mockUserExtraData,
-} from "../test-utils/mocks/mockUserData";
+} from "../../test-utils/mocks/mockUserData";
+
 import { setUserBasicData, setUserExtraData } from "./setUserData";
 
 describe("Given a setUserBasicData function", () => {
