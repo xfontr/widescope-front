@@ -1,10 +1,17 @@
 import { screen, render as reactRender } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useLocation } from "react-router-dom";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import { render, renderHook } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import NavigationMenu from "./NavigationMenu";
+
+const mockLogOut = jest.fn();
+
+jest.mock("../../hooks/useUser/useUser", () => () => ({
+  ...jest.requireActual("../../hooks/useUser/useUser"),
+  logOut: mockLogOut,
+}));
 
 describe("Given a NavigationMenu component", () => {
   describe("When instantiated", () => {
@@ -124,7 +131,7 @@ describe("Given a NavigationMenu component", () => {
 
 describe("Given the links of the NavigationMenu component", () => {
   describe("When clicked the 'home' link", () => {
-    test(`Then it should route the page to ${routes.root} and close the menu`, async () => {
+    test(`Then it should route the page to ${navRoutes.home.path} and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -139,13 +146,13 @@ describe("Given the links of the NavigationMenu component", () => {
         },
       } = renderHook(useLocation);
 
-      expect(pathname).toBe(routes.root);
+      expect(pathname).toBe(navRoutes.home.path);
       expect(homeLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Sign up' link", () => {
-    test(`Then it should route the page to '${routes.signUp}' and close the menu`, async () => {
+    test(`Then it should route the page to '${navRoutes.signUp.path}' and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -160,13 +167,13 @@ describe("Given the links of the NavigationMenu component", () => {
         },
       } = renderHook(useLocation);
 
-      expect(pathname).toBe(routes.signUp);
+      expect(pathname).toBe(navRoutes.signUp.path);
       expect(signUpLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Log out' link", () => {
-    test(`Then it should route the page to '${routes.logIn}' and close the menu`, async () => {
+    test(`Then it should call the logOut function and close the menu`, async () => {
       reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -175,19 +182,13 @@ describe("Given the links of the NavigationMenu component", () => {
       const logOutLink = screen.getByRole("link", { name: "Log out" });
       await userEvent.click(logOutLink);
 
-      const {
-        result: {
-          current: { pathname },
-        },
-      } = renderHook(useLocation);
-
-      expect(pathname).toBe(routes.logIn);
+      expect(mockLogOut).toHaveBeenCalled();
       expect(logOutLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Log in' link", () => {
-    test(`Then it should route the page to '${routes.logIn}' and close the menu`, async () => {
+    test(`Then it should route the page to '${navRoutes.logIn.path}' and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -202,13 +203,13 @@ describe("Given the links of the NavigationMenu component", () => {
         },
       } = renderHook(useLocation);
 
-      expect(pathname).toBe(routes.logIn);
+      expect(pathname).toBe(navRoutes.logIn.path);
       expect(logInLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Explore' link", () => {
-    test(`Then it should route the page to '${routes.explore}' and close the menu`, async () => {
+    test(`Then it should route the page to '${navRoutes.explore.path}' and close the menu`, async () => {
       render(<NavigationMenu />);
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -223,13 +224,13 @@ describe("Given the links of the NavigationMenu component", () => {
         },
       } = renderHook(useLocation);
 
-      expect(pathname).toBe(routes.explore);
+      expect(pathname).toBe(navRoutes.explore.path);
       expect(exploreLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Personal projects' link", () => {
-    test(`Then it should route the page to '${routes.personalProjects}' and close the menu`, async () => {
+    test(`Then it should route the page to '${navRoutes.personalProjects.path}' and close the menu`, async () => {
       reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -246,13 +247,13 @@ describe("Given the links of the NavigationMenu component", () => {
         },
       } = renderHook(useLocation);
 
-      expect(pathname).toBe(routes.personalProjects);
+      expect(pathname).toBe(navRoutes.personalProjects.path);
       expect(personalProjectsLink).not.toBeInTheDocument();
     });
   });
 
   describe("When clicked the 'Post a project' button", () => {
-    test(`Then it should route the page to '${routes.createProject}' and close the menu`, async () => {
+    test(`Then it should route the page to '"/project/new"' and close the menu`, async () => {
       reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
 
       const burgerIcon = screen.getByTestId("burger-icon");
@@ -269,7 +270,7 @@ describe("Given the links of the NavigationMenu component", () => {
         },
       } = renderHook(useLocation);
 
-      expect(pathname).toBe(routes.createProject);
+      expect(pathname).toBe("/project/new");
       expect(postButton).not.toBeInTheDocument();
     });
   });
