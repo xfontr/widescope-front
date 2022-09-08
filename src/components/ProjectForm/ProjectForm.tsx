@@ -2,7 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import useProjects from "../../hooks/useProjects/useProjects";
 import projectSchema from "../../schemas/projectSchema";
 import {
@@ -87,7 +87,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
     setValues(initialState);
     setErrors([]);
 
-    navigate(routes.personalProjects);
+    navigate(navRoutes.personalProjects.path);
   };
 
   const handleSubmit = async (event: SyntheticEvent): Promise<void> => {

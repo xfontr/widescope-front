@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import useUser from "../../hooks/useUser/useUser";
+import renderLinks from "../../utils/renderLinks/renderLinks";
 import Button from "../Button/Button";
 import NavigationStyled from "./NavigationMenuStyled";
 
@@ -41,75 +42,22 @@ const NavigationMenu = (): JSX.Element => {
 
           <section className={"navigation navigation--in"}>
             <ul className="navigation__links">
-              <li className="navigation__link">
-                <Link
-                  to={routes.root}
-                  className="navigation__link"
-                  onClick={toggleVisiblity}
-                >
-                  Home
-                </Link>
-              </li>
-
-              <li className="navigation__link">
-                <Link
-                  to={routes.explore}
-                  className="navigation__link"
-                  onClick={toggleVisiblity}
-                >
-                  Explore
-                </Link>
-              </li>
-
-              {isLogged && (
-                <li className="navigation__link">
-                  <Link
-                    to={routes.personalProjects}
-                    className="navigation__link"
-                    onClick={toggleVisiblity}
-                  >
-                    Your projects
-                  </Link>
-                </li>
-              )}
-
-              {!isLogged && (
-                <li className="navigation__link">
-                  <Link
-                    to={routes.signUp}
-                    className="navigation__link"
-                    onClick={toggleVisiblity}
-                  >
-                    Sign up
-                  </Link>
-                </li>
-              )}
-
-              {!isLogged && (
-                <li className="navigation__link">
-                  <Link
-                    to={routes.logIn}
-                    className="navigation__link"
-                    onClick={toggleVisiblity}
-                  >
-                    Log in
-                  </Link>
-                </li>
-              )}
-
-              {isLogged && (
-                <li className="navigation__link">
-                  <Link
-                    to={routes.logIn}
-                    className="navigation__link"
-                    onClick={() => {
-                      logOut();
-                      toggleVisiblity();
-                    }}
-                  >
-                    Log out
-                  </Link>
-                </li>
+              {Object.values(navRoutes).map(
+                (route) =>
+                  renderLinks(isLogged, route) && (
+                    <li className="navigation__link">
+                      <Link
+                        to={route.path}
+                        className="navigation__link"
+                        onClick={() => {
+                          toggleVisiblity();
+                          route.action && route.action(logOut);
+                        }}
+                      >
+                        {route.name}
+                      </Link>
+                    </li>
+                  )
               )}
             </ul>
 
@@ -118,7 +66,7 @@ const NavigationMenu = (): JSX.Element => {
                 type="button"
                 content="Post a project"
                 action={() => {
-                  navigate(routes.createProject);
+                  navigate("/project/new");
                   toggleVisiblity();
                 }}
               />

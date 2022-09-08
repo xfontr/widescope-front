@@ -1,4 +1,4 @@
-import { IUser, UserBasicData, UserExtraData } from "../types/user";
+import { IUser, UserBasicData, UserExtraData } from "../../types/user";
 
 export const setUserBasicData = (
   user: IUser,

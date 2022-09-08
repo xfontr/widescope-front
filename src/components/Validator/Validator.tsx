@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 
 interface ValidatorProps {
   rejectPath?: string;
@@ -7,7 +7,7 @@ interface ValidatorProps {
 }
 
 const Validator = ({
-  rejectPath = routes.logIn,
+  rejectPath = navRoutes.logIn.path,
   option,
 }: ValidatorProps): JSX.Element => {
   return <>{option ? <Outlet /> : <Navigate to={rejectPath} />}</>;

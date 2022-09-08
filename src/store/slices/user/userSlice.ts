@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserBasicData } from "../../../types/user";
-import setUserState from "../../../utils/setUserState";
+import setUserState from "../../../utils/setUserState/setUserState";
 
 const userSlice = createSlice({
   name: "user",

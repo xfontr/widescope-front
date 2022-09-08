@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import mockProject from "../../test-utils/mocks/mockProject";
 import {
   createEvent,
@@ -187,7 +187,9 @@ describe("Given a ProjectForm component", () => {
         expect(element).not.toHaveStyle("border-color: rgb(179,120,120)");
       });
 
-      expect(mockNavigate).toHaveBeenCalledWith(routes.personalProjects);
+      expect(mockNavigate).toHaveBeenCalledWith(
+        navRoutes.personalProjects.path
+      );
     });
   });
 

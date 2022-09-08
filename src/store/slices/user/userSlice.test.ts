@@ -1,6 +1,6 @@
 import { mockUserBasicData } from "../../../test-utils/mocks/mockUserData";
 import { UserBasicData } from "../../../types/user";
-import setUserState from "../../../utils/setUserState";
+import setUserState from "../../../utils/setUserState/setUserState";
 import {
   loadUserActionCreator,
   logOutActionCreator,

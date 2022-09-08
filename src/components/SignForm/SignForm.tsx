@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import routes from "../../configs/routes";
+import { navRoutes } from "../../configs/routes";
 import useUser from "../../hooks/useUser/useUser";
 import loginSchema from "../../schemas/loginSchema";
 import registerSchema from "../../schemas/registerSchema";
@@ -196,13 +196,13 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
         {isLogin && (
           <span className="form__sign-up-cta">
             Don't have an account?
-            <Link to={routes.signUp}>Sign up for free</Link>
+            <Link to={navRoutes.signUp.path}>Sign up for free</Link>
           </span>
         )}
         {!isLogin && (
           <span className="form__sign-up-cta">
             Already have an account?
-            <Link to={routes.logIn}>Log in</Link>
+            <Link to={navRoutes.logIn.path}>Log in</Link>
           </span>
         )}
       </FooterStyled>
