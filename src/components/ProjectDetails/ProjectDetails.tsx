@@ -8,6 +8,12 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
+  const creationDate = [
+    new Date(project.creationDate).getFullYear(),
+    new Date(project.creationDate).getDate(),
+    new Date(project.creationDate).getMonth(),
+  ].join("/");
+
   return (
     <ProjectDetailsStyled>
       <div className="project__title-section">
@@ -42,7 +48,7 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
           </ul>
 
           <h3 className="project__subheading">Post date</h3>
-          <span className="project__post-date">{project.creationDate}</span>
+          <span className="project__post-date">{creationDate}</span>
         </div>
 
         <div className="project__cta">
