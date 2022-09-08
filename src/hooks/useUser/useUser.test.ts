@@ -51,8 +51,6 @@ jest.mock("../../app/hooks", () => ({
   useAppDispatch: () => mockUseDispatch,
 }));
 
-const axiosErrorMessage = "AxiosError: Request failed with status code 400";
-
 describe("Given a signUp function returned by a useUser function", () => {
   describe("When called with valid sign up data", () => {
     test("Then it should return true and call all the dispatches from the log in user", async () => {
@@ -103,7 +101,7 @@ describe("Given a signUp function returned by a useUser function", () => {
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: `Sign up error: ${axiosErrorMessage}`,
+            message: "Sign up error",
             type: "error",
           })
         );
@@ -209,7 +207,7 @@ describe("Given a logIn function returned by a useUser function", () => {
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: `Log in error: ${axiosErrorMessage}`,
+            message: "Log in error",
             type: "error",
           })
         );

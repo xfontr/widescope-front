@@ -82,7 +82,7 @@ const useUser = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: `Log in error: ${error}`,
+            message: "Log in error",
             type: "error",
           })
         );
@@ -108,7 +108,7 @@ const useUser = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: `Sign up error: ${error}`,
+            message: "Sign up error",
             type: "error",
           })
         );
