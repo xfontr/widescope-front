@@ -12,6 +12,7 @@ const ButtonStyled = styled.button`
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  user-select: none;
 
   &:hover {
     box-shadow: ${(props) => props.theme.shapes.shortShadow};
@@ -39,6 +40,7 @@ const ButtonStyled = styled.button`
 
   &.button--disabled {
     opacity: 50%;
+    pointer-events: none;
   }
 `;
 

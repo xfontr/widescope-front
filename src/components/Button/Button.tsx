@@ -29,7 +29,9 @@ const Button = ({
       as={renderAs}
       href={link}
       onClick={handleButtonAction}
-      className={`button--${customStyle}`}
+      className={`${
+        props["disabled"] && "button--disabled"
+      } button--${customStyle} `}
       {...props}
     >
       {children}
