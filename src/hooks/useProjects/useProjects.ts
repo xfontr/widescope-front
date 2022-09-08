@@ -33,25 +33,32 @@ const useProjects = () => {
   const dispatch = useAppDispatch();
   const { token, id } = useAppSelector((state) => state.user.user);
 
-  const getAll = useCallback(async (): Promise<void> => {
-    try {
-      const {
-        data: { projects },
-      }: AxiosResponse<GetAllProjects> = await axios.get(
-        `${apiUrl}${endpoints.getAll}`
-      );
+  const getAll = useCallback(
+    async (offset = 0): Promise<void> => {
+      const limit = 10;
 
-      dispatch(loadAllActionCreator(projects.list as Projects));
-    } catch (error) {
-      dispatch(setVisibilityActionCreator(true));
-      dispatch(
-        closeActionCreator({
-          message: `Error while loading projects: ${error}`,
-          type: "error",
-        })
-      );
-    }
-  }, [dispatch]);
+      try {
+        const {
+          data: { projects },
+        }: AxiosResponse<GetAllProjects> = await axios.get(
+          `${apiUrl}${endpoints.getAll}?offset=${offset * limit}&limit=${
+            offset * limit + limit
+          }`
+        );
+
+        dispatch(loadAllActionCreator(projects.list as Projects));
+      } catch (error) {
+        dispatch(setVisibilityActionCreator(true));
+        dispatch(
+          closeActionCreator({
+            message: `Error while loading projects: ${error}`,
+            type: "error",
+          })
+        );
+      }
+    },
+    [dispatch]
+  );
 
   const getById = useCallback(
     async (projectId: string): Promise<IProject | void> => {

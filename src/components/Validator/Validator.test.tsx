@@ -2,6 +2,10 @@ import { render as reactRender, screen } from "@testing-library/react";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import Validator from "./Validator";
 
+const mockGetToken = jest.fn();
+
+jest.mock("../../hooks/useToken/useToken", () => () => mockGetToken);
+
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   Navigate: () => {
