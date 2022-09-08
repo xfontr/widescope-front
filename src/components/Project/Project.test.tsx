@@ -1,4 +1,5 @@
 import userEvent from "@testing-library/user-event";
+import { filterInitialState } from "../../pages/ExplorePage/ExplorePage";
 import mockProject from "../../test-utils/mocks/mockProject";
 import { render, screen, waitFor } from "../../test-utils/render/customRender";
 import { Filter } from "../../types/filter";
@@ -68,8 +69,28 @@ describe("Given a Project component", () => {
       await userEvent.click(authorTag);
 
       expect(mockUseState).toHaveBeenCalledWith({
+        ...filterInitialState,
         filter: "byAuthor",
         byAuthor: { id: mockProject.authorId, name: mockProject.author },
+      });
+    });
+  });
+
+  describe("When instantiated with a useState setter and clicket a technology tag", () => {
+    test("Then it should call the setter function with a filter by technology", async () => {
+      const mockUseState = jest.fn() as React.Dispatch<
+        React.SetStateAction<Filter>
+      >;
+
+      render(<Project project={mockProject} setFilter={mockUseState} />);
+
+      const technologyTag = screen.getByText(mockProject.technologies[0]);
+      await userEvent.click(technologyTag);
+
+      expect(mockUseState).toHaveBeenCalledWith({
+        ...filterInitialState,
+        filter: "byTechnology",
+        byTechnology: mockProject.technologies[0],
       });
     });
   });
