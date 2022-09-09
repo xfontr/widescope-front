@@ -8,6 +8,7 @@ export interface IProject {
   authorId: string;
   description: string;
   logo: string;
+  logoBackup: string;
 }
 
 export type Projects = IProject[];

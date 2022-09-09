@@ -9,6 +9,7 @@ const mockProject: IProject = {
   author: "username",
   authorId: "id",
   logo: "ProjectLogo.png",
+  logoBackup: "BackupProjectLogo.png",
   creationDate: "1662627402346",
 };
 
