@@ -5,6 +5,34 @@ import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import ExplorePage from "./ExplorePage";
 import userEvent from "@testing-library/user-event";
+import {
+  GetAllProjects,
+  UserProjects,
+} from "../../hooks/types/useProjectTypes";
+import { AxiosResponse } from "axios";
+
+const mockAmountOfProjects = 9;
+const mockListOfProjects = new Array(mockAmountOfProjects).fill(mockProject);
+let mockResolvedValue: Partial<AxiosResponse<UserProjects | GetAllProjects>> = {
+  data: {
+    projects: {
+      offset: 0,
+      limit: 0,
+      list: [
+        ...mockListOfProjects,
+        {
+          ...mockProject,
+          author: "Fake author",
+          technologies: ["false", "false"],
+        },
+      ],
+    },
+  },
+};
+
+jest.mock("axios", () => ({
+  get: () => mockResolvedValue,
+}));
 
 describe("Given a ExplorePage component", () => {
   describe("When instantiated", () => {
@@ -21,7 +49,7 @@ describe("Given a ExplorePage component", () => {
       });
 
       expect(heading).toBeInTheDocument();
-      expect(cards).toHaveLength(1);
+      expect(cards).toHaveLength(mockAmountOfProjects + 1);
 
       const pagination = [
         screen.getByRole("button", { name: "»" }),
@@ -50,10 +78,21 @@ describe("Given a ExplorePage component", () => {
 
   describe("When instantiated and the user clicks an author tag", () => {
     test("Then it should show only the projects of the selected user", async () => {
+      mockResolvedValue = {
+        data: {
+          projectsByAuthor: {
+            author: mockProject.author,
+            total: 9,
+            projects: [...mockListOfProjects],
+          },
+        },
+      };
+
       render(<ExplorePage />);
 
-      const author = await screen.findByText(mockUser.name);
-      await userEvent.click(author);
+      const author = await screen.findAllByText(mockUser.name);
+
+      await userEvent.click(author[0]);
 
       const heading = await screen.findByRole("heading", {
         name: `Projects by ${mockUser.name}`,
@@ -63,7 +102,7 @@ describe("Given a ExplorePage component", () => {
       const projectByThisAuthor = screen.getAllByText(mockProject.name);
 
       expect(heading).toBeInTheDocument();
-      expect(projectByThisAuthor).toHaveLength(1);
+      expect(projectByThisAuthor).toHaveLength(mockAmountOfProjects);
 
       await waitFor(() => {
         expect(projectByAnotherAuthor).not.toBeInTheDocument();
@@ -80,10 +119,12 @@ describe("Given a ExplorePage component", () => {
         const currentQuery = screen.queryByText(
           `Searching by: Technology (${mockProject.technologies[0]})`
         );
-        const projects = screen.getAllByText(mockProject.name);
+        const projectTechnologies = screen.getAllByText(
+          mockProject.technologies[0]
+        );
 
         expect(currentQuery).toBeInTheDocument();
-        expect(projects).toHaveLength(1);
+        expect(projectTechnologies).toHaveLength(mockAmountOfProjects);
       });
     });
 
@@ -91,8 +132,8 @@ describe("Given a ExplorePage component", () => {
       test("Then it should appear a link to reset the filters and see all projects again", async () => {
         render(<ExplorePage />);
 
-        const author = await screen.findByText(mockUser.name);
-        await userEvent.click(author);
+        const author = await screen.findAllByText(mockUser.name);
+        await userEvent.click(author[0]);
         const navigationLink = screen.getByText("« Keep exploring");
 
         expect(navigationLink).toBeInTheDocument();
@@ -104,12 +145,10 @@ describe("Given a ExplorePage component", () => {
         const heading = await screen.findByRole("heading", {
           name: "These are the latest projects",
         });
-        const projectByAnotherAuthor = screen.queryByText("Fake author");
-        const projectByThisAuthor = screen.getByText(mockProject.name);
+        const projecstByThisAuthor = screen.getAllByText(mockProject.name);
 
         expect(heading).toBeInTheDocument();
-        expect(projectByAnotherAuthor).toBeInTheDocument();
-        expect(projectByThisAuthor).toBeInTheDocument();
+        expect(projecstByThisAuthor).toHaveLength(mockAmountOfProjects + 1);
       });
     });
   });
