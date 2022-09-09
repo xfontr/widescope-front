@@ -1,9 +1,16 @@
 import userEvent from "@testing-library/user-event";
 import { filterInitialState } from "../../pages/ExplorePage/ExplorePage";
 import mockProject from "../../test-utils/mocks/mockProject";
-import { render, screen, waitFor } from "../../test-utils/render/customRender";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "../../test-utils/render/customRender";
 import { Filter } from "../../types/filter";
 import Project from "./Project";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const mockNavigate = jest.fn().mockReturnThis();
 
@@ -134,6 +141,27 @@ describe("Given a Project component", () => {
           `/projects/update/${mockProject.id}`
         );
       });
+    });
+  });
+
+  describe("When loading the project image", () => {
+    test("The image source should be the project locally saved image", () => {
+      render(<Project project={mockProject} isReadOnly={false} />);
+
+      const image = screen.getByAltText(`${mockProject.name} logo`);
+
+      expect(image.getAttribute("src")).toBe(
+        `${apiUrl}/uploads/${mockProject.logo}`
+      );
+    });
+
+    test("The image source should be the database one if the local one is not found", () => {
+      render(<Project project={mockProject} isReadOnly={false} />);
+
+      const image = screen.getByAltText(`${mockProject.name} logo`);
+      fireEvent.error(image);
+
+      expect(image.getAttribute("src")).toBe(mockProject.logoBackup);
     });
   });
 });
