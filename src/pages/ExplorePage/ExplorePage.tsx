@@ -18,7 +18,6 @@ export const filterInitialState: Filter = {
 
 const ExplorePage = (): JSX.Element => {
   const { getAll, getByAuthor } = useProjects();
-
   const [{ filter, byAuthor, byTechnology }, setFilter] =
     useState(filterInitialState);
   const [projects, setProjects] = useState([] as IProjects);
