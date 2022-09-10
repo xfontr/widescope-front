@@ -66,7 +66,10 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    formData.append("logo", event.target.files![0]);
+    formData.append(
+      `${isCreate ? "logo" : "logo_update"}`,
+      event.target.files![0]
+    );
 
     handleChange(event);
   };
@@ -145,7 +148,6 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="logo">Project logo</LabelStyled>
         <InputStyled
-          className={errors.includes("logo") ? "form__input--error" : ""}
           type="file"
           id="logo"
           name="logo"
