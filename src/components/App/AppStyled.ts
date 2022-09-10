@@ -5,10 +5,10 @@ const AppStyled = styled.div`
   padding: ${(props) => props.theme.spacing.paddingSmall};
   padding-bottom: 2.5rem;
 
-  max-width: ${(props) => props.theme.breakpoints.small};
+  max-width: ${(props) => props.theme.breakpoints.verySmall};
   margin: 0 auto;
 
-  @media (min-width: ${(props) => props.theme.breakpoints.small}) {
+  @media (min-width: ${(props) => props.theme.breakpoints.verySmall}) {
     max-width: ${(props) => props.theme.breakpoints.big};
   }
 

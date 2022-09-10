@@ -82,8 +82,13 @@ export const InputStyled = styled.input`
 
 export const FooterStyled = styled.footer`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: ${(props) => props.theme.spacing.gapSmall};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    align-items: center;
+    flex-direction: row;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
     width: 100%;
