@@ -1,12 +1,17 @@
 import { render as reactRender } from "@testing-library/react";
+import { navRoutes } from "../../configs/routes";
+import userEvent from "@testing-library/user-event";
 import mockProject from "../../test-utils/mocks/mockProject";
-import {
-  findAllByRole,
-  render,
-  screen,
-} from "../../test-utils/render/customRender";
+import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import LandingPage from "./LandingPage";
+
+const mockNavigate = jest.fn().mockReturnThis();
+
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
+}));
 
 describe("Given a LandingPage component", () => {
   describe("When intantiated if the user is not logged", () => {
@@ -25,8 +30,8 @@ describe("Given a LandingPage component", () => {
         screen.getByText(
           "Set your projects to a new level by sharing them with wideScope's glowing community of developers."
         ),
-        screen.getByRole("button", { name: "Explore" }),
-        screen.getByRole("button", { name: "Get started" }),
+        screen.getByText("Explore"),
+        screen.getByText("Get started"),
       ];
 
       const projects = await screen.findAllByRole("heading", {
@@ -52,7 +57,7 @@ describe("Given a LandingPage component", () => {
         name: "Share your projects. It's free",
         level: 2,
       });
-      const ctaButton = screen.getByRole("button", { name: "Post a project" });
+      const ctaButton = screen.getByText("Post a project");
       const loginForm = screen.queryByText(
         "Share your latests projects with the WideScope community."
       );
@@ -60,6 +65,38 @@ describe("Given a LandingPage component", () => {
       expect(ctaHeading).toBeInTheDocument();
       expect(ctaButton).toBeInTheDocument();
       expect(loginForm).not.toBeInTheDocument();
+    });
+
+    test("Then the 'Post a project' button should send the user to the create page on click", async () => {
+      reactRender(<LandingPage />, { wrapper: WrapperWithMockStore });
+
+      const ctaButton = screen.getByText("Post a project");
+
+      await userEvent.click(ctaButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith(navRoutes.createProject.path);
+    });
+  });
+
+  describe("When instantiated", () => {
+    test("If the user clicks the explore link, it should redirect to said page", async () => {
+      reactRender(<LandingPage />, { wrapper: WrapperWithMockStore });
+
+      const ctaButton = screen.getByText("Explore");
+
+      await userEvent.click(ctaButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith(navRoutes.explore.path);
+    });
+
+    test("If the user clicks the Get started link, it should redirect to the sign up page", async () => {
+      reactRender(<LandingPage />, { wrapper: WrapperWithMockStore });
+
+      const ctaButton = screen.getByText("Get started");
+
+      await userEvent.click(ctaButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith(navRoutes.signUp.path);
     });
   });
 });
