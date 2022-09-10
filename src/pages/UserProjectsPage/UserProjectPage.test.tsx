@@ -27,7 +27,7 @@ describe("Given a UserProjectsPage component", () => {
         wrapper: WrapperWithMockStore,
       });
 
-      const deleteButton = screen.getByRole("button", { name: "Delete" });
+      const deleteButton = screen.getByRole("button", { name: "delete" });
 
       expect(deleteButton).toBeInTheDocument();
     });
