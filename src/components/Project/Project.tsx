@@ -44,10 +44,10 @@ const Project = ({
           <h3 className="project__title">{project.name}</h3>
         </div>
         <img
-          src={`${apiUrl}/uploads/${project.logo}`}
+          src={`${apiUrl}/uploads/r_${project.logo}`}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
-            currentTarget.src = project.logoBackup;
+            currentTarget.src = `r_${project.logoBackup}`;
           }}
           alt={`${project.name} logo`}
           width="60"
