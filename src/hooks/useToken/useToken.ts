@@ -30,6 +30,7 @@ const useToken = () => {
     }
 
     dispatch(setVisibilityActionCreator(true));
+
     const decodedToken = getTokenData(token);
 
     try {

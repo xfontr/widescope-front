@@ -30,7 +30,7 @@ const App = (): JSX.Element => {
       </header>
 
       <main>
-        <Routes>
+        <Routes key="routes">
           {Object.values(navRoutes).map((route) =>
             renderRoutes(isLogged, route)
           )}

@@ -12,9 +12,9 @@ const UserProjectsPage = (): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      await getByAuthor(id!);
+      isLogged && (await getByAuthor(id!));
     })();
-  }, [getByAuthor, id]);
+  }, [getByAuthor, id, isLogged]);
 
   const projects = useAppSelector((state) =>
     isLogged ? state.userData.projects : []

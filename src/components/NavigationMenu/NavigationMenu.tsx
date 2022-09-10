@@ -45,8 +45,9 @@ const NavigationMenu = (): JSX.Element => {
               {Object.values(navRoutes).map(
                 (route) =>
                   renderLinks(isLogged, route) && (
-                    <li className="navigation__link">
+                    <li className="navigation__link" key={route.path}>
                       <Link
+                        key={route.name}
                         to={route.path}
                         className="navigation__link"
                         onClick={() => {
