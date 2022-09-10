@@ -5,9 +5,12 @@ import useProjects from "../../hooks/useProjects/useProjects";
 import { CTASectionStyled, HeroSectionStyled } from "./LandingPageStyled";
 import Projects from "../../components/Projects/Projects";
 import SignForm from "../../components/SignForm/SignForm";
+import { useNavigate } from "react-router-dom";
+import { navRoutes } from "../../configs/routes";
 
 const LandingPage = (): JSX.Element => {
   const { getAll } = useProjects();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -33,8 +36,22 @@ const LandingPage = (): JSX.Element => {
           glowing community of developers.
         </p>
 
-        <Button>Get started</Button>
-        <Button customStyle="outline">Explore</Button>
+        <Button
+          renderAs="a"
+          action={() => {
+            navigate(navRoutes.signUp.path);
+          }}
+          children="Get started"
+        />
+
+        <Button
+          customStyle="outline"
+          renderAs="a"
+          action={() => {
+            navigate(navRoutes.explore.path);
+          }}
+          children="Explore"
+        />
       </HeroSectionStyled>
 
       <section className="langing-page__projects">
@@ -63,7 +80,15 @@ const LandingPage = (): JSX.Element => {
                 <span className="page__title--bold"> It's free</span>
               </h2>
 
-              <Button customStyle="outline-invert">Post a project</Button>
+              <Button
+                customStyle="outline-invert"
+                renderAs="a"
+                action={() => {
+                  navigate(navRoutes.createProject.path);
+                }}
+              >
+                Post a project
+              </Button>
             </div>
           </div>
         )}
