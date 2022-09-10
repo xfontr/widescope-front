@@ -28,7 +28,7 @@ export const HeroSectionStyled = styled.section`
   }
   overflow: hidden;
 
-  &:first-child button {
+  &:first-child a {
     margin-right: ${({ theme }) => theme.spacing.gapSmall};
   }
 
@@ -93,8 +93,8 @@ export const CTASectionStyled = styled.section`
   }
 
   .landing-page__create {
-    button {
-      margin-top: ${({ theme }) => theme.spacing.gapSmall};
+    .page__title {
+      margin-bottom: ${({ theme }) => theme.spacing.gapSmall};
     }
 
     @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
