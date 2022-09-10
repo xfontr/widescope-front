@@ -59,7 +59,7 @@ const LandingPage = (): JSX.Element => {
           <div className="landing-page__create">
             <div className="cta-section">
               <h2 className="page__title">
-                Start sharing your projects. <br />
+                Share your projects. <br />
                 <span className="page__title--bold"> It's free</span>
               </h2>
 
