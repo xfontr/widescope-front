@@ -1,6 +1,12 @@
 import mockProject from "../../test-utils/mocks/mockProject";
-import { render, screen } from "../../test-utils/render/customRender";
+import {
+  fireEvent,
+  render,
+  screen,
+} from "../../test-utils/render/customRender";
 import ProjectDetails from "./ProjectDetails";
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 describe("Given a ProjectDetails component", () => {
   describe("When instantiated with a project as props", () => {
@@ -49,6 +55,27 @@ describe("Given a ProjectDetails component", () => {
       const date = screen.getByText(creationDate);
 
       expect(date).toBeInTheDocument();
+    });
+  });
+
+  describe("When loading the project image", () => {
+    test("The image source should be the project locally saved image", () => {
+      render(<ProjectDetails project={mockProject} />);
+
+      const image = screen.getByAltText(`${mockProject.name} logo`);
+
+      expect(image.getAttribute("src")).toBe(
+        `${apiUrl}/uploads/${mockProject.logo}`
+      );
+    });
+
+    test("The image source should be the database one if the local one is not found", () => {
+      render(<ProjectDetails project={mockProject} />);
+
+      const image = screen.getByAltText(`${mockProject.name} logo`);
+      fireEvent.error(image);
+
+      expect(image.getAttribute("src")).toBe(mockProject.logoBackup);
     });
   });
 });
