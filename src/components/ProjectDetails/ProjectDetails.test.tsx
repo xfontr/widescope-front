@@ -75,7 +75,11 @@ describe("Given a ProjectDetails component", () => {
       const image = screen.getByAltText(`${mockProject.name} logo`);
       fireEvent.error(image);
 
-      expect(image.getAttribute("src")).toBe(`r_${mockProject.logoBackup}`);
+      expect(image.getAttribute("src")).toBe(
+        `${mockProject.logoBackup.slice(0, -mockProject.logo.length)}r_${
+          mockProject.logo
+        }`
+      );
     });
   });
 });

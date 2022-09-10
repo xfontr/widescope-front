@@ -25,7 +25,10 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
         src={`${apiUrl}/uploads/r_${project.logo}`}
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = `r_${project.logoBackup}`;
+          currentTarget.src = `${project.logoBackup.slice(
+            0,
+            -project.logo.length
+          )}r_${project.logo}`;
         }}
         alt={`${project.name} logo`}
         width="250"
