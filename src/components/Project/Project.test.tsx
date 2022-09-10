@@ -107,7 +107,7 @@ describe("Given a Project component", () => {
       render(<Project project={mockProject} isReadOnly={false} />);
 
       const deleteButton = screen.getByRole("button", {
-        name: "Delete",
+        name: "delete",
       });
 
       expect(deleteButton).toBeInTheDocument();
@@ -117,7 +117,7 @@ describe("Given a Project component", () => {
       render(<Project project={mockProject} isReadOnly={false} />);
 
       const deleteButton = screen.getByRole("button", {
-        name: "Delete",
+        name: "delete",
       });
 
       await userEvent.click(deleteButton);
@@ -131,7 +131,7 @@ describe("Given a Project component", () => {
       render(<Project project={mockProject} isReadOnly={false} />);
 
       const updateButton = screen.getByRole("button", {
-        name: "Update",
+        name: "update",
       });
 
       await userEvent.click(updateButton);
@@ -161,7 +161,11 @@ describe("Given a Project component", () => {
       const image = screen.getByAltText(`${mockProject.name} logo`);
       fireEvent.error(image);
 
-      expect(image.getAttribute("src")).toBe(`r_${mockProject.logoBackup}`);
+      expect(image.getAttribute("src")).toBe(
+        `${mockProject.logoBackup.slice(0, -mockProject.logo.length)}r_${
+          mockProject.logo
+        }`
+      );
     });
   });
 });
