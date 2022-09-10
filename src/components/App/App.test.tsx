@@ -1,4 +1,5 @@
 import { screen } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 import { render } from "../../test-utils/render/customRender";
 import App from "./App";
 
@@ -18,11 +19,14 @@ jest.mock("react-router-dom", () => ({
 
 describe("Given an App component", () => {
   describe("When instantiated", () => {
-    test("Then it should show a heading with the app name and a footer with the copyright", () => {
+    test("Then it should show a heading with the app name and a footer with the copyright", async () => {
       const appName = "wideScope";
       const footerText = `wideScope © ${new Date().getFullYear()}`;
 
-      render(<App />);
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(() => {
+        render(<App />);
+      });
 
       const heading = screen.getByRole("heading", { name: appName });
       const footer = screen.getByText(footerText);
@@ -31,8 +35,11 @@ describe("Given an App component", () => {
       expect(footer).toBeInTheDocument();
     });
 
-    test("Then it should call the getToken function", () => {
-      render(<App />);
+    test("Then it should call the getToken function", async () => {
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(() => {
+        render(<App />);
+      });
 
       expect(mockGetToken).toHaveBeenCalled();
     });

@@ -18,7 +18,7 @@ const Projects = ({
     <ProjectsStyled>
       <ul className="projects__list">
         {projects.map((project, index) => (
-          <li className="projects__project" key={index}>
+          <li className="projects__project" key={`${project.id}${index}`}>
             <Project
               project={project}
               setFilter={setFilter}

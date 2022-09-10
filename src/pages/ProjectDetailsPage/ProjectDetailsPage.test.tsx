@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils";
 import mockProject from "../../test-utils/mocks/mockProject";
 import { render, screen } from "../../test-utils/render/customRender";
 import ProjectDetailsPage from "./ProjectDetailsPage";
@@ -12,7 +13,7 @@ jest.mock("react-router-dom", () => ({
 describe("Given a ProjectDetailsPage component", () => {
   describe("When instantiated with a valid param", () => {
     test("Then it should get a project and display it", async () => {
-      render(<ProjectDetailsPage />);
+      await render(<ProjectDetailsPage />);
 
       const projectTitle = await screen.findByRole("heading", {
         name: mockProject.name,
@@ -26,7 +27,10 @@ describe("Given a ProjectDetailsPage component", () => {
     test("Then it should display a not found message", async () => {
       mockProjectId = "falseId";
 
-      render(<ProjectDetailsPage />);
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(() => {
+        render(<ProjectDetailsPage />);
+      });
 
       const projectTitle = screen.queryByRole("heading", {
         name: mockProject.name,
