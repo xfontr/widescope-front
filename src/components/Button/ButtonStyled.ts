@@ -27,7 +27,7 @@ const ButtonStyled = styled.button`
 
   &.button--outline {
     font-weight: normal;
-    background-color: ${(props) => props.theme.colors.primary};
+    background-color: transparent;
     color: ${(props) => props.theme.colors.secondary};
     border: 1px solid ${(props) => props.theme.colors.secondary};
   }
@@ -35,6 +35,19 @@ const ButtonStyled = styled.button`
   &.button--outline:hover {
     background-color: ${(props) => props.theme.colors.secondary};
     color: ${(props) => props.theme.colors.primary};
+    border: 1px solid transparent;
+  }
+
+  &.button--outline-invert {
+    font-weight: normal;
+    background-color: transparent;
+    color: ${(props) => props.theme.colors.primary};
+    border: 1px solid ${(props) => props.theme.colors.primary};
+  }
+
+  &.button--outline-invert:hover {
+    background-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.secondary};
     border: 1px solid transparent;
   }
 

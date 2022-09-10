@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, ReactNode, SyntheticEvent } from "react";
 import ButtonStyled from "./ButtonStyled";
 
-type ButtonStyles = "default" | "outline";
+type ButtonStyles = "default" | "outline-invert" | "outline";
 
 interface ButtonProps extends ButtonHTMLAttributes<unknown> {
   children: ReactNode;

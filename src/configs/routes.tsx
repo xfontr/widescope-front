@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import ExplorePage from "../pages/ExplorePage/ExplorePage";
+import LandingPage from "../pages/LandingPage/LandingPage";
 import LogInPage from "../pages/LogInPage/LogInPage";
 import ManageProjectPage from "../pages/ManageProjectPage/ManageProjectPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
@@ -39,7 +40,7 @@ export const navRoutes: NavRoutes = {
     path: "/home",
     display: "always",
     name: "Home",
-    render: () => <ExplorePage />,
+    render: () => <LandingPage />,
   },
 
   explore: {

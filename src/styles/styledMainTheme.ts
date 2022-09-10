@@ -29,7 +29,8 @@ const styledMainTheme = {
   },
 
   breakpoints: {
-    small: "390px",
+    verySmall: "390px",
+    small: "440px",
     big: "700px",
     large: "1250px",
   },
