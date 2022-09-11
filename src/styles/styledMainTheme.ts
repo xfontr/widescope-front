@@ -2,6 +2,7 @@ const styledMainTheme = {
   colors: {
     primary: "rgb(255, 255, 255)",
     primaryDarker: "rgb(238, 238, 238)",
+    primaryDark: "rgb(199, 199, 199)",
 
     secondary: "rgb(25, 29, 35)",
     secondaryBrigther: "rgba(25, 29, 35, 0.7)",

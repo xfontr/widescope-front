@@ -13,6 +13,10 @@ jest.mock("../../app/hooks", () => ({
   useAppSelector: () => mockTotalProjects,
 }));
 
+const mockScroll = jest.fn();
+
+window.scrollTo = mockScroll;
+
 describe("Given a Pagination component", () => {
   describe("When instantiated with a page number and a setter function", () => {
     const mockSetter = jest.fn() as React.Dispatch<
@@ -155,6 +159,24 @@ describe("Given a Pagination component", () => {
       fireEvent.click(forwardButton);
 
       expect(mockSetter).not.toHaveBeenCalled();
+    });
+
+    test("When clicking any button, it should scroll to the top of the page", async () => {
+      mockTotalProjects = 30;
+      const page = 1;
+      render(<Pagination page={page} setPage={mockSetter} />);
+
+      const pagination = [
+        screen.getByRole("button", { name: "»" }),
+        screen.getByRole("button", { name: "«" }),
+        screen.getByRole("button", { name: "1" }),
+        screen.getByRole("button", { name: "3" }),
+        screen.getByText(page + 1),
+      ];
+
+      await userEvent.click(pagination[Math.floor(Math.random() * 2)]);
+
+      expect(mockScroll).toHaveBeenCalled();
     });
   });
 });

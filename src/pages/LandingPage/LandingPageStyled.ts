@@ -20,7 +20,7 @@ export const HeroSectionStyled = styled.section`
     height: 100vh;
     background-attachment: fixed;
     background-position: top left;
-    max-width: calc(100vw - 4.3%);
+    max-width: calc(100vw - 3.8%);
 
     @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
       max-width: calc(100vw - 1.1% + 1px);

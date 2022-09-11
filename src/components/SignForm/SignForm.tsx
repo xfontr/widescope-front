@@ -129,7 +129,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
         <LabelStyled htmlFor="name">Name</LabelStyled>
         <InputStyled
           className={
-            errors.failedInputs.includes("name") ? "form__input--error" : ""
+            errors.failedInputs.includes("name")
+              ? "form__input--user form__input--error"
+              : "form__input--user"
           }
           type="text"
           id="name"
@@ -146,7 +148,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
         <LabelStyled htmlFor="password">Password</LabelStyled>
         <InputStyled
           className={
-            errors.failedInputs.includes("password") ? "form__input--error" : ""
+            errors.failedInputs.includes("password")
+              ? "form__input--password form__input--error"
+              : "form__input--password"
           }
           type="password"
           id="password"
@@ -187,6 +191,7 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
                   ? "form__input--error"
                   : ""
               }
+              placeholder="johndoe@gmail.com"
               type="email"
               id="email"
               value={values.email}

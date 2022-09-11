@@ -116,7 +116,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
           }
           type="text"
           id="name"
-          placeholder="John Doe"
+          placeholder="Music App"
           autoComplete="off"
           value={values.name}
           onChange={handleChange}

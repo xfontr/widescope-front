@@ -68,7 +68,7 @@ export const InputStyled = styled.input`
   border-radius: ${(props) => props.theme.shapes.radiusSmall};
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.secondary};
-  border: 1px solid ${(props) => props.theme.colors.secondary};
+  border: 1px solid ${(props) => props.theme.colors.primaryDark};
   width: 100%;
   transition: 0.2s;
 
@@ -91,10 +91,60 @@ export const InputStyled = styled.input`
   }
 
   &:focus {
-    background-color: ${(props) => props.theme.colors.primaryDarker};
+    border-color: ${(props) => props.theme.colors.secondaryBrigther};
   }
 
   &.form__input {
+    &--user {
+      background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.7),
+          rgba(255, 255, 255, 0.7)
+        ),
+        url("/img/user-solid.svg") no-repeat;
+    }
+    &--password {
+      background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.7),
+          rgba(255, 255, 255, 0.7)
+        ),
+        url("/img/lock-solid.svg") no-repeat;
+    }
+
+    &--user:hover {
+      background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.4)
+        ),
+        url("/img/user-solid.svg") no-repeat;
+    }
+    &--password:hover {
+      background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.4)
+        ),
+        url("/img/lock-solid.svg") no-repeat;
+    }
+
+    &--user,
+    &--password {
+      background-size: 1.1rem;
+      background-position: 0.9rem;
+      padding-left: 3rem;
+    }
+
+    &--user:focus,
+    &--password:focus,
+    &--user:hover,
+    &--password:hover {
+      background-size: 1.4rem;
+      background-position: 0.9rem;
+      padding-left: 3rem;
+    }
+
     &--error-repeat {
       background-color: ${(props) => props.theme.colors.error};
     }
