@@ -85,6 +85,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
 
   const clearForm = () => {
     formData.delete("logo");
+    formData.delete("logo_update");
     formData.delete("project");
 
     setValues(initialState);
@@ -150,7 +151,7 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
         <InputStyled
           type="file"
           id="logo"
-          name="logo"
+          name={isCreate ? "logo" : "logo_update"}
           autoComplete="off"
           value={values.logo}
           onChange={handleFileChange}
