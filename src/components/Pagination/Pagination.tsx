@@ -26,6 +26,7 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         disabled={minPage === page}
         action={() => {
           setPage(minPage);
+          window.scrollTo(0, 0);
         }}
       />
 
@@ -35,6 +36,7 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         disabled={minPage === page}
         action={() => {
           setPage(page - 1);
+          window.scrollTo(0, 0);
         }}
       />
 
@@ -46,6 +48,7 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         disabled={maxPage === page}
         action={() => {
           setPage(page + 1);
+          window.scrollTo(0, 0);
         }}
       />
 
@@ -55,6 +58,7 @@ const Pagination = ({ page, setPage }: PaginationProps): JSX.Element => {
         disabled={maxPage === page}
         action={() => {
           setPage(maxPage);
+          window.scrollTo(0, 0);
         }}
       />
     </PaginationStyled>

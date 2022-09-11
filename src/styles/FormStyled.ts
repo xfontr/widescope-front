@@ -91,7 +91,6 @@ export const InputStyled = styled.input`
   }
 
   &:focus {
-    /* background-color: ${(props) => props.theme.colors.primaryDarker}; */
     border-color: ${(props) => props.theme.colors.secondaryBrigther};
   }
 
