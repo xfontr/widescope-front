@@ -61,7 +61,9 @@
       "src/**/*.tsx",
       "src/**/*.ts",
       "!src/index.tsx",
-      "!src/setupTests.ts"
+      "!src/setupTests.ts",
+      "!src/service-worker.ts",
+      "!src/serviceWorkerRegistration.ts"
     ]
   }
 }
