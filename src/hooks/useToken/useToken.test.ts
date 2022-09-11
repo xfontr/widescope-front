@@ -1,9 +1,6 @@
 import { waitFor, renderHook as reactRenderHook } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import {
-  closeActionCreator,
-  setVisibilityActionCreator,
-} from "../../store/slices/uiModal/uiModalSlice";
+import { setVisibilityActionCreator } from "../../store/slices/uiModal/uiModalSlice";
 import { loadUserActionCreator } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
@@ -29,9 +26,9 @@ let mockTokenContent = {
 
 jest.mock("../../utils/auth/auth", () => () => mockTokenContent);
 
-describe("Given a getToken function returned from a useToken function", () => {
+describe("Given a verifyUser function returned from a useToken function", () => {
   const {
-    result: { current: getToken },
+    result: { current: verifyUser },
   } = renderHook(useToken);
 
   const tokenContent = "###";
@@ -41,7 +38,7 @@ describe("Given a getToken function returned from a useToken function", () => {
       mockLocalStorage.setItem("token", tokenContent);
 
       await act(async () => {
-        await getToken();
+        await verifyUser();
       });
 
       await waitFor(() => {
@@ -60,7 +57,7 @@ describe("Given a getToken function returned from a useToken function", () => {
     test("Then it should dispatch the ui modal actions", async () => {
       await act(async () => {
         mockLocalStorage.setItem("token", tokenContent);
-        await getToken();
+        await verifyUser();
       });
 
       await waitFor(() => {
@@ -87,36 +84,11 @@ describe("Given a getToken function returned from a useToken function", () => {
       } as typeof mockTokenContent;
 
       await act(async () => {
-        await getToken();
+        await verifyUser();
       });
 
       await waitFor(() => {
         expect(localStorage.clear).toHaveBeenCalled();
-      });
-    });
-
-    test("Then it should dispatch the error ui modal", async () => {
-      const expectedError =
-        "TypeError: Cannot read properties of undefined (reading 'id')";
-
-      localStorage.clear = jest.fn();
-      mockLocalStorage.setItem("token", tokenContent);
-
-      mockTokenContent = {
-        id: "falseId",
-      } as typeof mockTokenContent;
-
-      await act(async () => {
-        await getToken();
-      });
-
-      await waitFor(() => {
-        expect(mockUseDispatch).toHaveBeenCalledWith(
-          closeActionCreator({
-            message: `Log in error: ${expectedError}`,
-            type: "error",
-          })
-        );
       });
     });
   });

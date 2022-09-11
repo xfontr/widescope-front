@@ -10,13 +10,13 @@ import renderRoutes from "../../utils/renderRoutes/renderRoutes";
 
 const App = (): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
-  const getToken = useToken();
+  const verifyUser = useToken();
 
   useEffect(() => {
     (async () => {
-      await getToken();
+      await verifyUser();
     })();
-  }, [getToken]);
+  }, [verifyUser]);
 
   return (
     <AppStyled>
