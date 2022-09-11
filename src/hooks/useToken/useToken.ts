@@ -1,9 +1,6 @@
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  closeActionCreator,
-  setVisibilityActionCreator,
-} from "../../store/slices/uiModal/uiModalSlice";
+import { setVisibilityActionCreator } from "../../store/slices/uiModal/uiModalSlice";
 import {
   loadUserActionCreator,
   toggleStatusActionCreator,
@@ -18,14 +15,14 @@ import {
 import useUser from "../useUser/useUser";
 
 const useToken = () => {
-  const { getUserData } = useUser();
+  const { getUserData, logOut } = useUser();
   const dispatch = useAppDispatch();
-  const isLogged = useAppSelector((state) => state.user.isLogged);
+  const isValidated = useAppSelector((state) => state.userData.email);
 
-  const getToken = useCallback(async () => {
+  const verifyUser = useCallback(async () => {
     const token = localStorage.getItem("token");
 
-    if (isLogged || !token) {
+    if (isValidated || !token) {
       return;
     }
 
@@ -39,20 +36,15 @@ const useToken = () => {
       dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
       dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
       dispatch(toggleStatusActionCreator(true));
-
-      dispatch(setVisibilityActionCreator(false));
     } catch (error) {
+      logOut();
       localStorage.clear();
-      dispatch(
-        closeActionCreator({
-          message: `Log in error: ${error}`,
-          type: "error",
-        })
-      );
     }
-  }, [getUserData, dispatch, isLogged]);
 
-  return getToken;
+    dispatch(setVisibilityActionCreator(false));
+  }, [getUserData, dispatch, isValidated, logOut]);
+
+  return verifyUser;
 };
 
 export default useToken;
