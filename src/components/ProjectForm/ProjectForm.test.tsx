@@ -158,6 +158,22 @@ describe("Given a ProjectForm component", () => {
       });
     });
 
+    test("If the user submit invalid values, a list of errors should appear", async () => {
+      render(<ProjectForm isCreate={true} />);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Create project",
+      });
+
+      await userEvent.click(submitButton);
+
+      const errorMessage = screen.getByText(
+        '"name" is not allowed to be empty'
+      );
+
+      expect(errorMessage).toBeInTheDocument();
+    });
+
     test("If the user submits, the fields should be emptied, the errors restored and sent back to the list", async () => {
       render(<ProjectForm isCreate={true} />);
       const typedText = mockProject.name;

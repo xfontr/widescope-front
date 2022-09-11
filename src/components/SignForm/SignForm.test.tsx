@@ -103,6 +103,22 @@ describe("Given a SignForm component", () => {
         expect(element).toHaveStyle("border-width: 2px");
       });
     });
+
+    test("If the user submit invalid values, a list of errors should appear", async () => {
+      render(<SignForm isLogin={false} />);
+
+      const submitButton = screen.getByRole("button", {
+        name: "Sign up",
+      });
+
+      await userEvent.click(submitButton);
+
+      const expectedPasswordError = screen.getByText(
+        '"password" is not allowed to be empty'
+      );
+
+      expect(expectedPasswordError).toBeInTheDocument();
+    });
   });
 
   describe("When instantiated as a sign up form and submitted with a valid user", () => {

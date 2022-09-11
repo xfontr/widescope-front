@@ -79,7 +79,6 @@ export const InputStyled = styled.input`
   & input[type="file"] {
     margin-top: 0.5rem;
     padding: ${({ theme }) => theme.spacing.gapSmall};
-    border: 2px dashed ${({ theme }) => theme.colors.secondary};
     border-radius: ${({ theme }) => theme.shapes.radiusSmall};
     background-color: ${({ theme }) => theme.colors.primaryDarker};
     cursor: pointer;

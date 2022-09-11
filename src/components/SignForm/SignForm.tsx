@@ -13,6 +13,9 @@ import {
   LabelStyled,
   SignFormStyled,
 } from "../../styles/FormStyled";
+import Joi from "joi";
+import { validateForm } from "../../utils/validateForm/validateForm";
+import Errors from "../Errors/Errors";
 
 interface SignFormProps {
   isLogin: boolean;
@@ -25,10 +28,15 @@ const initialState = {
   email: "",
 };
 
+const errorsInitialState = {
+  errors: [] as Joi.ValidationErrorItem[],
+  failedInputs: [] as string[],
+};
+
 const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
   const { signUp, logIn } = useUser();
   const [values, setValues] = useState(initialState);
-  const [errors, setErrors] = useState([] as string[]);
+  const [errors, setErrors] = useState(errorsInitialState);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValues({
@@ -56,25 +64,14 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
     }
   };
 
-  const validateValues = (): boolean => {
-    const validation = isLogin
-      ? loginSchema.validate(
+  const validateValues = (): boolean =>
+    isLogin
+      ? validateForm(
+          loginSchema,
           { name: values.name, password: values.password },
-          { abortEarly: false }
+          setErrors
         )
-      : registerSchema.validate(values, { abortEarly: false });
-
-    if (validation.error) {
-      const errors = validation.error.details.map(
-        (failedInput) => failedInput.path[0]
-      );
-
-      setErrors(errors as string[]);
-      return false;
-    } else {
-      return true;
-    }
-  };
+      : validateForm(registerSchema, values, setErrors);
 
   const logInAction = async () => {
     if (!validateValues()) {
@@ -131,7 +128,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="name">Name</LabelStyled>
         <InputStyled
-          className={errors.includes("name") ? "form__input--error" : ""}
+          className={
+            errors.failedInputs.includes("name") ? "form__input--error" : ""
+          }
           type="text"
           id="name"
           placeholder="John Doe"
@@ -146,7 +145,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       <GroupStyled>
         <LabelStyled htmlFor="password">Password</LabelStyled>
         <InputStyled
-          className={errors.includes("password") ? "form__input--error" : ""}
+          className={
+            errors.failedInputs.includes("password") ? "form__input--error" : ""
+          }
           type="password"
           id="password"
           autoComplete="off"
@@ -163,7 +164,9 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
             <LabelStyled htmlFor="repeatPassword">Repeat password</LabelStyled>
             <InputStyled
               className={
-                errors.includes("repeatPassword") ? "form__input--error" : ""
+                errors.failedInputs.includes("repeatPassword")
+                  ? "form__input--error"
+                  : ""
               }
               type="password"
               id="repeatPassword"
@@ -179,7 +182,11 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
           <GroupStyled>
             <LabelStyled htmlFor="email">Email address</LabelStyled>
             <InputStyled
-              className={errors.includes("email") ? "form__input--error" : ""}
+              className={
+                errors.failedInputs.includes("email")
+                  ? "form__input--error"
+                  : ""
+              }
               type="email"
               id="email"
               value={values.email}
@@ -190,6 +197,8 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
           </GroupStyled>
         </>
       )}
+
+      <Errors errors={errors} />
 
       <FooterStyled>
         <Button type="submit" children={`${isLogin ? "Log in" : "Sign up"}`} />
