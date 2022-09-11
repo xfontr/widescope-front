@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Link } from "react-router-dom";
 import { navRoutes } from "../../configs/routes";
 import useUser from "../../hooks/useUser/useUser";
@@ -33,7 +33,7 @@ const errorsInitialState = {
   failedInputs: [] as string[],
 };
 
-const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
+const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
   const { signUp, logIn } = useUser();
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState(errorsInitialState);
@@ -222,6 +222,6 @@ const SignForm = ({ isLogin }: SignFormProps): JSX.Element => {
       </FooterStyled>
     </SignFormStyled>
   );
-};
+});
 
 export default SignForm;

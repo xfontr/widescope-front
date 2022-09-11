@@ -1,8 +1,9 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import { navRoutes } from "../../configs/routes";
 
-const NotFoundPage = (): JSX.Element => {
+const NotFoundPage = React.memo((): JSX.Element => {
   const navigate = useNavigate();
 
   return (
@@ -23,6 +24,6 @@ const NotFoundPage = (): JSX.Element => {
       />
     </>
   );
-};
+});
 
 export default NotFoundPage;

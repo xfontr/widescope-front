@@ -5,10 +5,10 @@ import { navRoutes } from "../../configs/routes";
 import { useAppSelector } from "../../app/hooks";
 import { Link, Routes } from "react-router-dom";
 import useToken from "../../hooks/useToken/useToken";
-import { useEffect } from "react";
+import { memo, Suspense, useEffect } from "react";
 import renderRoutes from "../../utils/renderRoutes/renderRoutes";
 
-const App = (): JSX.Element => {
+const App = memo((): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
   const verifyUser = useToken();
 
@@ -30,11 +30,13 @@ const App = (): JSX.Element => {
       </header>
 
       <main>
-        <Routes key="routes">
-          {Object.values(navRoutes).map((route) =>
-            renderRoutes(isLogged, route)
-          )}
-        </Routes>
+        <Suspense fallback={<span>Loading...</span>}>
+          <Routes key="routes">
+            {Object.values(navRoutes).map((route) =>
+              renderRoutes(isLogged, route)
+            )}
+          </Routes>
+        </Suspense>
       </main>
 
       <footer className="footer">
@@ -42,6 +44,6 @@ const App = (): JSX.Element => {
       </footer>
     </AppStyled>
   );
-};
+});
 
 export default App;

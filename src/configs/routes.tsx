@@ -1,12 +1,23 @@
+import React from "react";
 import { Navigate } from "react-router-dom";
-import ExplorePage from "../pages/ExplorePage/ExplorePage";
 import LandingPage from "../pages/LandingPage/LandingPage";
-import LogInPage from "../pages/LogInPage/LogInPage";
-import ManageProjectPage from "../pages/ManageProjectPage/ManageProjectPage";
-import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
-import ProjectDetailsPage from "../pages/ProjectDetailsPage/ProjectDetailsPage";
-import SignUpPage from "../pages/SignUpPage/SignUpPage";
-import UserProjectsPage from "../pages/UserProjectsPage/UserProjectsPage";
+const ExplorePage = React.lazy(
+  () => import("../pages/ExplorePage/ExplorePage")
+);
+const LogInPage = React.lazy(() => import("../pages/LogInPage/LogInPage"));
+const ManageProjectPage = React.lazy(
+  () => import("../pages/ManageProjectPage/ManageProjectPage")
+);
+const NotFoundPage = React.lazy(
+  () => import("../pages/NotFoundPage/NotFoundPage")
+);
+const ProjectDetailsPage = React.lazy(
+  () => import("../pages/ProjectDetailsPage/ProjectDetailsPage")
+);
+const SignUpPage = React.lazy(() => import("../pages/SignUpPage/SignUpPage"));
+const UserProjectsPage = React.lazy(
+  () => import("../pages/UserProjectsPage/UserProjectsPage")
+);
 
 export interface NavRoute {
   path: string;

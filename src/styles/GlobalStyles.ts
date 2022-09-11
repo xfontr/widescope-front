@@ -70,6 +70,12 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
 }
+
+.loading-card {
+  height: 350.53px;
+  width: 388.40px;
+  background-color: ${styledMainTheme.colors.primary};
+}
 `;
 
 export default GlobalStyles;

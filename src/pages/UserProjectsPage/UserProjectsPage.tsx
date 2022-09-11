@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import Projects from "../../components/Projects/Projects";
 import useProjects from "../../hooks/useProjects/useProjects";
 
-const UserProjectsPage = (): JSX.Element => {
+const UserProjectsPage = memo((): JSX.Element => {
   const { getByAuthor } = useProjects();
   const { id, isLogged } = useAppSelector((state) => ({
     id: state.user.user.id,
@@ -37,6 +37,6 @@ const UserProjectsPage = (): JSX.Element => {
       )}
     </>
   );
-};
+});
 
 export default UserProjectsPage;
