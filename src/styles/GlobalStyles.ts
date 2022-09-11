@@ -76,6 +76,15 @@ const GlobalStyles = createGlobalStyle`
   width: 388.40px;
   background-color: ${styledMainTheme.colors.primary};
 }
+
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
 `;
 
 export default GlobalStyles;

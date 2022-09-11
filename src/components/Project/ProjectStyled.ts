@@ -9,6 +9,7 @@ const ProjectStyled = styled.article`
   flex-direction: column;
   gap: ${(props) => props.theme.spacing.gapSmall};
   font-size: 1.1rem;
+  position: relative;
 
   h3 {
     margin: 0;

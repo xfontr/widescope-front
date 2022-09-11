@@ -24,6 +24,8 @@ const AppStyled = styled.div`
 
     &__title {
       font-size: 1.3rem;
+      position: relative;
+      z-index: 999;
     }
   }
 

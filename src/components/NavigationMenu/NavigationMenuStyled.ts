@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 const NavigationStyled = styled.nav`
+  position: relative;
+  z-index: 999;
+
   ul {
     display: flex;
     flex-direction: column;

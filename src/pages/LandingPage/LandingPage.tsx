@@ -26,33 +26,35 @@ const LandingPage = memo((): JSX.Element => {
 
   return (
     <>
-      <HeroSectionStyled>
-        <h1 className="page__title page__title--landing">
-          Let them know
-          <span className="page__title--bold"> what you've got</span>
-        </h1>
+      <HeroSectionStyled className="full-width">
+        <div className="container">
+          <h1 className="page__title page__title--landing">
+            Let them know
+            <span className="page__title--bold"> what you've got</span>
+          </h1>
 
-        <p className="page__title-subheading page__title-subheading--landing">
-          Set your projects to a new level by sharing them with wideScope's
-          glowing community of developers.
-        </p>
+          <p className="page__title-subheading page__title-subheading--landing">
+            Set your projects to a new level by sharing them with wideScope's
+            glowing community of developers.
+          </p>
 
-        <Button
-          renderAs="a"
-          action={() => {
-            navigate(navRoutes.signUp.path);
-          }}
-          children="Get started"
-        />
+          <Button
+            renderAs="a"
+            action={() => {
+              navigate(navRoutes.signUp.path);
+            }}
+            children="Get started"
+          />
 
-        <Button
-          customStyle="outline"
-          renderAs="a"
-          action={() => {
-            navigate(navRoutes.explore.path);
-          }}
-          children="Explore"
-        />
+          <Button
+            customStyle="outline"
+            renderAs="a"
+            action={() => {
+              navigate(navRoutes.explore.path);
+            }}
+            children="Explore"
+          />
+        </div>
       </HeroSectionStyled>
 
       <Suspense fallback={<p>Getting some projects...</p>}>
@@ -62,40 +64,42 @@ const LandingPage = memo((): JSX.Element => {
       </Suspense>
 
       <Suspense fallback={<p>Loading...</p>}>
-        <CTASectionStyled>
-          {!isLogged && (
-            <div className="landing-page__log-in">
-              <div className="cta-section">
-                <h2 className="page__title">
-                  Start sharing your projects. <br />
-                  <span className="page__title--bold"> It's free</span>
-                </h2>
+        <CTASectionStyled className="full-width">
+          <div className="container">
+            {!isLogged && (
+              <div className="landing-page__log-in">
+                <div className="cta-section">
+                  <h2 className="page__title">
+                    Start sharing your projects. <br />
+                    <span className="page__title--bold"> It's free</span>
+                  </h2>
+                </div>
+
+                <SignForm isLogin={true} />
               </div>
+            )}
 
-              <SignForm isLogin={true} />
-            </div>
-          )}
+            {isLogged && (
+              <div className="landing-page__create">
+                <div className="cta-section">
+                  <h2 className="page__title">
+                    Share your projects. <br />
+                    <span className="page__title--bold"> It's free</span>
+                  </h2>
 
-          {isLogged && (
-            <div className="landing-page__create">
-              <div className="cta-section">
-                <h2 className="page__title">
-                  Share your projects. <br />
-                  <span className="page__title--bold"> It's free</span>
-                </h2>
-
-                <Button
-                  customStyle="outline-invert"
-                  renderAs="a"
-                  action={() => {
-                    navigate(navRoutes.createProject.path);
-                  }}
-                >
-                  Post a project
-                </Button>
+                  <Button
+                    customStyle="outline-invert"
+                    renderAs="a"
+                    action={() => {
+                      navigate(navRoutes.createProject.path);
+                    }}
+                  >
+                    Post a project
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </CTASectionStyled>
       </Suspense>
     </>
