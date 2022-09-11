@@ -40,7 +40,9 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
 
   const [values, setValues] = useState(initialState);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     setValues({
       ...values,
       [event.target.id]: event.target.value,
@@ -146,16 +148,19 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
         />
       </GroupStyled>
 
-      <GroupStyled>
+      <GroupStyled className="area">
         <LabelStyled htmlFor="logo">Project logo</LabelStyled>
-        <InputStyled
-          type="file"
-          id="logo"
-          name={isCreate ? "logo" : "logo_update"}
-          autoComplete="off"
-          value={values.logo}
-          onChange={handleFileChange}
-        />
+        <InputStyled as="div" className="drop-area">
+          <span>Drop your logo here</span>
+          <input
+            type="file"
+            id="logo"
+            name={isCreate ? "logo" : "logo_update"}
+            autoComplete="off"
+            value={values.logo}
+            onChange={handleFileChange}
+          />
+        </InputStyled>
       </GroupStyled>
 
       <GroupStyled>
@@ -192,11 +197,11 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
         />
       </GroupStyled>
 
-      <GroupStyled>
+      <GroupStyled className="area">
         <LabelStyled htmlFor="name">Description</LabelStyled>
         <InputStyled
+          as="textarea"
           className={errors.includes("description") ? "form__input--error" : ""}
-          type="text"
           id="description"
           placeholder="Music app is a wonderful system to share music between its users."
           autoComplete="off"
