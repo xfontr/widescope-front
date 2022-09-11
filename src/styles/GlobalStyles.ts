@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
-  button, input {
+  button, input, textarea {
     font: inherit;
     border: none;
     outline: none;

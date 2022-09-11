@@ -43,8 +43,16 @@ export const GroupStyled = styled.div`
     display: block;
   }
 
+  &.area {
+    width: 100%;
+  }
+
   @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
     width: 45%;
+
+    &.area {
+      width: 95%;
+    }
   }
 `;
 
@@ -63,6 +71,24 @@ export const InputStyled = styled.input`
   border: 1px solid ${(props) => props.theme.colors.secondary};
   width: 100%;
   transition: 0.2s;
+
+  &.drop-area span {
+    font-size: 0.8rem;
+  }
+
+  & input[type="file"] {
+    margin-top: 0.5rem;
+    padding: ${({ theme }) => theme.spacing.gapSmall};
+    border-radius: ${({ theme }) => theme.shapes.radiusSmall};
+    background-color: ${({ theme }) => theme.colors.primaryDarker};
+    cursor: pointer;
+    max-width: 100%;
+    width: 100%;
+
+    &::-webkit-file-upload-button {
+      display: none;
+    }
+  }
 
   &:focus {
     background-color: ${(props) => props.theme.colors.primaryDarker};
