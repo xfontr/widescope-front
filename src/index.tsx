@@ -9,6 +9,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/700.css";
 import { BrowserRouter } from "react-router-dom";
+import * as serviceWorkersRegistration from "./serviceWorkerRegistration";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -25,3 +26,5 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+serviceWorkersRegistration.register();
