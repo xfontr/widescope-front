@@ -95,6 +95,20 @@ export const InputStyled = styled.input`
   }
 
   &.form__input {
+    &--user {
+      background: url("/img/user-solid.svg") no-repeat;
+    }
+    &--password {
+      background: url("/img/lock-solid.svg") no-repeat;
+    }
+
+    &--user,
+    &--password {
+      background-size: 1.1rem;
+      background-position: 0.9rem;
+      padding-left: 3rem;
+    }
+
     &--error-repeat {
       background-color: ${(props) => props.theme.colors.error};
     }
