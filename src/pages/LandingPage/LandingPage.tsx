@@ -1,14 +1,15 @@
-import { useEffect } from "react";
+import { lazy, Suspense, memo, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import Button from "../../components/Button/Button";
 import useProjects from "../../hooks/useProjects/useProjects";
 import { CTASectionStyled, HeroSectionStyled } from "./LandingPageStyled";
-import Projects from "../../components/Projects/Projects";
-import SignForm from "../../components/SignForm/SignForm";
 import { useNavigate } from "react-router-dom";
 import { navRoutes } from "../../configs/routes";
 
-const LandingPage = (): JSX.Element => {
+const Projects = lazy(() => import("../../components/Projects/Projects"));
+const SignForm = lazy(() => import("../../components/SignForm/SignForm"));
+
+const LandingPage = memo((): JSX.Element => {
   const { getAll } = useProjects();
   const navigate = useNavigate();
 
@@ -54,47 +55,51 @@ const LandingPage = (): JSX.Element => {
         />
       </HeroSectionStyled>
 
-      <section className="langing-page__projects">
-        <Projects projects={projects}></Projects>
-      </section>
+      <Suspense fallback={<p>Getting some projects...</p>}>
+        <section className="langing-page__projects">
+          <Projects projects={projects}></Projects>
+        </section>
+      </Suspense>
 
-      <CTASectionStyled>
-        {!isLogged && (
-          <div className="landing-page__log-in">
-            <div className="cta-section">
-              <h2 className="page__title">
-                Start sharing your projects. <br />
-                <span className="page__title--bold"> It's free</span>
-              </h2>
+      <Suspense fallback={<p>Loading...</p>}>
+        <CTASectionStyled>
+          {!isLogged && (
+            <div className="landing-page__log-in">
+              <div className="cta-section">
+                <h2 className="page__title">
+                  Start sharing your projects. <br />
+                  <span className="page__title--bold"> It's free</span>
+                </h2>
+              </div>
+
+              <SignForm isLogin={true} />
             </div>
+          )}
 
-            <SignForm isLogin={true} />
-          </div>
-        )}
+          {isLogged && (
+            <div className="landing-page__create">
+              <div className="cta-section">
+                <h2 className="page__title">
+                  Share your projects. <br />
+                  <span className="page__title--bold"> It's free</span>
+                </h2>
 
-        {isLogged && (
-          <div className="landing-page__create">
-            <div className="cta-section">
-              <h2 className="page__title">
-                Share your projects. <br />
-                <span className="page__title--bold"> It's free</span>
-              </h2>
-
-              <Button
-                customStyle="outline-invert"
-                renderAs="a"
-                action={() => {
-                  navigate(navRoutes.createProject.path);
-                }}
-              >
-                Post a project
-              </Button>
+                <Button
+                  customStyle="outline-invert"
+                  renderAs="a"
+                  action={() => {
+                    navigate(navRoutes.createProject.path);
+                  }}
+                >
+                  Post a project
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-      </CTASectionStyled>
+          )}
+        </CTASectionStyled>
+      </Suspense>
     </>
   );
-};
+});
 
 export default LandingPage;

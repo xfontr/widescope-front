@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
@@ -8,7 +8,7 @@ import renderLinks from "../../utils/renderLinks/renderLinks";
 import Button from "../Button/Button";
 import NavigationStyled from "./NavigationMenuStyled";
 
-const NavigationMenu = (): JSX.Element => {
+const NavigationMenu = memo((): JSX.Element => {
   const [isMenuVisible, setVisibility] = useState(false);
   const { logOut } = useUser();
   const isLogged = useAppSelector((state: RootState) => state.user.isLogged);
@@ -77,6 +77,6 @@ const NavigationMenu = (): JSX.Element => {
       )}
     </NavigationStyled>
   );
-};
+});
 
 export default NavigationMenu;

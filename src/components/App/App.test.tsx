@@ -17,6 +17,13 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
+jest.mock("../../pages/ExplorePage/ExplorePage", () => ({
+  ExplorePage: () => {
+    const MockExplorePage = (): JSX.Element => <>ExplorePage</>;
+    return <MockExplorePage />;
+  },
+}));
+
 describe("Given an App component", () => {
   describe("When instantiated", () => {
     test("Then it should show a heading with the app name and a footer with the copyright", async () => {

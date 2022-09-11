@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProjectDetails from "../../components/ProjectDetails/ProjectDetails";
 import useProjects from "../../hooks/useProjects/useProjects";
 import { IProject } from "../../types/project";
 
-const ProjectDetailsPage = (): JSX.Element => {
+const ProjectDetailsPage = memo((): JSX.Element => {
   const { getById } = useProjects();
   const { projectId } = useParams();
   const [currentProject, setProject] = useState(false as IProject | false);
@@ -28,6 +28,6 @@ const ProjectDetailsPage = (): JSX.Element => {
       {currentProject && <ProjectDetails project={currentProject} />}
     </>
   );
-};
+});
 
 export default ProjectDetailsPage;

@@ -23,7 +23,7 @@ describe("Given a LandingPage component", () => {
           name: "Let them know what you've got",
           level: 1,
         }),
-        screen.getByRole("heading", {
+        await screen.findByRole("heading", {
           name: "Start sharing your projects. It's free",
           level: 2,
         }),
