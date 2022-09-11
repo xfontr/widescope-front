@@ -1,32 +1,31 @@
 import styled from "styled-components";
 
 export const HeroSectionStyled = styled.section`
-  padding-top: 3vh;
-  margin-bottom: 5rem;
+  background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.7)
+    ),
+    url("/img/background.jpeg");
 
-  &::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    background-image: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.7),
-        rgba(255, 255, 255, 0.7)
-      ),
-      url("/img/background.jpeg");
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-attachment: fixed;
-    background-position: top left;
-    max-width: calc(100vw - 3.8%);
+  background-attachment: fixed;
+  background-position: top left;
+  margin-top: -12.4vh;
+  margin-bottom: -10vh;
+  padding: 14vh 0 20vh 1.4rem;
 
-    @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
-      max-width: calc(100vw - 1.1% + 1px);
+  .container {
+    max-width: ${(props) => props.theme.breakpoints.verySmall};
+    margin: 0 auto;
+
+    @media (min-width: ${(props) => props.theme.breakpoints.verySmall}) {
+      max-width: ${(props) => props.theme.breakpoints.big};
+    }
+
+    @media (min-width: ${(props) => props.theme.breakpoints.big}) {
+      max-width: ${(props) => props.theme.breakpoints.large};
     }
   }
-  overflow: hidden;
 
   &:first-child a {
     margin-right: ${({ theme }) => theme.spacing.gapSmall};
@@ -55,44 +54,45 @@ export const HeroSectionStyled = styled.section`
 `;
 
 export const CTASectionStyled = styled.section`
-  margin: 2rem 0;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  margin-top: 5rem;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
+  color: ${({ theme }) => theme.colors.primary};
+
+  .container {
+    padding: 1.4rem;
+    max-width: ${(props) => props.theme.breakpoints.verySmall};
+    margin: 0 auto;
+
+    @media (min-width: ${(props) => props.theme.breakpoints.verySmall}) {
+      max-width: ${(props) => props.theme.breakpoints.big};
+    }
+
+    @media (min-width: ${(props) => props.theme.breakpoints.big}) {
+      max-width: ${(props) => props.theme.breakpoints.large};
+    }
+  }
 
   h2 {
     margin-bottom: 0;
   }
 
-  .cta-section {
-    color: ${({ theme }) => theme.colors.primary};
-    padding: 5rem 0;
-  }
-
   .landing-page__log-in {
+    padding-top: 1rem;
+    .page__title {
+      padding-bottom: 1rem;
+    }
     @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
       .page__title {
         max-width: 100%;
       }
     }
-
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      background-color: rgb(25, 29, 35);
-      left: 0;
-      width: 100vw;
-      height: 125vh;
-      max-width: calc(100vw - 4.3%);
-      margin-top: -115vh;
-
-      @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
-        height: 100vh;
-        max-width: calc(100vw - 1.1% + 1px);
-        margin-top: -85vh;
-      }
-    }
   }
 
   .landing-page__create {
+    padding-top: ${({ theme }) => theme.spacing.gapBig};
+
     .page__title {
       margin-bottom: ${({ theme }) => theme.spacing.gapSmall};
     }
@@ -101,24 +101,6 @@ export const CTASectionStyled = styled.section`
       text-align: center;
       .page__title {
         max-width: 100%;
-      }
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      background-color: rgb(25, 29, 35);
-      left: 0;
-      width: 100vw;
-      height: 54vh;
-      max-width: calc(100vw - 4.3%);
-      margin-top: -55vh;
-
-      @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
-        height: 47vh;
-        max-width: calc(100vw - 1.1% + 1px);
-        margin-top: -48vh;
       }
     }
   }

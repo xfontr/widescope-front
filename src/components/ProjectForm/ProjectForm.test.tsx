@@ -97,7 +97,7 @@ describe("Given a ProjectForm component", () => {
 
   describe("When instantiated as any sort of form", () => {
     test("Then the user should be able to type values to the input fields", async () => {
-      const typedText = mockProject.name;
+      const typedText = mockProject.repository;
       render(<ProjectForm isCreate={true} />);
 
       const form = [
@@ -176,7 +176,7 @@ describe("Given a ProjectForm component", () => {
 
     test("If the user submits, the fields should be emptied, the errors restored and sent back to the list", async () => {
       render(<ProjectForm isCreate={true} />);
-      const typedText = mockProject.name;
+      const typedText = mockProject.repository;
 
       const form = screen.getAllByRole("textbox");
 
@@ -212,7 +212,7 @@ describe("Given a ProjectForm component", () => {
   describe("When submitted as a create form", () => {
     test("Then it should call the create function with the form data", async () => {
       render(<ProjectForm isCreate={true} />);
-      const typedText = mockProject.name;
+      const typedText = mockProject.repository;
 
       const form = screen.getAllByRole("textbox");
 

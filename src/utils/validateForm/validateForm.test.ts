@@ -1,4 +1,3 @@
-import Joi from "joi";
 import loginSchema from "../../schemas/loginSchema";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { FormErrors, validateForm } from "./validateForm";

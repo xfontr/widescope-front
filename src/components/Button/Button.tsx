@@ -28,6 +28,8 @@ const Button = ({
     <ButtonStyled
       as={renderAs}
       href={link}
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={handleButtonAction}
       className={`${
         props["disabled"] && "button--disabled"

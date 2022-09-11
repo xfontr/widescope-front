@@ -203,7 +203,7 @@ const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
         </>
       )}
 
-      <Errors errors={errors} />
+      {!isLogin && <Errors errors={errors} />}
 
       <FooterStyled>
         <Button type="submit" children={`${isLogin ? "Log in" : "Sign up"}`} />
