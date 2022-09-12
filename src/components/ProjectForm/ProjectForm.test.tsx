@@ -168,7 +168,7 @@ describe("Given a ProjectForm component", () => {
       await userEvent.click(submitButton);
 
       const errorMessage = screen.getByText(
-        '"name" is not allowed to be empty'
+        '"Project name" is not allowed to be empty'
       );
 
       expect(errorMessage).toBeInTheDocument();

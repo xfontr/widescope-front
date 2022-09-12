@@ -10,7 +10,7 @@ import {
   HeaderStyled,
   SignFormStyled,
 } from "../RenderForm/RenderFormStyled";
-import { validateForm } from "../../utils/validateForm/validateForm";
+import { validateForm } from "../../utils/forms/validateForm";
 import Errors from "../Errors/Errors";
 import RenderForm from "../RenderForm/RenderForm";
 import { FormErrorsState } from "../RenderForm/RenderFormTypes";

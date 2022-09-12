@@ -1,7 +1,7 @@
 import loginSchema from "../../schemas/loginSchema";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { render, screen } from "../../test-utils/render/customRender";
-import { FormErrors } from "../../utils/validateForm/validateForm";
+import { FormErrors } from "../../utils/forms/validateForm";
 import Errors from "./Errors";
 
 describe("Given a Errors component", () => {
@@ -27,7 +27,7 @@ describe("Given a Errors component", () => {
       render(<Errors errors={errors} />);
 
       const expectedPasswordError = screen.getByText(
-        '"password" is not allowed to be empty'
+        '"Password" is not allowed to be empty'
       );
 
       expect(expectedPasswordError).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe("Given a Errors component", () => {
       render(<Errors errors={errors} />);
 
       const unexpectedPasswordError = screen.queryByText(
-        '"password" is not allowed to be empty'
+        '"Password" is not allowed to be empty'
       );
 
       expect(unexpectedPasswordError).not.toBeInTheDocument();

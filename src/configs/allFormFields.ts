@@ -1,21 +1,7 @@
-export type FormComponents =
-  | "logIn"
-  | "signUp"
-  | "createProject"
-  | "updateProject";
-
-export type FormFields =
-  | "name"
-  | "password"
-  | "repeatPassword"
-  | "email"
-  | "projectName"
-  | "repository"
-  | "logo"
-  | "logoUpdate"
-  | "technologyFront"
-  | "technologyBack"
-  | "description";
+import {
+  FormComponents,
+  FormFields,
+} from "../components/RenderForm/RenderFormTypes";
 
 export interface FormValue {
   type?: React.HTMLInputTypeAttribute;
@@ -81,7 +67,6 @@ export const allFormFields: Record<FormFields, FormValue> = {
     label: "Project logo",
     name: "logo",
     belongsTo: ["createProject"],
-    customClass: "drop-area",
     customGroupClass: "area",
   },
 
@@ -90,7 +75,6 @@ export const allFormFields: Record<FormFields, FormValue> = {
     label: "Project logo",
     name: "logoUpdate",
     belongsTo: ["updateProject"],
-    customClass: "drop-area",
     customGroupClass: "area",
   },
 

@@ -72,11 +72,7 @@ export const InputStyled = styled.input`
   width: 100%;
   transition: 0.2s;
 
-  &.drop-area span {
-    font-size: 0.8rem;
-  }
-
-  & input[type="file"] {
+  &[type="file"] {
     margin-top: 0.5rem;
     padding: ${({ theme }) => theme.spacing.gapSmall};
     border-radius: ${({ theme }) => theme.shapes.radiusSmall};

@@ -11,10 +11,7 @@ import {
   SignFormStyled,
 } from "../RenderForm/RenderFormStyled";
 import { IProject } from "../../types/project";
-import {
-  FormErrors,
-  validateForm,
-} from "../../utils/validateForm/validateForm";
+import { FormErrors, validateForm } from "../../utils/forms/validateForm";
 import Button from "../Button/Button";
 import Errors from "../Errors/Errors";
 import RenderForm from "../RenderForm/RenderForm";
