@@ -1,4 +1,4 @@
-import { waitFor } from "@testing-library/react";
+import { waitFor, renderHook as reactRenderHook } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { navRoutes } from "../../configs/routes";
 import {
@@ -11,9 +11,11 @@ import {
   toggleStatusActionCreator,
 } from "../../store/slices/user/userSlice";
 import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
+import mockContact from "../../test-utils/mocks/mockContact";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { renderHook } from "../../test-utils/render/customRender";
+import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import {
   setUserBasicData,
   setUserExtraData,
@@ -251,7 +253,7 @@ describe("Given a logOut function returned by a useUser function", () => {
     },
   } = renderHook(useUser);
 
-  describe(`When called`, () => {
+  describe("When called", () => {
     test("Then it should clear the local storage", () => {
       act(() => {
         logOut();
@@ -274,6 +276,52 @@ describe("Given a logOut function returned by a useUser function", () => {
       });
 
       expect(mockNavigate).toHaveBeenCalledWith(navRoutes.logIn.path);
+    });
+  });
+});
+
+describe("Given a addFriend function returned by a useUser function", () => {
+  const {
+    result: {
+      current: { addFriend },
+    },
+  } = reactRenderHook(useUser, { wrapper: WrapperWithMockStore });
+
+  describe("When called with a user id as an argument", () => {
+    test("Then it should fetch the API to add a friend and close the modal with a success message", async () => {
+      await addFriend(mockContact.id);
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Friend added",
+            type: "success",
+          })
+        );
+      });
+    });
+  });
+
+  describe("When called with a non-existant user id as an argument", () => {
+    test("Then it should call the dispatch to close the modal with an error", async () => {
+      await addFriend("wrongId");
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Couldn't add friend",
+            type: "error",
+          })
+        );
+      });
     });
   });
 });
