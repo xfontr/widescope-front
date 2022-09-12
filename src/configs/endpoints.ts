@@ -2,6 +2,7 @@ const endpoints = {
   usersRoot: "/users",
   signUp: "/users/sign-up",
   logIn: "/users/log-in",
+  addFriend: "/users/",
 
   projectsRoot: "/projects",
   getAll: "/projects/all",

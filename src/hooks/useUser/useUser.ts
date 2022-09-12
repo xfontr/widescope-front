@@ -125,7 +125,32 @@ const useUser = () => {
     navigate(navRoutes.logIn.path);
   };
 
-  return { signUp, logIn, getUserData, logOut };
+  const addFriend = useCallback(
+    async (friendId: string) => {
+      dispatch(setVisibilityActionCreator(true));
+
+      try {
+        await axios.patch(`${apiUrl}${endpoints.addFriend}${friendId}`);
+
+        dispatch(
+          closeActionCreator({
+            message: "Friend added",
+            type: "success",
+          })
+        );
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: "Sign up error",
+            type: "error",
+          })
+        );
+      }
+    },
+    [dispatch]
+  );
+
+  return { signUp, logIn, getUserData, logOut, addFriend };
 };
 
 export default useUser;
