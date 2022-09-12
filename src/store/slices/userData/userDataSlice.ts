@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import IContact from "../../../types/IContact";
 import { IProject, Projects } from "../../../types/project";
 import { UserExtraData } from "../../../types/user";
 
@@ -38,6 +39,17 @@ const userDataSlice = createSlice({
         project.id === action.payload.id ? action.payload : project
       ),
     }),
+
+    addFriend: (
+      previousState,
+      action: PayloadAction<Omit<IContact, "isFriend">>
+    ) => ({
+      ...previousState,
+      user: {
+        ...previousState,
+        friends: [...previousState.friends, action.payload],
+      },
+    }),
   },
 });
 
@@ -57,3 +69,5 @@ export const { deleteUserProject: deleteUserProjectActionCreator } =
 
 export const { updateUserProject: updateUserProjectActionCreator } =
   userDataSlice.actions;
+
+export const { addFriend: addFriendActionCreator } = userDataSlice.actions;
