@@ -1,3 +1,4 @@
+import IContact from "./IContact";
 import { Projects } from "./project";
 
 export interface UserBasicData {
@@ -8,7 +9,7 @@ export interface UserBasicData {
 
 export interface UserExtraData {
   email: string;
-  friends: string[];
+  friends: Omit<IContact, "isFriend">[];
   projects: Projects;
 }
 

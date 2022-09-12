@@ -13,7 +13,10 @@ import {
   logOutActionCreator,
   toggleStatusActionCreator,
 } from "../../store/slices/user/userSlice";
-import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
+import {
+  addFriendActionCreator,
+  loadUserDataActionCreator,
+} from "../../store/slices/userData/userDataSlice";
 import {
   IUser,
   UserGetData,
@@ -127,7 +130,7 @@ const useUser = () => {
   };
 
   const addFriend = useCallback(
-    async (friendId: string) => {
+    async (friendId: string, friendName: string) => {
       dispatch(setVisibilityActionCreator(true));
       try {
         await axios.patch(`${apiUrl}${endpoints.addFriend}${friendId}`, "", {
@@ -135,6 +138,8 @@ const useUser = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+
+        dispatch(addFriendActionCreator({ id: friendId, name: friendName }));
 
         dispatch(
           closeActionCreator({
