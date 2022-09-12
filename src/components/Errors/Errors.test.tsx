@@ -27,7 +27,7 @@ describe("Given a Errors component", () => {
       render(<Errors errors={errors} />);
 
       const expectedPasswordError = screen.getByText(
-        '"password" is not allowed to be empty'
+        '"Password" is not allowed to be empty'
       );
 
       expect(expectedPasswordError).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe("Given a Errors component", () => {
       render(<Errors errors={errors} />);
 
       const unexpectedPasswordError = screen.queryByText(
-        '"password" is not allowed to be empty'
+        '"Password" is not allowed to be empty'
       );
 
       expect(unexpectedPasswordError).not.toBeInTheDocument();

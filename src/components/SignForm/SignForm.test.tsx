@@ -114,7 +114,7 @@ describe("Given a SignForm component", () => {
       await userEvent.click(submitButton);
 
       const expectedPasswordError = screen.getByText(
-        '"password" is not allowed to be empty'
+        '"Password" is not allowed to be empty'
       );
 
       expect(expectedPasswordError).toBeInTheDocument();
