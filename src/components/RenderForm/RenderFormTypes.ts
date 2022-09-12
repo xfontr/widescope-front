@@ -17,7 +17,8 @@ export type FormComponents =
   | "logIn"
   | "signUp"
   | "createProject"
-  | "updateProject";
+  | "updateProject"
+  | "search";
 
 export type FormFields =
   | "name"
@@ -30,4 +31,5 @@ export type FormFields =
   | "logoUpdate"
   | "technologyFront"
   | "technologyBack"
-  | "description";
+  | "description"
+  | "search";
