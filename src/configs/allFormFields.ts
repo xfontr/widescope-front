@@ -109,5 +109,6 @@ export const allFormFields: Record<FormFields, FormValue> = {
     placeholder: "Search...",
     belongsTo: ["search"],
     customClass: "search-bar",
+    customGroupClass: "area",
   },
 };

@@ -151,6 +151,11 @@ export const InputStyled = styled.input`
       border-width: 2px;
     }
   }
+
+  &.search-bar {
+    width: 100%;
+    margin-bottom: calc(${({ theme }) => theme.spacing.gapSmall} / 2);
+  }
 `;
 
 export const FooterStyled = styled.footer`
