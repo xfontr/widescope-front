@@ -38,7 +38,7 @@ const RenderForm = <T extends { [key: string]: string | number }>(
 ): JSX.Element => (
   <>
     {createFormFrom(props.formType, allFormFields).map((field) => (
-      <GroupStyled className={field.customGroupClass && field.customGroupClass}>
+      <GroupStyled className={field.customGroupClass}>
         <LabelStyled htmlFor={field.name}>{field.label}</LabelStyled>
         <InputStyled
           as={field.renderAs ? field.renderAs : "input"}
@@ -50,12 +50,7 @@ const RenderForm = <T extends { [key: string]: string | number }>(
           onChange={(
             event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
           ) => {
-            handleChange(
-              event,
-              props.state,
-              props.setter,
-              props.formData && props.formData
-            );
+            handleChange(event, props.state, props.setter, props.formData);
           }}
           value={props.state[field.name]}
         />

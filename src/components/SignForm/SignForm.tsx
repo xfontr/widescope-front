@@ -7,62 +7,34 @@ import registerSchema from "../../schemas/registerSchema";
 import Button from "../Button/Button";
 import {
   FooterStyled,
-  GroupStyled,
   HeaderStyled,
-  InputStyled,
-  LabelStyled,
   SignFormStyled,
-} from "../../styles/FormStyled";
-import Joi from "joi";
+} from "../RenderForm/RenderFormStyled";
 import { validateForm } from "../../utils/validateForm/validateForm";
 import Errors from "../Errors/Errors";
+import RenderForm from "../RenderForm/RenderForm";
+import { FormErrorsState } from "../RenderForm/RenderFormTypes";
 
 interface SignFormProps {
   isLogin: boolean;
 }
 
-const initialState = {
+const errorsInitialState: FormErrorsState = {
+  errors: [],
+  failedInputs: [],
+};
+
+export const signFormInitialState = {
   name: "",
   password: "",
   repeatPassword: "",
   email: "",
 };
 
-const errorsInitialState = {
-  errors: [] as Joi.ValidationErrorItem[],
-  failedInputs: [] as string[],
-};
-
 const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
   const { signUp, logIn } = useUser();
-  const [values, setValues] = useState(initialState);
+  const [values, setValues] = useState(signFormInitialState);
   const [errors, setErrors] = useState(errorsInitialState);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-  };
-
-  const handlePasswordValidation = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!event.target.value) {
-      event.target.classList.remove("form__input--error-repeat");
-      return;
-    }
-
-    if (values.password !== event.target.value) {
-      event.target.className += event.target.className.includes(
-        "form__input--error-repeat"
-      )
-        ? ""
-        : " form__input--error-repeat";
-    } else {
-      event.target.classList.remove("form__input--error-repeat");
-    }
-  };
 
   const validateValues = (): boolean =>
     isLogin
@@ -74,10 +46,6 @@ const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
       : validateForm(registerSchema, values, setErrors);
 
   const logInAction = async () => {
-    if (!validateValues()) {
-      return;
-    }
-
     await logIn({
       name: values.name,
       password: values.password,
@@ -85,14 +53,6 @@ const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
   };
 
   const signUpAction = async () => {
-    if (!validateValues()) {
-      return;
-    }
-
-    if (values.password !== values.repeatPassword) {
-      return;
-    }
-
     await signUp({
       name: values.name,
       password: values.password,
@@ -102,6 +62,10 @@ const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!validateValues()) {
+      return;
+    }
 
     if (!isLogin) {
       signUpAction();
@@ -125,83 +89,12 @@ const SignForm = memo(({ isLogin }: SignFormProps): JSX.Element => {
         </span>
       </HeaderStyled>
 
-      <GroupStyled>
-        <LabelStyled htmlFor="name">Name</LabelStyled>
-        <InputStyled
-          className={
-            errors.failedInputs.includes("name")
-              ? "form__input--user form__input--error"
-              : "form__input--user"
-          }
-          type="text"
-          id="name"
-          placeholder="John Doe"
-          autoComplete="off"
-          value={values.name}
-          onChange={(event) => {
-            handleChange(event);
-          }}
-        />
-      </GroupStyled>
-
-      <GroupStyled>
-        <LabelStyled htmlFor="password">Password</LabelStyled>
-        <InputStyled
-          className={
-            errors.failedInputs.includes("password")
-              ? "form__input--password form__input--error"
-              : "form__input--password"
-          }
-          type="password"
-          id="password"
-          autoComplete="off"
-          value={values.password}
-          onChange={(event) => {
-            handleChange(event);
-          }}
-        />
-      </GroupStyled>
-
-      {!isLogin && (
-        <>
-          <GroupStyled>
-            <LabelStyled htmlFor="repeatPassword">Repeat password</LabelStyled>
-            <InputStyled
-              className={
-                errors.failedInputs.includes("repeatPassword")
-                  ? "form__input--error"
-                  : ""
-              }
-              type="password"
-              id="repeatPassword"
-              autoComplete="off"
-              value={values.repeatPassword}
-              onChange={(event) => {
-                handleChange(event);
-                handlePasswordValidation(event);
-              }}
-            />
-          </GroupStyled>
-
-          <GroupStyled>
-            <LabelStyled htmlFor="email">Email address</LabelStyled>
-            <InputStyled
-              className={
-                errors.failedInputs.includes("email")
-                  ? "form__input--error"
-                  : ""
-              }
-              placeholder="johndoe@gmail.com"
-              type="email"
-              id="email"
-              value={values.email}
-              onChange={(event) => {
-                handleChange(event);
-              }}
-            />
-          </GroupStyled>
-        </>
-      )}
+      <RenderForm
+        formType={`${isLogin ? "logIn" : "signUp"}`}
+        errors={errors}
+        state={values}
+        setter={setValues}
+      />
 
       {!isLogin && <Errors errors={errors} />}
 
