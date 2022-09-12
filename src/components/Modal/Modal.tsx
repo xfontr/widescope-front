@@ -1,10 +1,10 @@
-import { memo, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import { setVisibilityActionCreator } from "../../store/slices/uiModal/uiModalSlice";
 import ModalStyled from "./ModalStyled";
 
-const Modal = memo((): JSX.Element => {
+const Modal = (): JSX.Element => {
   const { isVisible, message, type, isClosing } = useAppSelector(
     (state: RootState) => state.uiModal
   );
@@ -34,5 +34,6 @@ const Modal = memo((): JSX.Element => {
       {!isVisible && <></>}
     </>
   );
-});
+};
+
 export default Modal;
