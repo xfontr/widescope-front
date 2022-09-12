@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const NavigationStyled = styled.nav`
   position: fixed;
-  right: 7%;
+  right: 4%;
   z-index: 999;
 
   ul {
@@ -37,7 +37,7 @@ const NavigationStyled = styled.nav`
     height: 100%;
     width: 70%;
     text-align: right;
-    padding: 8rem 7%;
+    padding: 8rem 4%;
     transform: translate(100%);
     transition: 0.4s;
 
