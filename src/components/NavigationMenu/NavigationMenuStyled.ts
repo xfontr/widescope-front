@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const NavigationStyled = styled.nav`
-  position: relative;
+  position: fixed;
+  right: 7%;
   z-index: 999;
 
   ul {

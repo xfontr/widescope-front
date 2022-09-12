@@ -75,16 +75,16 @@ const ExplorePage = (): JSX.Element => {
         </h2>
       )}
 
-      {projects.length && (
+      {projects.length ? (
         <>
           <Projects projects={projects} setFilter={setFilter} />
           {filter !== "byAuthor" && (
             <Pagination page={page} setPage={setPage} />
           )}
         </>
+      ) : (
+        <span>No projects found.</span>
       )}
-
-      {!projects.length && <span>No projects found.</span>}
     </>
   );
 };
