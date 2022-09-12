@@ -3,9 +3,11 @@ import { validateForm } from "../../utils/forms/validateForm";
 import RenderForm from "../RenderForm/RenderForm";
 import { FormErrorsState } from "../RenderForm/RenderFormTypes";
 import searchSchema from "../../schemas/searchSchema";
+import Button from "../Button/Button";
+import useUser from "../../hooks/useUser/useUser";
 
 const searchInitialState = {
-  sarch: "",
+  search: "",
 };
 
 const errorsInitialState: FormErrorsState = {
@@ -16,26 +18,31 @@ const errorsInitialState: FormErrorsState = {
 const SearchBar = (): JSX.Element => {
   const [errors, setErrors] = useState(errorsInitialState);
   const [value, setValue] = useState(searchInitialState);
+  const { addFriend } = useUser();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault();
-
+    debugger;
     if (!validateForm(searchSchema, value, setErrors)) {
+      debugger;
       return;
     }
+    debugger;
+    await addFriend("", value.search);
   };
 
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <RenderForm
-          errors={errors}
-          formType="search"
-          state={value}
-          setter={setValue}
-        />
-      </form>
-    </section>
+    <form onSubmit={handleSubmit}>
+      <RenderForm
+        errors={errors}
+        formType="search"
+        state={value}
+        setter={setValue}
+      />
+      <Button children="Search" customStyle="outline" />
+    </form>
   );
 };
 

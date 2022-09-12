@@ -7,6 +7,7 @@ import { Link, Routes } from "react-router-dom";
 import useToken from "../../hooks/useToken/useToken";
 import { Suspense, useEffect } from "react";
 import renderRoutes from "../../utils/renderRoutes/renderRoutes";
+import SearchBar from "../SearchBar/SearchBar";
 
 const App = (): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
@@ -21,7 +22,7 @@ const App = (): JSX.Element => {
   return (
     <AppStyled>
       <Modal />
-
+      <SearchBar />
       <header className="header">
         <Link to="/">
           <h1 className="header__title">wideScope</h1>
