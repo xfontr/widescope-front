@@ -101,7 +101,7 @@ describe("Given a Modal component", () => {
   });
 
   describe("When instantiated with a state of visible and closing", () => {
-    test("Then it should not be visible after 2300ms", async () => {
+    test("Then it should not be visible after 1120ms", async () => {
       const {
         result: { current: dispatch },
       } = renderHook(useAppDispatch);
@@ -118,7 +118,7 @@ describe("Given a Modal component", () => {
       expect(modal).toBeInTheDocument();
 
       await act(async () => {
-        await jest.advanceTimersByTime(2300);
+        await jest.advanceTimersByTime(1125);
       });
 
       expect(modal).not.toBeInTheDocument();

@@ -36,6 +36,7 @@ const useProjects = () => {
   const getAll = useCallback(
     async (offset = 0, technology = ""): Promise<void> => {
       const limit = 10;
+      dispatch(setVisibilityActionCreator(true));
 
       try {
         const {
@@ -47,8 +48,13 @@ const useProjects = () => {
         );
 
         dispatch(loadAllActionCreator(projects.list as Projects));
+        dispatch(
+          closeActionCreator({
+            message: "",
+            type: "success",
+          })
+        );
       } catch (error) {
-        dispatch(setVisibilityActionCreator(true));
         dispatch(
           closeActionCreator({
             message: "Error while loading projects",
@@ -71,7 +77,12 @@ const useProjects = () => {
           `${apiUrl}${endpoints.projectById}${projectId}`
         );
 
-        dispatch(setVisibilityActionCreator(false));
+        dispatch(
+          closeActionCreator({
+            message: "",
+            type: "success",
+          })
+        );
 
         return project as IProject;
       } catch (error) {
@@ -99,7 +110,12 @@ const useProjects = () => {
           `${apiUrl}${endpoints.projectsByAuthor}${userId}`
         );
 
-        dispatch(setVisibilityActionCreator(false));
+        dispatch(
+          closeActionCreator({
+            message: "",
+            type: "success",
+          })
+        );
 
         if (id === userId) {
           dispatch(loadUserProjectsActionCreator(projects));

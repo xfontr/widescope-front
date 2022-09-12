@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 const ProjectStyled = styled.article`
-  background-color: ${(props) => props.theme.colors.primary};
-  border-radius: ${(props) => props.theme.shapes.radiusSmall};
-  padding: ${(props) => props.theme.spacing.paddingBig};
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: ${({ theme }) => theme.shapes.radiusSmall};
+  padding: ${({ theme }) => theme.spacing.paddingBig};
 
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.spacing.gapSmall};
+  gap: ${({ theme }) => theme.spacing.gapSmall};
   font-size: 1.1rem;
   position: relative;
 
@@ -35,7 +35,7 @@ const ProjectStyled = styled.article`
     }
 
     &__author {
-      color: ${(props) => props.theme.colors.secondaryBrigther};
+      color: ${({ theme }) => theme.colors.secondaryBrigther};
       cursor: pointer;
     }
 
@@ -50,8 +50,8 @@ const ProjectStyled = styled.article`
     }
 
     &__technology {
-      background-color: ${(props) => props.theme.colors.primaryDarker};
-      color: ${(props) => props.theme.colors.secondaryBrigther};
+      background-color: ${({ theme }) => theme.colors.primaryDarker};
+      color: ${({ theme }) => theme.colors.secondaryBrigther};
       border-radius: 0.2rem;
       padding: 0.25rem 0.8rem;
       font-weight: bold;
@@ -61,8 +61,8 @@ const ProjectStyled = styled.article`
     }
 
     &__technology:hover {
-      background-color: ${(props) => props.theme.colors.secondary};
-      color: ${(props) => props.theme.colors.primary};
+      background-color: ${({ theme }) => theme.colors.secondary};
+      color: ${({ theme }) => theme.colors.primary};
     }
 
     &__description {

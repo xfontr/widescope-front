@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 const AppStyled = styled.div`
-  color: ${(props) => props.theme.colors.secondary};
-  padding: ${(props) => props.theme.spacing.paddingSmall};
+  color: ${({ theme }) => theme.colors.secondary};
+  padding: ${({ theme }) => theme.spacing.paddingSmall};
   padding-bottom: 2.5rem;
 
-  max-width: ${(props) => props.theme.breakpoints.verySmall};
+  max-width: ${({ theme }) => theme.breakpoints.verySmall};
   margin: 0 auto;
 
-  @media (min-width: ${(props) => props.theme.breakpoints.verySmall}) {
-    max-width: ${(props) => props.theme.breakpoints.big};
+  @media (min-width: ${({ theme }) => theme.breakpoints.verySmall}) {
+    max-width: ${({ theme }) => theme.breakpoints.big};
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints.big}) {
-    max-width: ${(props) => props.theme.breakpoints.large};
+  @media (min-width: ${({ theme }) => theme.breakpoints.big}) {
+    max-width: ${({ theme }) => theme.breakpoints.large};
   }
 
   .header {
@@ -38,7 +38,7 @@ const AppStyled = styled.div`
     &__copyright {
       padding-top: 2rem;
       display: block;
-      color: ${(props) => props.theme.colors.secondaryBrigther};
+      color: ${({ theme }) => theme.colors.secondaryBrigther};
     }
   }
 `;

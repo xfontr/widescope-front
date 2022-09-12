@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 const NavigationStyled = styled.nav`
-  position: relative;
+  position: fixed;
+  right: 4%;
   z-index: 999;
 
   ul {
     display: flex;
     flex-direction: column;
-    gap: ${(props) => props.theme.spacing.gapSmall};
+    gap: ${({ theme }) => theme.spacing.gapSmall};
   }
 
   a {
@@ -36,7 +37,7 @@ const NavigationStyled = styled.nav`
     height: 100%;
     width: 70%;
     text-align: right;
-    padding: 8rem 7%;
+    padding: 8rem 4%;
     transform: translate(100%);
     transition: 0.4s;
 
@@ -147,7 +148,7 @@ const NavigationStyled = styled.nav`
     display: block;
     width: 0%;
     opacity: 0%;
-    background-color: ${(props) => props.theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.secondary};
     height: 0.1rem;
   }
 
