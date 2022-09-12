@@ -167,5 +167,26 @@ describe("Given a Project component", () => {
         }`
       );
     });
+
+    test("The image should not keep trying to change its source after the first try", () => {
+      render(<Project project={mockProject} isReadOnly={false} />);
+
+      const image = screen.getByAltText(`${mockProject.name} logo`);
+      fireEvent.error(image);
+
+      expect(image.getAttribute("src")).toBe(
+        `${mockProject.logoBackup.slice(0, -mockProject.logo.length)}r_${
+          mockProject.logo
+        }`
+      );
+
+      fireEvent.error(image);
+
+      expect(image.getAttribute("src")).toBe(
+        `${mockProject.logoBackup.slice(0, -mockProject.logo.length)}r_${
+          mockProject.logo
+        }`
+      );
+    });
   });
 });
