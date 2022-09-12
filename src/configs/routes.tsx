@@ -28,11 +28,7 @@ export interface NavRoute {
   render?: () => JSX.Element;
 }
 
-export interface NavRoutes {
-  [key: string]: NavRoute;
-}
-
-export const navRoutes: NavRoutes = {
+export const navRoutes: Record<string, NavRoute> = {
   notFound: {
     path: "*",
     display: "never",
