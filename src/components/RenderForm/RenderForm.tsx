@@ -38,7 +38,7 @@ const RenderForm = <T extends { [key: string]: string | number }>(
 ): JSX.Element => (
   <>
     {createFormFrom(props.formType, allFormFields).map((field) => (
-      <GroupStyled className={field.customGroupClass}>
+      <GroupStyled className={field.customGroupClass} key={field.name}>
         <LabelStyled htmlFor={field.name}>{field.label}</LabelStyled>
         <InputStyled
           as={field.renderAs ? field.renderAs : "input"}
