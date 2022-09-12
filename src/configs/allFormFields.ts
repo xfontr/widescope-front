@@ -102,4 +102,12 @@ export const allFormFields: Record<FormFields, FormValue> = {
     renderAs: "textarea",
     customGroupClass: "area",
   },
+
+  search: {
+    label: "Search",
+    name: "search",
+    placeholder: "Search...",
+    belongsTo: ["search"],
+    customClass: "search-bar",
+  },
 };
