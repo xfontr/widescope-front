@@ -1,7 +1,7 @@
 import IContact from "../../types/IContact";
 
 const mockContact: IContact = {
-  id: "contact id",
+  id: "contactId",
   name: "contact name",
   isFriend: false,
 };

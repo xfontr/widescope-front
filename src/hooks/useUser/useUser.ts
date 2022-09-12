@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
 import { navRoutes } from "../../configs/routes";
 import {
@@ -32,6 +32,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const useUser = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { token } = useAppSelector(({ user }) => user.user);
 
   const getUserData = useCallback(async (id: string): Promise<IUser | void> => {
     try {
@@ -125,7 +126,35 @@ const useUser = () => {
     navigate(navRoutes.logIn.path);
   };
 
-  return { signUp, logIn, getUserData, logOut };
+  const addFriend = useCallback(
+    async (friendId: string) => {
+      dispatch(setVisibilityActionCreator(true));
+      try {
+        await axios.patch(`${apiUrl}${endpoints.addFriend}${friendId}`, "", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        dispatch(
+          closeActionCreator({
+            message: "Friend added",
+            type: "success",
+          })
+        );
+      } catch (error) {
+        dispatch(
+          closeActionCreator({
+            message: "Couldn't add friend",
+            type: "error",
+          })
+        );
+      }
+    },
+    [dispatch, token]
+  );
+
+  return { signUp, logIn, getUserData, logOut, addFriend };
 };
 
 export default useUser;

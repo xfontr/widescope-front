@@ -8,6 +8,7 @@ import {
   UserProjects,
 } from "../../hooks/types/useProjectTypes";
 import { SignUpResponse, UserToken } from "../../hooks/types/useUserTypes";
+import mockContact from "../mocks/mockContact";
 import mockProject from "../mocks/mockProject";
 import mockUser from "../mocks/mockUser";
 
@@ -55,6 +56,26 @@ const handlers = [
       })
     );
   }),
+
+  rest.patch(
+    `${apiUrl}${endpoints.addFriend}${mockContact.id}`,
+    async (req, res, ctx) =>
+      res(
+        ctx.status(200),
+        ctx.json({
+          friendAdded: "Pedro",
+        })
+      )
+  ),
+
+  rest.patch(`${apiUrl}${endpoints.addFriend}wrongId`, async (req, res, ctx) =>
+    res(
+      ctx.status(404),
+      ctx.json({
+        badRequest: "Error while adding friend",
+      })
+    )
+  ),
 
   rest.get(`${apiUrl}${endpoints.getAll}`, async (req, res, ctx) => {
     return res(
