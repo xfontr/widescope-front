@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Filter } from "../../types/filter";
 import useProjects from "../../hooks/useProjects/useProjects";
 import { filterInitialState } from "../../pages/ExplorePage/ExplorePage";
+import { useState } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectProps {
@@ -20,6 +21,7 @@ const Project = ({
 }: ProjectProps): JSX.Element => {
   const navigate = useNavigate();
   const { deleteProject } = useProjects();
+  const [requests, setRequests] = useState(false);
 
   return (
     <ProjectStyled>
@@ -46,11 +48,15 @@ const Project = ({
         <img
           src={`${apiUrl}/uploads/r_${project.logo}`}
           onError={({ currentTarget }) => {
+            if (requests) {
+              return;
+            }
             currentTarget.onerror = null;
             currentTarget.src = `${project.logoBackup.slice(
               0,
               -project.logo.length
             )}r_${project.logo}`;
+            setRequests(true);
           }}
           alt={`${project.name} logo`}
           width="60"
