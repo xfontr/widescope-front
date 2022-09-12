@@ -11,7 +11,7 @@ import NavigationStyled from "./NavigationMenuStyled";
 const NavigationMenu = (): JSX.Element => {
   const [isMenuVisible, setVisibility] = useState(false);
   const { logOut } = useUser();
-  const isLogged = useAppSelector((state: RootState) => state.user.isLogged);
+  const { isLogged, user } = useAppSelector((state: RootState) => state.user);
   const navigate = useNavigate();
 
   const toggleVisiblity = () => {
@@ -61,7 +61,13 @@ const NavigationMenu = (): JSX.Element => {
                   )
               )}
             </ul>
-
+            {isLogged && (
+              <span className="navigation__user-name">
+                Welcome,
+                <br />
+                {user.name}
+              </span>
+            )}
             {isLogged && (
               <Button
                 type="button"
