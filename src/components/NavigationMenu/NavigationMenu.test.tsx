@@ -2,6 +2,7 @@ import { screen, render as reactRender } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useLocation } from "react-router-dom";
 import { navRoutes } from "../../configs/routes";
+import mockUser from "../../test-utils/mocks/mockUser";
 import { render, renderHook } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import NavigationMenu from "./NavigationMenu";
@@ -69,6 +70,17 @@ describe("Given a NavigationMenu component", () => {
       expect(logInLink).not.toBeInTheDocument();
       expect(signUpLink).not.toBeInTheDocument();
       expect(logOutLink).toBeInTheDocument();
+    });
+
+    test("If the user is logged, its name should appear", async () => {
+      reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const userName = screen.getByText(`Welcome,${mockUser.name}`);
+
+      expect(userName).toBeInTheDocument();
     });
 
     test("If the user is not logged, the post a project button should not appear", async () => {
