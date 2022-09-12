@@ -10,7 +10,10 @@ import {
   logOutActionCreator,
   toggleStatusActionCreator,
 } from "../../store/slices/user/userSlice";
-import { loadUserDataActionCreator } from "../../store/slices/userData/userDataSlice";
+import {
+  addFriendActionCreator,
+  loadUserDataActionCreator,
+} from "../../store/slices/userData/userDataSlice";
 import mockContact from "../../test-utils/mocks/mockContact";
 import mockLocalStorage from "../../test-utils/mocks/mockLocalStorage";
 import mockUser from "../../test-utils/mocks/mockUser";
@@ -289,7 +292,7 @@ describe("Given a addFriend function returned by a useUser function", () => {
 
   describe("When called with a user id as an argument", () => {
     test("Then it should fetch the API to add a friend and close the modal with a success message", async () => {
-      await addFriend(mockContact.id);
+      await addFriend(mockContact.id, "");
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
@@ -304,11 +307,25 @@ describe("Given a addFriend function returned by a useUser function", () => {
         );
       });
     });
+
+    test("Then it should call the dispatch to add the obtained friend to the contacts list", async () => {
+      await addFriend(mockContact.id, mockContact.name);
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          addFriendActionCreator({ id: mockContact.id, name: mockContact.name })
+        );
+      });
+    });
   });
 
   describe("When called with a non-existant user id as an argument", () => {
     test("Then it should call the dispatch to close the modal with an error", async () => {
-      await addFriend("wrongId");
+      await addFriend("wrongId", "");
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
