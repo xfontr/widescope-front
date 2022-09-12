@@ -17,7 +17,7 @@ registerRoute(
   new CacheFirst()
 );
 
-const apiURL = "https://facundo-tolosa-final-project-back.onrender.com";
+const apiURL = "https://x202207-w7chwe-xifre-font-back.herokuapp.com";
 
 registerRoute(
   ({ url }) => url.origin === apiURL,

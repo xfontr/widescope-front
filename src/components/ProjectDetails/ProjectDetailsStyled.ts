@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const ProjectDetailsStyled = styled.article`
-  background-color: ${(props) => props.theme.colors.primary};
-  border-radius: ${(props) => props.theme.shapes.radiusSmall};
-  padding: ${(props) => props.theme.spacing.paddingBig};
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: ${({ theme }) => theme.shapes.radiusSmall};
+  padding: ${({ theme }) => theme.spacing.paddingBig};
 
-  @media (min-width: ${(props) => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
     padding: 3.5rem;
   }
 
@@ -27,7 +27,7 @@ const ProjectDetailsStyled = styled.article`
       font-weight: normal;
 
       &-section {
-        margin-bottom: ${(props) => props.theme.spacing.paddingBig};
+        margin-bottom: ${({ theme }) => theme.spacing.paddingBig};
       }
     }
 
@@ -44,7 +44,7 @@ const ProjectDetailsStyled = styled.article`
 
     &__author {
       font-size: 1.2rem;
-      color: ${(props) => props.theme.colors.secondaryBrigther};
+      color: ${({ theme }) => theme.colors.secondaryBrigther};
     }
 
     &__subheading {
@@ -53,12 +53,12 @@ const ProjectDetailsStyled = styled.article`
 
     &__technologies {
       display: flex;
-      gap: ${(props) => props.theme.spacing.gapSmall};
+      gap: ${({ theme }) => theme.spacing.gapSmall};
     }
 
     &__technology {
-      background-color: ${(props) => props.theme.colors.primaryDarker};
-      color: ${(props) => props.theme.colors.secondaryBrigther};
+      background-color: ${({ theme }) => theme.colors.primaryDarker};
+      color: ${({ theme }) => theme.colors.secondaryBrigther};
       border-radius: 0.2rem;
       padding: 0.1rem 0.7rem;
       font-weight: bold;
@@ -66,14 +66,14 @@ const ProjectDetailsStyled = styled.article`
 
     &__cta-text {
       display: block;
-      margin-bottom: ${(props) => props.theme.spacing.gapSmall};
+      margin-bottom: ${({ theme }) => theme.spacing.gapSmall};
     }
 
     &__body {
-      margin-top: ${(props) => props.theme.spacing.gapSmall};
+      margin-top: ${({ theme }) => theme.spacing.gapSmall};
 
-      @media (min-width: ${(props) => props.theme.breakpoints.large}) {
-        margin-top: ${(props) => props.theme.spacing.gapBig};
+      @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+        margin-top: ${({ theme }) => theme.spacing.gapBig};
         display: flex;
 
         & div {

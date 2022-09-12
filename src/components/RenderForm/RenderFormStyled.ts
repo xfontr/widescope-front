@@ -4,11 +4,11 @@ export const SignFormStyled = styled.form`
   display: flex;
   flex-direction: column;
 
-  gap: ${(props) => props.theme.spacing.gapBig};
-  padding: ${(props) => props.theme.spacing.paddingBig};
-  border-radius: ${(props) => props.theme.shapes.radiusSmall};
-  background-color: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.secondary};
+  gap: ${({ theme }) => theme.spacing.gapBig};
+  padding: ${({ theme }) => theme.spacing.paddingBig};
+  border-radius: ${({ theme }) => theme.shapes.radiusSmall};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
 
   max-width: 33rem;
 
@@ -34,7 +34,7 @@ export const HeaderStyled = styled.header`
     }
 
     &__cta-text {
-      color: ${(props) => props.theme.colors.secondaryBrigther};
+      color: ${({ theme }) => theme.colors.secondaryBrigther};
     }
   }
 `;
@@ -64,12 +64,12 @@ export const LabelStyled = styled.label`
 
 export const InputStyled = styled.input`
   font-size: 1.1rem;
-  padding: ${(props) => props.theme.shapes.rectangularContainer};
+  padding: ${({ theme }) => theme.shapes.rectangularContainer};
   padding-left: 0.8rem;
-  border-radius: ${(props) => props.theme.shapes.radiusSmall};
-  background-color: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.secondary};
-  border: 1px solid ${(props) => props.theme.colors.primaryDark};
+  border-radius: ${({ theme }) => theme.shapes.radiusSmall};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.primaryDark};
   width: 100%;
   transition: 0.2s;
 
@@ -88,7 +88,7 @@ export const InputStyled = styled.input`
   }
 
   &:focus {
-    border-color: ${(props) => props.theme.colors.secondaryBrigther};
+    border-color: ${({ theme }) => theme.colors.secondaryBrigther};
   }
 
   &.form__input {
@@ -143,11 +143,11 @@ export const InputStyled = styled.input`
     }
 
     &--error-repeat {
-      background-color: ${(props) => props.theme.colors.error};
+      background-color: ${({ theme }) => theme.colors.error};
     }
 
     &--error {
-      border-color: ${(props) => props.theme.colors.error};
+      border-color: ${({ theme }) => theme.colors.error};
       border-width: 2px;
     }
   }
@@ -156,7 +156,7 @@ export const InputStyled = styled.input`
 export const FooterStyled = styled.footer`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.theme.spacing.gapSmall};
+  gap: ${({ theme }) => theme.spacing.gapSmall};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
     align-items: center;
@@ -170,7 +170,7 @@ export const FooterStyled = styled.footer`
   & .form__sign-up-cta {
     display: block;
     max-width: 12rem;
-    color: ${(props) => props.theme.colors.secondaryBrigther};
+    color: ${({ theme }) => theme.colors.secondaryBrigther};
     line-height: 1.1rem;
 
     a {

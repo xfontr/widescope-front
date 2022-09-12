@@ -12,8 +12,8 @@ const ModalStyled = styled.div`
   align-items: center;
 
   min-height: 8.5rem;
-  box-shadow: ${(props) => props.theme.shapes.longShadow};
-  background-color: ${(props) => props.theme.colors.primary};
+  box-shadow: ${({ theme }) => theme.shapes.longShadow};
+  background-color: ${({ theme }) => theme.colors.primary};
 
   & .modal__content {
     display: flex;
@@ -30,11 +30,11 @@ const ModalStyled = styled.div`
     }
 
     &--error {
-      color: ${(props) => props.theme.colors.error};
+      color: ${({ theme }) => theme.colors.error};
     }
 
     &--success {
-      color: ${(props) => props.theme.colors.success};
+      color: ${({ theme }) => theme.colors.success};
     }
   }
 

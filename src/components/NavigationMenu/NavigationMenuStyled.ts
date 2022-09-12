@@ -7,7 +7,7 @@ const NavigationStyled = styled.nav`
   ul {
     display: flex;
     flex-direction: column;
-    gap: ${(props) => props.theme.spacing.gapSmall};
+    gap: ${({ theme }) => theme.spacing.gapSmall};
   }
 
   a {
@@ -147,7 +147,7 @@ const NavigationStyled = styled.nav`
     display: block;
     width: 0%;
     opacity: 0%;
-    background-color: ${(props) => props.theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.secondary};
     height: 0.1rem;
   }
 

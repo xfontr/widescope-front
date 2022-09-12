@@ -15,15 +15,15 @@ export const HeroSectionStyled = styled.section`
   padding: 14vh 0 20vh 1.4rem;
 
   .container {
-    max-width: ${(props) => props.theme.breakpoints.verySmall};
+    max-width: ${({ theme }) => theme.breakpoints.verySmall};
     margin: 0 auto;
 
-    @media (min-width: ${(props) => props.theme.breakpoints.verySmall}) {
-      max-width: ${(props) => props.theme.breakpoints.big};
+    @media (min-width: ${({ theme }) => theme.breakpoints.verySmall}) {
+      max-width: ${({ theme }) => theme.breakpoints.big};
     }
 
-    @media (min-width: ${(props) => props.theme.breakpoints.big}) {
-      max-width: ${(props) => props.theme.breakpoints.large};
+    @media (min-width: ${({ theme }) => theme.breakpoints.big}) {
+      max-width: ${({ theme }) => theme.breakpoints.large};
     }
   }
 
@@ -62,15 +62,15 @@ export const CTASectionStyled = styled.section`
 
   .container {
     padding: 1.4rem;
-    max-width: ${(props) => props.theme.breakpoints.verySmall};
+    max-width: ${({ theme }) => theme.breakpoints.verySmall};
     margin: 0 auto;
 
-    @media (min-width: ${(props) => props.theme.breakpoints.verySmall}) {
-      max-width: ${(props) => props.theme.breakpoints.big};
+    @media (min-width: ${({ theme }) => theme.breakpoints.verySmall}) {
+      max-width: ${({ theme }) => theme.breakpoints.big};
     }
 
-    @media (min-width: ${(props) => props.theme.breakpoints.big}) {
-      max-width: ${(props) => props.theme.breakpoints.large};
+    @media (min-width: ${({ theme }) => theme.breakpoints.big}) {
+      max-width: ${({ theme }) => theme.breakpoints.large};
     }
   }
 
