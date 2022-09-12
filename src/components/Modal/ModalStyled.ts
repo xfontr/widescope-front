@@ -2,16 +2,17 @@ import styled from "styled-components";
 
 const ModalStyled = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999999;
+  right: calc(50vw - (10rem / 2));
+  top: 1rem;
+  z-index: 99999;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  min-height: 8.5rem;
+  height: 10rem;
+  width: 10rem;
+  border-radius: ${({ theme }) => theme.shapes.radiusSmall};
   box-shadow: ${({ theme }) => theme.shapes.longShadow};
   background-color: ${({ theme }) => theme.colors.primary};
 

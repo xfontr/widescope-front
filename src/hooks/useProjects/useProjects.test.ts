@@ -241,7 +241,10 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
-          setVisibilityActionCreator(false)
+          closeActionCreator({
+            message: "",
+            type: "success",
+          })
         );
       });
     });
