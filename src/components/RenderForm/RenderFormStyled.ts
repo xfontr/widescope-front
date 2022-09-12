@@ -8,6 +8,7 @@ export const SignFormStyled = styled.form`
   padding: ${(props) => props.theme.spacing.paddingBig};
   border-radius: ${(props) => props.theme.shapes.radiusSmall};
   background-color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.secondary};
 
   max-width: 33rem;
 

@@ -1,4 +1,4 @@
-import { lazy, Suspense, memo, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
 import Button from "../../components/Button/Button";
 import useProjects from "../../hooks/useProjects/useProjects";
@@ -9,7 +9,7 @@ import { navRoutes } from "../../configs/routes";
 const Projects = lazy(() => import("../../components/Projects/Projects"));
 const SignForm = lazy(() => import("../../components/SignForm/SignForm"));
 
-const LandingPage = memo((): JSX.Element => {
+const LandingPage = (): JSX.Element => {
   const { getAll } = useProjects();
   const navigate = useNavigate();
 
@@ -104,6 +104,6 @@ const LandingPage = memo((): JSX.Element => {
       </Suspense>
     </>
   );
-});
+};
 
 export default LandingPage;

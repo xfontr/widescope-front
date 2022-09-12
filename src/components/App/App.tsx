@@ -5,10 +5,10 @@ import { navRoutes } from "../../configs/routes";
 import { useAppSelector } from "../../app/hooks";
 import { Link, Routes } from "react-router-dom";
 import useToken from "../../hooks/useToken/useToken";
-import { memo, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import renderRoutes from "../../utils/renderRoutes/renderRoutes";
 
-const App = memo((): JSX.Element => {
+const App = (): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
   const verifyUser = useToken();
 
@@ -44,6 +44,6 @@ const App = memo((): JSX.Element => {
       </footer>
     </AppStyled>
   );
-});
+};
 
 export default App;

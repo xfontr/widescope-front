@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { RootState } from "../../app/store";
 import Projects from "../../components/Projects/Projects";
@@ -16,7 +16,7 @@ export const filterInitialState: Filter = {
   byTechnology: "",
 };
 
-const ExplorePage = memo((): JSX.Element => {
+const ExplorePage = (): JSX.Element => {
   const { getAll, getByAuthor } = useProjects();
   const [{ filter, byAuthor, byTechnology }, setFilter] =
     useState(filterInitialState);
@@ -87,6 +87,6 @@ const ExplorePage = memo((): JSX.Element => {
       {!projects.length && <span>No projects found.</span>}
     </>
   );
-});
+};
 
 export default ExplorePage;
