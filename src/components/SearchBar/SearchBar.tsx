@@ -24,12 +24,11 @@ const SearchBar = (): JSX.Element => {
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    debugger;
+
     if (!validateForm(searchSchema, value, setErrors)) {
-      debugger;
       return;
     }
-    debugger;
+
     await addFriend("", value.search);
   };
 
@@ -41,7 +40,7 @@ const SearchBar = (): JSX.Element => {
         state={value}
         setter={setValue}
       />
-      <Button children="Search" customStyle="outline" />
+      <Button children="Search" />
     </form>
   );
 };
