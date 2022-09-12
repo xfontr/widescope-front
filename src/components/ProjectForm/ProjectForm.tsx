@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
@@ -8,20 +7,21 @@ import useProjects from "../../hooks/useProjects/useProjects";
 import projectSchema from "../../schemas/projectSchema";
 import {
   FooterStyled,
-  GroupStyled,
   HeaderStyled,
-  InputStyled,
-  LabelStyled,
   SignFormStyled,
-} from "../../styles/FormStyled";
+} from "../RenderForm/RenderFormStyled";
 import { IProject } from "../../types/project";
-import { validateForm } from "../../utils/validateForm/validateForm";
+import {
+  FormErrors,
+  validateForm,
+} from "../../utils/validateForm/validateForm";
 import Button from "../Button/Button";
 import Errors from "../Errors/Errors";
+import RenderForm from "../RenderForm/RenderForm";
 
-const errorsInitialState = {
-  errors: [] as Joi.ValidationErrorItem[],
-  failedInputs: [] as string[],
+const errorsInitialState: FormErrors = {
+  errors: [],
+  failedInputs: [],
 };
 interface ProjectFormProps {
   isCreate: boolean;
@@ -36,31 +36,16 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
   const [errors, setErrors] = useState(errorsInitialState);
   const navigate = useNavigate();
 
-  const initialState = {
+  const projectFormInitialState = {
     name: project ? project.name : "",
     repository: project ? project.repository : "",
     logo: "",
+    logoUpdate: "",
     technologyFront: project ? project.technologies[0] : "",
     technologyBack: project ? project.technologies[1] : "",
     description: project ? project.description : "",
   };
-
-  const [values, setValues] = useState(initialState);
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    setValues({
-      ...values,
-      [event.target.id]: event.target.value,
-    });
-
-    event.target.type === "file" &&
-      formData.append(
-        `${isCreate ? "logo" : "logo_update"}`,
-        (event as React.ChangeEvent<HTMLInputElement>).target.files![0]
-      );
-  };
+  const [values, setValues] = useState(projectFormInitialState);
 
   const curateData = () => ({
     author: user.name,
@@ -73,10 +58,10 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
 
   const clearForm = () => {
     formData.delete("logo");
-    formData.delete("logo_update");
+    formData.delete("logoUpdate");
     formData.delete("project");
 
-    setValues(initialState);
+    setValues(projectFormInitialState);
     setErrors(errorsInitialState);
 
     navigate(navRoutes.personalProjects.path);
@@ -108,107 +93,13 @@ const ProjectForm = ({ isCreate, project }: ProjectFormProps): JSX.Element => {
         </h3>
       </HeaderStyled>
 
-      <GroupStyled>
-        <LabelStyled htmlFor="name">Name</LabelStyled>
-        <InputStyled
-          className={
-            errors.failedInputs.includes("name") ? "form__input--error" : ""
-          }
-          type="text"
-          id="name"
-          placeholder="Music App"
-          autoComplete="off"
-          value={values.name}
-          onChange={handleChange}
-        />
-      </GroupStyled>
-
-      <GroupStyled>
-        <LabelStyled htmlFor="repository">Repository URL</LabelStyled>
-        <InputStyled
-          className={
-            errors.failedInputs.includes("repository")
-              ? "form__input--error"
-              : ""
-          }
-          type="text"
-          id="repository"
-          placeholder="Your Github, etc. repository"
-          autoComplete="off"
-          value={values.repository}
-          onChange={handleChange}
-        />
-      </GroupStyled>
-
-      <GroupStyled className="area">
-        <LabelStyled htmlFor="logo">Project logo</LabelStyled>
-        <InputStyled as="div" className="drop-area">
-          <span>Drop your logo here</span>
-          <input
-            type="file"
-            id="logo"
-            name={isCreate ? "logo" : "logo_update"}
-            autoComplete="off"
-            value={values.logo}
-            onChange={handleChange}
-          />
-        </InputStyled>
-      </GroupStyled>
-
-      <GroupStyled>
-        <LabelStyled htmlFor="technologyFront">
-          Frontend main library or framework
-        </LabelStyled>
-        <InputStyled
-          className={
-            errors.failedInputs.includes("technologyFront")
-              ? "form__input--error"
-              : ""
-          }
-          type="text"
-          id="technologyFront"
-          placeholder="React"
-          autoComplete="off"
-          value={values.technologyFront}
-          onChange={handleChange}
-        />
-      </GroupStyled>
-
-      <GroupStyled>
-        <LabelStyled htmlFor="technologyBack">
-          Backend main library or framework
-        </LabelStyled>
-        <InputStyled
-          className={
-            errors.failedInputs.includes("technologyBack")
-              ? "form__input--error"
-              : ""
-          }
-          type="text"
-          id="technologyBack"
-          placeholder="Express"
-          autoComplete="off"
-          value={values.technologyBack}
-          onChange={handleChange}
-        />
-      </GroupStyled>
-
-      <GroupStyled className="area">
-        <LabelStyled htmlFor="name">Description</LabelStyled>
-        <InputStyled
-          as="textarea"
-          className={
-            errors.failedInputs.includes("description")
-              ? "form__input--error"
-              : ""
-          }
-          id="description"
-          placeholder="Music app is a wonderful system to share music between its users."
-          autoComplete="off"
-          value={values.description}
-          onChange={handleChange}
-        />
-      </GroupStyled>
+      <RenderForm
+        errors={errors}
+        formType={isCreate ? "createProject" : "updateProject"}
+        state={values}
+        setter={setValues}
+        formData={formData}
+      />
 
       <Errors errors={errors} />
 

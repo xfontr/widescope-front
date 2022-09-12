@@ -223,60 +223,6 @@ describe("Given a SignForm component", () => {
     });
   });
 
-  describe("When instantiated as a sign up form and typed a wrong password in the repeat field", () => {
-    test("Then it should change the style of the repeat field until a correct password is typed", async () => {
-      const falsePassword = "falsePassword";
-      const expectedClassName = "form__input--error-repeat";
-      render(<SignForm isLogin={false} />);
-
-      const passwordInput = screen.getByLabelText(
-        "Password"
-      ) as HTMLInputElement;
-      const repeatPasswordInput = screen.getByLabelText(
-        "Repeat password"
-      ) as HTMLInputElement;
-
-      await userEvent.type(passwordInput, falsePassword);
-      await userEvent.type(repeatPasswordInput, "f");
-
-      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
-        true
-      );
-
-      await userEvent.type(repeatPasswordInput, "alsePassword");
-
-      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
-        false
-      );
-    });
-
-    test("Then it should change the style of the repeat field and bring it back to normal if it's empty", async () => {
-      const falsePassword = "falsePassword";
-      const expectedClassName = "form__input--error-repeat";
-      render(<SignForm isLogin={false} />);
-
-      const passwordInput = screen.getByLabelText(
-        "Password"
-      ) as HTMLInputElement;
-      const repeatPasswordInput = screen.getByLabelText(
-        "Repeat password"
-      ) as HTMLInputElement;
-
-      await userEvent.type(passwordInput, falsePassword);
-      await userEvent.type(repeatPasswordInput, "f");
-
-      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
-        true
-      );
-
-      fireEvent.change(repeatPasswordInput, { target: { value: "" } });
-
-      expect(repeatPasswordInput.className.includes(expectedClassName)).toBe(
-        false
-      );
-    });
-  });
-
   describe("When instantiated as a log in form and submitted", () => {
     test("Then it should not call the sign up validations", async () => {
       render(<SignForm isLogin={true} />);
