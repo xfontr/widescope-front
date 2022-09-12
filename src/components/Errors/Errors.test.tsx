@@ -1,7 +1,7 @@
 import loginSchema from "../../schemas/loginSchema";
 import mockUser from "../../test-utils/mocks/mockUser";
 import { render, screen } from "../../test-utils/render/customRender";
-import { FormErrors } from "../../utils/validateForm/validateForm";
+import { FormErrors } from "../../utils/forms/validateForm";
 import Errors from "./Errors";
 
 describe("Given a Errors component", () => {

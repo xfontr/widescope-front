@@ -1,4 +1,4 @@
-import { FormErrors } from "../../utils/validateForm/validateForm";
+import { FormErrors } from "../../utils/forms/validateForm";
 import ErrorsStyled from "./ErrorsStyled";
 
 interface ErrorsProps {

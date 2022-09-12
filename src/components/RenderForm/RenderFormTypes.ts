@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { FormComponents } from "../../configs/allFormFields";
 
 export interface RenderFormProps<T> {
   formType: FormComponents;
@@ -13,3 +12,22 @@ export interface FormErrorsState {
   errors: Joi.ValidationErrorItem[];
   failedInputs: string[];
 }
+
+export type FormComponents =
+  | "logIn"
+  | "signUp"
+  | "createProject"
+  | "updateProject";
+
+export type FormFields =
+  | "name"
+  | "password"
+  | "repeatPassword"
+  | "email"
+  | "projectName"
+  | "repository"
+  | "logo"
+  | "logoUpdate"
+  | "technologyFront"
+  | "technologyBack"
+  | "description";
