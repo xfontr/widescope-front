@@ -285,15 +285,15 @@ describe("Given a logOut function returned by a useUser function", () => {
 });
 
 describe("Given a addFriend function returned by a useUser function", () => {
-  const {
-    result: {
-      current: { addFriend },
-    },
-  } = reactRenderHook(useUser, { wrapper: WrapperWithMockStore });
-
   describe("When called with a user id as an argument", () => {
+    const {
+      result: {
+        current: { addFriend },
+      },
+    } = reactRenderHook(useUser, { wrapper: WrapperWithMockStore });
+
     test("Then it should fetch the API to add a friend and close the modal with a success message", async () => {
-      await addFriend(mockContact.id, "");
+      await addFriend(mockContact.name);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
@@ -310,7 +310,7 @@ describe("Given a addFriend function returned by a useUser function", () => {
     });
 
     test("Then it should call the dispatch to add the obtained friend to the contacts list", async () => {
-      await addFriend(mockContact.id, mockContact.name);
+      await addFriend(mockContact.name);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
@@ -318,19 +318,46 @@ describe("Given a addFriend function returned by a useUser function", () => {
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
-          addFriendActionCreator({ id: mockContact.id, name: mockContact.name })
+          addFriendActionCreator({ id: "randomId", name: mockContact.name })
         );
       });
     });
   });
 
-  describe("When called with a non-existant user id as an argument", () => {
+  describe("When called with a non-existant user name as an argument", () => {
+    const {
+      result: {
+        current: { addFriend },
+      },
+    } = reactRenderHook(useUser, { wrapper: WrapperWithMockStore });
+
     test("Then it should call the dispatch to close the modal with an error", async () => {
-      await addFriend("wrongId", "");
+      await addFriend("");
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
       );
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Couldn't add friend",
+            type: "error",
+          })
+        );
+      });
+    });
+  });
+
+  describe("When called requesting a user whose id is the same as the logged user", () => {
+    const {
+      result: {
+        current: { addFriend },
+      },
+    } = reactRenderHook(useUser, { wrapper: WrapperWithMockStore });
+
+    test("Then it should call the modal dispatch with an error", async () => {
+      await addFriend("sameUsername");
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(

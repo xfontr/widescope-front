@@ -16,7 +16,7 @@ describe("Given a SearchBar component", () => {
 
       const searchBar = [
         screen.getByLabelText(allFormFields.search.label),
-        screen.getByRole("button", { name: "Search" }),
+        screen.getByRole("button", { name: "Add friend" }),
       ];
 
       searchBar.forEach((element) => expect(element).toBeInTheDocument());
@@ -30,7 +30,7 @@ describe("Given a SearchBar component", () => {
 
       const searchBar = [
         screen.getByLabelText(allFormFields.search.label),
-        screen.getByRole("button", { name: "Search" }),
+        screen.getByRole("button", { name: "Add friend" }),
       ];
 
       await userEvent.type(searchBar[0], typedText);
@@ -49,7 +49,7 @@ describe("Given a SearchBar component", () => {
 
       const searchBar = [
         screen.getByLabelText(allFormFields.search.label),
-        screen.getByRole("button", { name: "Search" }),
+        screen.getByRole("button", { name: "Add friend" }),
       ];
 
       await userEvent.type(searchBar[0], typedText);
