@@ -12,6 +12,7 @@ import {
 } from "../../store/slices/user/userSlice";
 import {
   addFriendActionCreator,
+  loadFriendsActionCreator,
   loadUserDataActionCreator,
 } from "../../store/slices/userData/userDataSlice";
 import mockContact from "../../test-utils/mocks/mockContact";
@@ -335,6 +336,65 @@ describe("Given a addFriend function returned by a useUser function", () => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
             message: "Couldn't add friend",
+            type: "error",
+          })
+        );
+      });
+    });
+  });
+});
+
+describe("Given a loadFriends function returned by a useUser function", () => {
+  describe("When called", () => {
+    const {
+      result: {
+        current: { loadFriends },
+      },
+    } = reactRenderHook(useUser, { wrapper: WrapperWithMockStore });
+
+    test("Then it should fetch the API to load all the user friends and close the modal with a success type", async () => {
+      await loadFriends();
+
+      expect(mockUseDispatch).toHaveBeenCalledWith(
+        setVisibilityActionCreator(true)
+      );
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "",
+            type: "success",
+          })
+        );
+      });
+    });
+
+    test("Then it should call the load friends action", async () => {
+      await loadFriends();
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          loadFriendsActionCreator([
+            { id: mockContact.id, name: mockContact.name },
+          ])
+        );
+      });
+    });
+  });
+
+  describe("When called but the fetch fails", () => {
+    const {
+      result: {
+        current: { loadFriends },
+      },
+    } = renderHook(useUser);
+    test("Then it should close the modal with an error message", async () => {
+      await loadFriends();
+
+      await waitFor(() => {
+        expect(mockUseDispatch).toHaveBeenCalledWith(
+          closeActionCreator({
+            message: "Couldn't load any friend",
             type: "error",
           })
         );

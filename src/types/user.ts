@@ -31,3 +31,7 @@ export interface UserLogInData {
 export interface UserGetData {
   user: IUser;
 }
+
+export interface UserGetFriends {
+  userFriends: Omit<IContact, "isFriend">[];
+}
