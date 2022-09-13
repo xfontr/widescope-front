@@ -52,7 +52,7 @@ const handlers = [
     res(
       ctx.status(400),
       ctx.json({
-        error: "Invalid username or password",
+        userFriends: [],
       })
     )
   ),

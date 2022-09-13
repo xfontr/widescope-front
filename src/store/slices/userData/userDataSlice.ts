@@ -40,18 +40,15 @@ const userDataSlice = createSlice({
       ),
     }),
 
-    addFriend: (
-      previousState,
-      action: PayloadAction<Omit<IContact, "isFriend">>
-    ) => ({
+    addFriend: (previousState, action: PayloadAction<IContact>) => ({
       ...previousState,
       friends: [...previousState.friends, action.payload],
     }),
 
-    loadFriends: (
-      previousState,
-      action: PayloadAction<Omit<IContact, "isFriend">[]>
-    ) => ({ ...previousState, friends: action.payload }),
+    loadFriends: (previousState, action: PayloadAction<IContact[]>) => ({
+      ...previousState,
+      friends: action.payload,
+    }),
   },
 });
 

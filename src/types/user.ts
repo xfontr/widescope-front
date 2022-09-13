@@ -9,7 +9,7 @@ export interface UserBasicData {
 
 export interface UserExtraData {
   email: string;
-  friends: Omit<IContact, "isFriend">[];
+  friends: IContact[];
   projects: Projects;
 }
 
@@ -33,5 +33,5 @@ export interface UserGetData {
 }
 
 export interface UserGetFriends {
-  userFriends: Omit<IContact, "isFriend">[];
+  userFriends: IContact[];
 }
