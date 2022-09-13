@@ -4,9 +4,20 @@ import { InputStyled } from "../RenderForm/RenderFormStyled";
 import Button from "../Button/Button";
 import socket from "../../sockets";
 import openListener from "./openListener";
+import Message from "../Message/Message";
+import MessagesStyled from "./MessagesStyled";
 
 interface MessageProps {
   friend: string;
+}
+
+export interface IMessage {
+  current: string;
+  friend: string;
+  history: {
+    user: string;
+    content: string;
+  }[];
 }
 
 const Messages = ({ friend }: MessageProps): JSX.Element => {
@@ -14,12 +25,12 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
 
   socket!.open();
 
-  const messageInitialState = {
+  const messageInitialState: IMessage = {
     current: "",
     friend: friend,
     history: [
       {
-        isUser: false,
+        user: "",
         content: "",
       },
     ],
@@ -31,13 +42,18 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+
+    if (!messages.current) {
+      return;
+    }
+
     socket!.emit(`MESSAGE_FROM:${name}`, messages.current, messages.friend);
     setMessage({
       ...messages,
       history: [
         ...messages.history,
         {
-          isUser: true,
+          user: name!,
           content: messages.current,
         },
       ],
@@ -45,8 +61,22 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
   };
 
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
+    <MessagesStyled>
+      <ul className="messages">
+        {messages.history.map((message, index) => (
+          <>
+            {message.content && (
+              <Message
+                user={message.user}
+                message={message.content}
+                index={index}
+              />
+            )}
+          </>
+        ))}
+      </ul>
+
+      <form className="messages__send" onSubmit={handleSubmit}>
         <InputStyled
           type="text"
           value={messages.current}
@@ -59,15 +89,7 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
         />
         <Button>Send</Button>
       </form>
-
-      <section className="messages">
-        {messages.history.map((message) => (
-          <span>{`${message.isUser ? "You: " : `${messages.friend}: `}${
-            message.content
-          }`}</span>
-        ))}
-      </section>
-    </section>
+    </MessagesStyled>
   );
 };
 
