@@ -18,6 +18,9 @@ const SignUpPage = React.lazy(() => import("../pages/SignUpPage/SignUpPage"));
 const UserProjectsPage = React.lazy(
   () => import("../pages/UserProjectsPage/UserProjectsPage")
 );
+const ContactsPage = React.lazy(
+  () => import("../pages/ContactsPage/ContactsPage")
+);
 
 export interface NavRoute {
   path: string;
@@ -105,5 +108,12 @@ export const navRoutes: Record<string, NavRoute> = {
     display: "never",
     name: "Project details",
     render: () => <ProjectDetailsPage />,
+  },
+
+  contactsPage: {
+    path: "/contacts",
+    display: "logged",
+    name: "Contacts",
+    render: () => <ContactsPage />,
   },
 };

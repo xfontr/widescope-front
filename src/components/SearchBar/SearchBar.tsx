@@ -5,6 +5,7 @@ import { FormErrorsState } from "../RenderForm/RenderFormTypes";
 import searchSchema from "../../schemas/searchSchema";
 import Button from "../Button/Button";
 import useUser from "../../hooks/useUser/useUser";
+import { SignFormStyled } from "../RenderForm/RenderFormStyled";
 
 const searchInitialState = {
   search: "",
@@ -33,7 +34,7 @@ const SearchBar = (): JSX.Element => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <SignFormStyled onSubmit={handleSubmit}>
       <RenderForm
         errors={errors}
         formType="search"
@@ -41,7 +42,7 @@ const SearchBar = (): JSX.Element => {
         setter={setValue}
       />
       <Button children="Search" />
-    </form>
+    </SignFormStyled>
   );
 };
 

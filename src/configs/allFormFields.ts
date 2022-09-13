@@ -104,7 +104,7 @@ export const allFormFields: Record<FormFields, FormValue> = {
   },
 
   search: {
-    label: "Search",
+    label: "Find a friend",
     name: "search",
     placeholder: "Search...",
     belongsTo: ["search"],

@@ -264,6 +264,29 @@ describe("Given the links of the NavigationMenu component", () => {
     });
   });
 
+  describe("When clicked the 'Contacts' link", () => {
+    test(`Then it should route the page to '"/contacts"' and close the menu`, async () => {
+      reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
+
+      const burgerIcon = screen.getByTestId("burger-icon");
+      await userEvent.click(burgerIcon);
+
+      const contactsLink = screen.getByRole("link", {
+        name: "Contacts",
+      });
+      await userEvent.click(contactsLink);
+
+      const {
+        result: {
+          current: { pathname },
+        },
+      } = renderHook(useLocation);
+
+      expect(pathname).toBe("/contacts");
+      expect(contactsLink).not.toBeInTheDocument();
+    });
+  });
+
   describe("When clicked the 'Post a project' button", () => {
     test(`Then it should route the page to '"/project/new"' and close the menu`, async () => {
       reactRender(<NavigationMenu />, { wrapper: WrapperWithMockStore });
