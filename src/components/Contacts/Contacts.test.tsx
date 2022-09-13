@@ -20,7 +20,9 @@ describe("Given a contacts component", () => {
     test("Then it should inform the user that no contacts were found", () => {
       render(<Contacts contacts={[]} />);
 
-      const message = screen.getByText("You don't seem to have any contact :(");
+      const message = screen.getByText(
+        "You don't seem to have any contacts :("
+      );
 
       expect(message).toBeInTheDocument();
     });

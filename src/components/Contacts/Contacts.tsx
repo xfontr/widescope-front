@@ -15,7 +15,7 @@ const Contacts = ({ contacts }: ContactsProps): JSX.Element => (
         </li>
       ))
     ) : (
-      <span>You don't seem to have any contact :(</span>
+      <span>You don't seem to have any contacts :(</span>
     )}
   </ContactsStyled>
 );
