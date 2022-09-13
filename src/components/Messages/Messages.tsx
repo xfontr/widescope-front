@@ -62,33 +62,35 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
 
   return (
     <MessagesStyled>
-      <ul className="messages">
-        {messages.history.map((message, index) => (
-          <>
-            {message.content && (
-              <Message
-                user={message.user}
-                message={message.content}
-                index={index}
-              />
-            )}
-          </>
-        ))}
-      </ul>
+      <div className="modal-container">
+        <ul className="messages">
+          {messages.history.map((message, index) => (
+            <>
+              {message.content && (
+                <Message
+                  user={message.user}
+                  message={message.content}
+                  index={index}
+                />
+              )}
+            </>
+          ))}
+        </ul>
 
-      <form className="messages__send" onSubmit={handleSubmit}>
-        <InputStyled
-          type="text"
-          value={messages.current}
-          onChange={(e) =>
-            setMessage({
-              ...messages,
-              current: e.target.value,
-            })
-          }
-        />
-        <Button>Send</Button>
-      </form>
+        <form className="messages__send" onSubmit={handleSubmit}>
+          <InputStyled
+            type="text"
+            value={messages.current}
+            onChange={(e) =>
+              setMessage({
+                ...messages,
+                current: e.target.value,
+              })
+            }
+          />
+          <Button>Send</Button>
+        </form>
+      </div>
     </MessagesStyled>
   );
 };
