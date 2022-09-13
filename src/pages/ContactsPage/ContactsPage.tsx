@@ -1,8 +1,20 @@
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Contacts from "../../components/Contacts/Contacts";
-import mockContact from "../../test-utils/mocks/mockContact";
+import { useEffect } from "react";
+import useUser from "../../hooks/useUser/useUser";
+import { useAppSelector } from "../../app/hooks";
 
 const ManageContacts = (): JSX.Element => {
+  const { loadFriends } = useUser();
+
+  useEffect(() => {
+    (async () => {
+      await loadFriends();
+    })();
+  }, [loadFriends]);
+
+  const { friends } = useAppSelector(({ userData }) => userData);
+
   return (
     <section className="contacts">
       <h2 className="page__title">
@@ -11,7 +23,7 @@ const ManageContacts = (): JSX.Element => {
       <SearchBar />
 
       <h3 className="page__subheading">Your friends</h3>
-      <Contacts contacts={[mockContact]} />
+      <Contacts contacts={friends} />
     </section>
   );
 };
