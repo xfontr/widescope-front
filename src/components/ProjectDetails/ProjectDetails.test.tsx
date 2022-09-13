@@ -81,5 +81,26 @@ describe("Given a ProjectDetails component", () => {
         }`
       );
     });
+
+    test("The image should not keep trying to change its source after the first try", () => {
+      render(<ProjectDetails project={mockProject} />);
+
+      const image = screen.getByAltText(`${mockProject.name} logo`);
+      fireEvent.error(image);
+
+      expect(image.getAttribute("src")).toBe(
+        `${mockProject.logoBackup.slice(0, -mockProject.logo.length)}${
+          mockProject.logo
+        }`
+      );
+
+      fireEvent.error(image);
+
+      expect(image.getAttribute("src")).toBe(
+        `${mockProject.logoBackup.slice(0, -mockProject.logo.length)}${
+          mockProject.logo
+        }`
+      );
+    });
   });
 });
