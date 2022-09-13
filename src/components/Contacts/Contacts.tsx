@@ -8,11 +8,15 @@ interface ContactsProps {
 
 const Contacts = ({ contacts }: ContactsProps): JSX.Element => (
   <ContactsStyled>
-    {contacts.map((contact) => (
-      <li className="contact" key={contact.id}>
-        <Contact contact={contact} />
-      </li>
-    ))}
+    {contacts.length ? (
+      contacts.map((contact) => (
+        <li className="contact" key={contact.id}>
+          <Contact contact={contact} />
+        </li>
+      ))
+    ) : (
+      <span>You don't seem to have any contact :(</span>
+    )}
   </ContactsStyled>
 );
 
