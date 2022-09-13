@@ -1,6 +1,7 @@
 import { IProject } from "../../types/project";
 import ProjectDetailsStyled from "./ProjectDetailsStyled";
 import Button from "../Button/Button";
+import { useState } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 interface ProjectDetailsProps {
@@ -8,6 +9,8 @@ interface ProjectDetailsProps {
 }
 
 const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
+  const [requests, setRequests] = useState(false);
+
   const creationDate = [
     new Date(project.creationDate).getFullYear(),
     new Date(project.creationDate).getDate(),
@@ -24,11 +27,15 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
       <img
         src={`${apiUrl}/uploads/${project.logo}`}
         onError={({ currentTarget }) => {
+          if (requests) {
+            return;
+          }
           currentTarget.onerror = null;
           currentTarget.src = `${project.logoBackup.slice(
             0,
             -project.logo.length
           )}${project.logo}`;
+          setRequests(true);
         }}
         alt={`${project.name} logo`}
         width="250"
