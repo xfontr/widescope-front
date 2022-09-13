@@ -1,9 +1,8 @@
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Contacts from "../../components/Contacts/Contacts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useUser from "../../hooks/useUser/useUser";
 import { useAppSelector } from "../../app/hooks";
-import Messages from "../../components/Messages/Messages";
 
 const ManageContacts = (): JSX.Element => {
   const { loadFriends } = useUser();

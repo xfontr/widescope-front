@@ -1,17 +1,18 @@
 import { useAppSelector } from "../../app/hooks";
+import IContact from "../../types/IContact";
 import MessageStyled from "./MessageStyled";
 
 interface MessageProps {
-  user: string;
+  user: IContact;
   message: string;
   index: number;
 }
 
 const Message = ({ user, message, index }: MessageProps): JSX.Element => {
-  const { name } = useAppSelector(({ user }) => user.user);
+  const { id } = useAppSelector(({ user }) => user.user);
 
-  const modifier = `${user === name ? "user" : "friend"}`;
-  const sender = `${user === name ? "You" : user}`;
+  const modifier = `${user.id === id ? "user" : "friend"}`;
+  const sender = `${user.id === id ? "You" : user.name}`;
 
   return (
     <>

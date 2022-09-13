@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const MessagesStyled = styled.div`
+  z-index: 999999;
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
@@ -11,6 +12,16 @@ const MessagesStyled = styled.div`
   justify-content: center;
   align-items: center;
 
+  .modal-close {
+    z-index: 999999;
+    position: absolute;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    cursor: pointer;
+  }
+
   .modal-container {
     position: relative;
     padding: calc(${({ theme }) => theme.spacing.paddingBig} * 1.7)
@@ -18,13 +29,17 @@ const MessagesStyled = styled.div`
     border-radius: ${({ theme }) => theme.shapes.radiusBig};
     background-color: ${({ theme }) => theme.colors.primaryDarker};
 
-    min-height: 75vh;
-    max-height: 95vh;
-    min-width: 50vw;
-    max-width: 95vw;
+    width: 90vw;
+    height: 95vh;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+      width: 55vw;
+      height: 85vh;
+    }
   }
 
   .messages {
+    overflow: hidden;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
