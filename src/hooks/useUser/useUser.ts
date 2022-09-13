@@ -135,12 +135,17 @@ const useUser = () => {
   const addFriend = useCallback(
     async (friendName: string) => {
       dispatch(setVisibilityActionCreator(true));
+
       try {
         const {
           data: { users },
         } = await axios.get<UserGetAllUsers>(
           `${apiUrl}${endpoints.getAllUsers}?username=${friendName}`
         );
+
+        if (users[0].id === id) {
+          throw new Error();
+        }
 
         await axios.patch(`${apiUrl}${endpoints.addFriend}${users[0].id}`, "", {
           headers: {
@@ -165,7 +170,7 @@ const useUser = () => {
         );
       }
     },
-    [dispatch, token]
+    [dispatch, token, id]
   );
 
   const loadFriends = useCallback(async () => {

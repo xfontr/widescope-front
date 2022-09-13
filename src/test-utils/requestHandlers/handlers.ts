@@ -59,11 +59,19 @@ const handlers = [
 
   rest.get(`${apiUrl}${endpoints.getAllUsers}`, async (req, res, ctx) => {
     const username = req.url.searchParams.get("username");
-    if (username) {
+
+    if (username === "sameUsername") {
       return res(
         ctx.status(200),
         ctx.json({
-          users: [mockUser],
+          users: [{ ...mockUser, id: "id" }],
+        })
+      );
+    } else if (username) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          users: [{ ...mockUser, id: "randomId" }],
         })
       );
     } else {
@@ -75,6 +83,15 @@ const handlers = [
       );
     }
   }),
+
+  rest.patch(`${apiUrl}${endpoints.addFriend}randomId`, async (req, res, ctx) =>
+    res(
+      ctx.status(200),
+      ctx.json({
+        friendAdded: "Pedro",
+      })
+    )
+  ),
 
   rest.post(`${apiUrl}${endpoints.logIn}`, async (req, res, ctx) => {
     const { password } = await req.json();
@@ -99,26 +116,6 @@ const handlers = [
       })
     );
   }),
-
-  rest.patch(
-    `${apiUrl}${endpoints.addFriend}${mockUser.id}`,
-    async (req, res, ctx) =>
-      res(
-        ctx.status(200),
-        ctx.json({
-          friendAdded: "Pedro",
-        })
-      )
-  ),
-
-  rest.patch(`${apiUrl}${endpoints.addFriend}wrongId`, async (req, res, ctx) =>
-    res(
-      ctx.status(404),
-      ctx.json({
-        badRequest: "Error while adding friend",
-      })
-    )
-  ),
 
   rest.get(`${apiUrl}${endpoints.getAll}`, async (req, res, ctx) => {
     return res(

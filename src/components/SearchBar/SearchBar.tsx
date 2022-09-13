@@ -41,7 +41,7 @@ const SearchBar = (): JSX.Element => {
         state={value}
         setter={setValue}
       />
-      <Button children="Search" />
+      <Button children="Add friend" />
     </SignFormStyled>
   );
 };
