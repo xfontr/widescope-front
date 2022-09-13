@@ -4,7 +4,7 @@ export const SignFormStyled = styled.form`
   display: flex;
   flex-direction: column;
 
-  gap: ${({ theme }) => theme.spacing.gapBig};
+  gap: ${({ theme }) => theme.spacing.gapSmall};
   padding: ${({ theme }) => theme.spacing.paddingBig};
   border-radius: ${({ theme }) => theme.shapes.radiusSmall};
   background-color: ${({ theme }) => theme.colors.primary};

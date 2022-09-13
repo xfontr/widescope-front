@@ -8,7 +8,7 @@ const NavigationStyled = styled.nav`
   ul {
     display: flex;
     flex-direction: column;
-    gap: ${({ theme }) => theme.spacing.gapSmall};
+    gap: calc(${({ theme }) => theme.spacing.gapSmall} * 0.6);
   }
 
   a {
@@ -60,7 +60,7 @@ const NavigationStyled = styled.nav`
 
     &__link {
       width: fit-content;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       cursor: pointer;
     }
 
