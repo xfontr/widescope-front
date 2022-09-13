@@ -4,6 +4,7 @@ import { InputStyled } from "../RenderForm/RenderFormStyled";
 import Button from "../Button/Button";
 import socket from "../../sockets";
 import openListener from "./openListener";
+import Message from "../Message/Message";
 
 interface MessageProps {
   friend: string;
@@ -60,13 +61,15 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
         <Button>Send</Button>
       </form>
 
-      <section className="messages">
-        {messages.history.map((message) => (
-          <span>{`${message.isUser ? "You: " : `${messages.friend}: `}${
-            message.content
-          }`}</span>
+      <ul className="messages">
+        {messages.history.map((message, index) => (
+          <Message
+            user={message.isUser ? "You" : messages.friend}
+            message={message.content}
+            index={index}
+          />
         ))}
-      </section>
+      </ul>
     </section>
   );
 };
