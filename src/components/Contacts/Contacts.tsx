@@ -8,7 +8,7 @@ interface ContactsProps {
 
 const Contacts = ({ contacts }: ContactsProps): JSX.Element => (
   <ContactsStyled>
-    {contacts.length ? (
+    {contacts && contacts.length ? (
       contacts.map((contact) => (
         <li className="contact" key={contact.id}>
           <Contact contact={contact} />
