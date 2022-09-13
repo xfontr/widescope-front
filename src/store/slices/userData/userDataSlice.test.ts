@@ -2,11 +2,11 @@ import mockContact from "../../../test-utils/mocks/mockContact";
 import mockProject from "../../../test-utils/mocks/mockProject";
 import { mockUserExtraData } from "../../../test-utils/mocks/mockUserData";
 import { UserExtraData } from "../../../types/user";
-import { addProjectActionCreator } from "../projects/projectsSlice";
 import {
   addFriendActionCreator,
   addUserProjectActionCreator,
   deleteUserProjectActionCreator,
+  loadFriendsActionCreator,
   loadUserDataActionCreator,
   loadUserProjectsActionCreator,
   updateUserProjectActionCreator,
@@ -106,6 +106,27 @@ describe("Given a addFriendActionCreator funcion", () => {
       };
 
       const action = addFriendActionCreator(expectedAction.payload);
+
+      expect(action).toStrictEqual(expectedAction);
+    });
+  });
+});
+
+describe("Given a loadFriendsActionCreator funcion", () => {
+  describe("When called with a list of contacts as a payload", () => {
+    test("Then it should return an action with a type 'userData/loadFriends' and said list as payload", () => {
+      const actionType = "userData/loadFriends";
+      const expectedAction = {
+        type: actionType,
+        payload: [
+          {
+            id: mockContact.id,
+            name: mockContact.name,
+          },
+        ],
+      };
+
+      const action = loadFriendsActionCreator(expectedAction.payload);
 
       expect(action).toStrictEqual(expectedAction);
     });
@@ -213,6 +234,31 @@ describe("Given a userDataReducer function", () => {
         id: mockContact.id,
         name: mockContact.name,
       });
+
+      const result = userDataReducer(initialState, action);
+
+      expect(result).toStrictEqual(expectedResult);
+    });
+  });
+
+  describe("When called with a loadFriends action creator", () => {
+    test("Then it should load all the friends to the user state", () => {
+      const initialState = {
+        ...mockUserExtraData,
+        friends: [],
+      };
+
+      const expectedResult = {
+        ...mockUserExtraData,
+        friends: [{ id: mockContact.id, name: mockContact.name }],
+      };
+
+      const action = loadFriendsActionCreator([
+        {
+          id: mockContact.id,
+          name: mockContact.name,
+        },
+      ]);
 
       const result = userDataReducer(initialState, action);
 
