@@ -20,9 +20,24 @@ const MessagesStyled = styled.div`
     height: 60px;
     background-color: white;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.colors.secondary};
+
+    &.fa svg {
+      width: 1.7rem;
+      fill: ${({ theme }) => theme.colors.primary};
+    }
   }
 
   .modal-container {
+    transition: 0.3s;
+    animation-name: show-messages;
+    animation-duration: 0.6s;
+    animation-iteration-count: 1;
+
     position: relative;
     padding: calc(${({ theme }) => theme.spacing.paddingBig} * 1.7)
       ${({ theme }) => theme.spacing.paddingBig};
@@ -60,6 +75,16 @@ const MessagesStyled = styled.div`
       bottom: calc(${({ theme }) => theme.spacing.paddingBig} * 0.8);
       gap: ${({ theme }) => theme.spacing.gapSmall};
       margin-top: ${({ theme }) => theme.spacing.gapSmall};
+    }
+  }
+
+  @keyframes show-messages {
+    from {
+      transform: rotate3d(1, 1, 1, 0deg);
+    }
+
+    to {
+      transform: rotate3d(20, 2, 10, 360deg);
     }
   }
 `;

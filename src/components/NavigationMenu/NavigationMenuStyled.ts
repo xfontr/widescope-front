@@ -60,8 +60,12 @@ const NavigationStyled = styled.nav`
 
     &__link {
       width: fit-content;
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       cursor: pointer;
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+        font-size: 2rem;
+      }
     }
 
     &__link::after {
@@ -81,10 +85,15 @@ const NavigationStyled = styled.nav`
 
     &__user-name {
       display: block;
-      font-size: 1.5rem;
-      line-height: 2rem;
+      font-size: 1rem;
+      line-height: 1rem;
       color: ${({ theme }) => theme.colors.secondaryBrigther};
       margin-top: ${({ theme }) => theme.spacing.paddingBig};
+
+      @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+      }
     }
   }
 

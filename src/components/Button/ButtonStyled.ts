@@ -77,6 +77,18 @@ const ButtonStyled = styled.button`
     justify-content: center;
     align-items: center;
   }
+
+  &.button--icon {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0.5rem 1.4rem;
+
+    .fa svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
 `;
 
 export default ButtonStyled;

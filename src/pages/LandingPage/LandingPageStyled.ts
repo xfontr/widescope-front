@@ -10,7 +10,7 @@ export const HeroSectionStyled = styled.section`
 
   background-attachment: fixed;
   background-position: top left;
-  margin-top: -12.4vh;
+  margin-top: -15vh;
   margin-bottom: -10vh;
   padding: 14vh 0 20vh 1.4rem;
 
