@@ -3,18 +3,17 @@ import socket from "../../sockets";
 import { IMessage } from "./Messages";
 
 const openListener = (
-  friend: string,
-  message: string,
+  user: string,
   messages: IMessage,
   setter: React.Dispatch<React.SetStateAction<IMessage>>
 ) => {
-  socket!.on(`MESSAGE_TO:${friend}`, (message: string) => {
+  socket!.on(`MESSAGE_TO:${user}`, (message: string) => {
     setter({
       ...messages,
       history: [
         ...messages.history,
         {
-          user: friend,
+          user: messages.friend,
           content: message,
         },
       ],

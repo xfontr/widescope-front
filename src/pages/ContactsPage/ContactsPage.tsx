@@ -16,15 +16,17 @@ const ManageContacts = (): JSX.Element => {
   const { friends } = useAppSelector(({ userData }) => userData);
 
   return (
-    <section className="contacts">
-      <h2 className="page__title">
-        Meet other <span className="page__title--bold">authors</span>
-      </h2>
-      <SearchBar />
+    <>
+      <section className="contacts">
+        <h2 className="page__title">
+          Meet other <span className="page__title--bold">authors</span>
+        </h2>
+        <SearchBar />
 
-      <h3 className="page__subheading">Your friends</h3>
-      <Contacts contacts={friends} />
-    </section>
+        <h3 className="page__subheading">Your friends</h3>
+        <Contacts contacts={friends} />
+      </section>
+    </>
   );
 };
 
