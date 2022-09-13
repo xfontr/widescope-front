@@ -34,7 +34,7 @@ const SearchBar = (): JSX.Element => {
   };
 
   return (
-    <SignFormStyled onSubmit={handleSubmit}>
+    <SignFormStyled onSubmit={handleSubmit} className="search-bar__container">
       <RenderForm
         errors={errors}
         formType="search"
