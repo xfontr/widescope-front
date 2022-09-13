@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 const ContactStyled = styled.article`
-  background-color: ${({ theme }) => theme.colors.primary};
-  width: 100%;
-  padding: ${({ theme }) => theme.spacing.paddingSmall};
+  border: 1px solid ${({ theme }) => theme.colors.secondary};
+  padding: ${({ theme }) => theme.spacing.paddingSmall} 2rem;
   border-radius: ${({ theme }) => theme.shapes.radiusSmall};
 `;
 
