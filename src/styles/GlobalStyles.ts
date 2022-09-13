@@ -54,6 +54,11 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+      &__subheading{
+      margin: 2rem 0 0.5rem 0;
+      font-size: 2rem;
+    }
+
   &-container {
     background-color: ${styledMainTheme.colors.primary};
     border-radius: ${styledMainTheme.shapes.radiusSmall};

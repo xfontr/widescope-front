@@ -8,8 +8,9 @@ describe("Given a ManageContacts component", () => {
       render(<ManageContacts />);
 
       const manageContacts = [
-        screen.getByRole("heading", { name: "Meet other authors" }),
+        screen.getByRole("heading", { name: "Meet other authors", level: 2 }),
         screen.getByLabelText(allFormFields.search.label),
+        screen.getByRole("heading", { name: "Your friends", level: 3 }),
       ];
 
       manageContacts.forEach((element) => expect(element).toBeInTheDocument());
