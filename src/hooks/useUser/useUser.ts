@@ -15,11 +15,13 @@ import {
 } from "../../store/slices/user/userSlice";
 import {
   addFriendActionCreator,
+  loadFriendsActionCreator,
   loadUserDataActionCreator,
 } from "../../store/slices/userData/userDataSlice";
 import {
   IUser,
   UserGetData,
+  UserGetFriends,
   UserLogInData,
   UserSignUpData,
 } from "../../types/user";
@@ -35,7 +37,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const useUser = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { token } = useAppSelector(({ user }) => user.user);
+  const { token, id } = useAppSelector(({ user }) => user.user);
 
   const getUserData = useCallback(async (id: string): Promise<IUser | void> => {
     try {
@@ -159,7 +161,35 @@ const useUser = () => {
     [dispatch, token]
   );
 
-  return { signUp, logIn, getUserData, logOut, addFriend };
+  const loadFriends = useCallback(async () => {
+    dispatch(setVisibilityActionCreator(true));
+
+    try {
+      const {
+        data: { userFriends },
+      }: AxiosResponse<UserGetFriends> = await axios.get(
+        `${apiUrl}${endpoints.usersRoot}/${id}?friends=all`
+      );
+
+      dispatch(loadFriendsActionCreator(userFriends));
+
+      dispatch(
+        closeActionCreator({
+          message: "",
+          type: "success",
+        })
+      );
+    } catch (error) {
+      dispatch(
+        closeActionCreator({
+          message: "Couldn't load any friend",
+          type: "error",
+        })
+      );
+    }
+  }, [id, dispatch]);
+
+  return { signUp, logIn, getUserData, logOut, addFriend, loadFriends };
 };
 
 export default useUser;

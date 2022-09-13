@@ -8,6 +8,7 @@ import {
   UserProjects,
 } from "../../hooks/types/useProjectTypes";
 import { SignUpResponse, UserToken } from "../../hooks/types/useUserTypes";
+import { UserGetData, UserGetFriends } from "../../types/user";
 import mockContact from "../mocks/mockContact";
 import mockProject from "../mocks/mockProject";
 import mockUser from "../mocks/mockUser";
@@ -15,13 +16,27 @@ import mockUser from "../mocks/mockUser";
 const apiUrl = process.env.REACT_APP_API_URL as string;
 
 const handlers = [
-  rest.get(`${apiUrl}${endpoints.usersRoot}/${mockUser.id}`, (req, res, ctx) =>
-    res(
-      ctx.status(200),
-      ctx.json({
-        user: mockUser,
-      })
-    )
+  rest.get(
+    `${apiUrl}${endpoints.usersRoot}/${mockUser.id}`,
+    (req, res, ctx) => {
+      const queryAllFriends = req.url.searchParams.get("friends");
+
+      if (queryAllFriends === "all") {
+        return res(
+          ctx.status(200),
+          ctx.json<UserGetFriends>({
+            userFriends: [{ id: mockContact.id, name: mockContact.name }],
+          })
+        );
+      } else {
+        return res(
+          ctx.status(200),
+          ctx.json<UserGetData>({
+            user: mockUser,
+          })
+        );
+      }
+    }
   ),
 
   rest.get(`${apiUrl}${endpoints.usersRoot}/falseId`, (req, res, ctx) =>
