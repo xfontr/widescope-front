@@ -47,6 +47,11 @@ const userDataSlice = createSlice({
       ...previousState,
       friends: [...previousState.friends, action.payload],
     }),
+
+    loadFriends: (
+      previousState,
+      action: PayloadAction<Omit<IContact, "isFriend">[]>
+    ) => ({ ...previousState, friends: action.payload }),
   },
 });
 
@@ -68,3 +73,5 @@ export const { updateUserProject: updateUserProjectActionCreator } =
   userDataSlice.actions;
 
 export const { addFriend: addFriendActionCreator } = userDataSlice.actions;
+
+export const { loadFriends: loadFriendsActionCreator } = userDataSlice.actions;
