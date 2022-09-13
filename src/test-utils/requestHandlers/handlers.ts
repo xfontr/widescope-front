@@ -48,6 +48,15 @@ const handlers = [
     )
   ),
 
+  rest.get(`${apiUrl}${endpoints.usersRoot}/undefined`, (req, res, ctx) =>
+    res(
+      ctx.status(400),
+      ctx.json({
+        error: "Invalid username or password",
+      })
+    )
+  ),
+
   rest.post(`${apiUrl}${endpoints.logIn}`, async (req, res, ctx) => {
     const { password } = await req.json();
     const status = password === "" ? 400 : 200;
