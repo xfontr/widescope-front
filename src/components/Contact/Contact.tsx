@@ -13,7 +13,9 @@ const Contact = ({ contact }: ContactProps): JSX.Element => {
 
   return (
     <>
-      {messagesDisplay && <Messages friend={contact.id} />}
+      {messagesDisplay && (
+        <Messages friend={contact} close={setMessagesDisplay} />
+      )}
       <ContactStyled>
         <h3 className="contact__name">{contact.name}</h3>
         <Button action={() => setMessagesDisplay(true)}>Talk</Button>
