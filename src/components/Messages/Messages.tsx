@@ -11,17 +11,26 @@ interface MessageProps {
   friend: string;
 }
 
+export interface IMessage {
+  current: string;
+  friend: string;
+  history: {
+    user: string;
+    content: string;
+  }[];
+}
+
 const Messages = ({ friend }: MessageProps): JSX.Element => {
   const { name } = useAppSelector(({ user }) => user.user);
 
   socket!.open();
 
-  const messageInitialState = {
+  const messageInitialState: IMessage = {
     current: "",
     friend: friend,
     history: [
       {
-        isUser: false,
+        user: "",
         content: "",
       },
     ],
@@ -44,7 +53,7 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
       history: [
         ...messages.history,
         {
-          isUser: true,
+          user: name!,
           content: messages.current,
         },
       ],
@@ -58,7 +67,7 @@ const Messages = ({ friend }: MessageProps): JSX.Element => {
           <>
             {message.content && (
               <Message
-                user={message.isUser ? "You" : messages.friend}
+                user={message.user}
                 message={message.content}
                 index={index}
               />

@@ -2,12 +2,13 @@ import mockUser from "../../test-utils/mocks/mockUser";
 import { render, screen } from "../../test-utils/render/customRender";
 import Messages from "./Messages";
 import userEvent from "@testing-library/user-event";
-import socket from "../../sockets";
+
+const mockSocketEmit = jest.fn();
 
 jest.mock("../../sockets", () => ({
   open: () => undefined,
   on: (to: string, message: string) => jest.fn(),
-  emit: () => jest.fn(),
+  emit: () => mockSocketEmit,
 }));
 
 jest.mock("./openListener", () => () => jest.fn());
@@ -41,8 +42,18 @@ describe("Given a Messages component", () => {
 
       await userEvent.click(submitButton);
 
-      const message = screen.getByText(`You: ${typedMessage}`);
+      const message = screen.getByText(typedMessage);
       expect(message).toBeInTheDocument();
+    });
+
+    test("Then it should do nothing if the message was empty", async () => {
+      render(<Messages friend={mockUser.name} />);
+
+      const submitButton = screen.getByRole("button", { name: "Send" });
+
+      await userEvent.click(submitButton);
+
+      expect(mockSocketEmit).not.toHaveBeenCalled();
     });
   });
 });
