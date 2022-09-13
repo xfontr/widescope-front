@@ -293,7 +293,7 @@ describe("Given a addFriend function returned by a useUser function", () => {
 
   describe("When called with a user id as an argument", () => {
     test("Then it should fetch the API to add a friend and close the modal with a success message", async () => {
-      await addFriend(mockContact.id, "");
+      await addFriend(mockContact.name);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
@@ -310,7 +310,7 @@ describe("Given a addFriend function returned by a useUser function", () => {
     });
 
     test("Then it should call the dispatch to add the obtained friend to the contacts list", async () => {
-      await addFriend(mockContact.id, mockContact.name);
+      await addFriend(mockContact.name);
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)
@@ -318,7 +318,7 @@ describe("Given a addFriend function returned by a useUser function", () => {
 
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
-          addFriendActionCreator({ id: mockContact.id, name: mockContact.name })
+          addFriendActionCreator({ id: mockUser.id, name: mockContact.name })
         );
       });
     });
@@ -326,7 +326,7 @@ describe("Given a addFriend function returned by a useUser function", () => {
 
   describe("When called with a non-existant user id as an argument", () => {
     test("Then it should call the dispatch to close the modal with an error", async () => {
-      await addFriend("wrongId", "");
+      await addFriend("");
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         setVisibilityActionCreator(true)

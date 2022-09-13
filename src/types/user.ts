@@ -35,3 +35,7 @@ export interface UserGetData {
 export interface UserGetFriends {
   userFriends: IContact[];
 }
+
+export interface UserGetAllUsers {
+  users: IUser[];
+}

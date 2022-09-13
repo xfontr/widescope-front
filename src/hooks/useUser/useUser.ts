@@ -20,6 +20,7 @@ import {
 } from "../../store/slices/userData/userDataSlice";
 import {
   IUser,
+  UserGetAllUsers,
   UserGetData,
   UserGetFriends,
   UserLogInData,
@@ -132,16 +133,22 @@ const useUser = () => {
   };
 
   const addFriend = useCallback(
-    async (friendId: string, friendName: string) => {
+    async (friendName: string) => {
       dispatch(setVisibilityActionCreator(true));
       try {
-        await axios.patch(`${apiUrl}${endpoints.addFriend}${friendId}`, "", {
+        const {
+          data: { users },
+        } = await axios.get<UserGetAllUsers>(
+          `${apiUrl}${endpoints.getAllUsers}?username=${friendName}`
+        );
+
+        await axios.patch(`${apiUrl}${endpoints.addFriend}${users[0].id}`, "", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        dispatch(addFriendActionCreator({ id: friendId, name: friendName }));
+        dispatch(addFriendActionCreator({ id: users[0].id, name: friendName }));
 
         dispatch(
           closeActionCreator({

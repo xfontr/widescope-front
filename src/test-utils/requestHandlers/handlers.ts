@@ -57,6 +57,25 @@ const handlers = [
     )
   ),
 
+  rest.get(`${apiUrl}${endpoints.getAllUsers}`, async (req, res, ctx) => {
+    const username = req.url.searchParams.get("username");
+    if (username) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          users: [mockUser],
+        })
+      );
+    } else {
+      return res(
+        ctx.status(404),
+        ctx.json({
+          users: [],
+        })
+      );
+    }
+  }),
+
   rest.post(`${apiUrl}${endpoints.logIn}`, async (req, res, ctx) => {
     const { password } = await req.json();
     const status = password === "" ? 400 : 200;
@@ -82,7 +101,7 @@ const handlers = [
   }),
 
   rest.patch(
-    `${apiUrl}${endpoints.addFriend}${mockContact.id}`,
+    `${apiUrl}${endpoints.addFriend}${mockUser.id}`,
     async (req, res, ctx) =>
       res(
         ctx.status(200),

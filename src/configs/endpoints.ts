@@ -3,6 +3,7 @@ const endpoints = {
   signUp: "/users/sign-up",
   logIn: "/users/log-in",
   addFriend: "/users/",
+  getAllUsers: "/users/all",
 
   projectsRoot: "/projects",
   getAll: "/projects/all",

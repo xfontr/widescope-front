@@ -30,7 +30,7 @@ const SearchBar = (): JSX.Element => {
       return;
     }
 
-    await addFriend("", value.search);
+    await addFriend(value.search);
   };
 
   return (
