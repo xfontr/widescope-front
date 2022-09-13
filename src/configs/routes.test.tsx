@@ -2,6 +2,12 @@ import mockProject from "../test-utils/mocks/mockProject";
 import { render, screen } from "../test-utils/render/customRender";
 import { navRoutes } from "./routes";
 
+jest.mock("../sockets", () => ({
+  open: () => undefined,
+  on: () => jest.fn(),
+  emit: () => jest.fn(),
+}));
+
 describe("Given a routes module", () => {
   describe("When instantiated any of the lazy rendered components", () => {
     test("They should appear in the document", async () => {

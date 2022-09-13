@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import Messages from "../components/Messages/Messages";
 import LandingPage from "../pages/LandingPage/LandingPage";
 const ExplorePage = React.lazy(
   () => import("../pages/ExplorePage/ExplorePage")
@@ -115,5 +116,12 @@ export const navRoutes: Record<string, NavRoute> = {
     display: "logged",
     name: "Contacts",
     render: () => <ContactsPage />,
+  },
+
+  messages: {
+    path: "/messages",
+    display: "always",
+    name: "Messages",
+    render: () => <Messages friend={"Prueba"} />,
   },
 };
