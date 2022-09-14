@@ -6,8 +6,10 @@ import { Filter } from "../../types/filter";
 import useProjects from "../../hooks/useProjects/useProjects";
 import { filterInitialState } from "../../pages/ExplorePage/ExplorePage";
 import { useState } from "react";
+import sliceText from "../../utils/sliceText/sliceText";
 
 const apiUrl = process.env.REACT_APP_API_URL;
+const maxLength = 109;
 interface ProjectProps {
   project: IProject;
   setFilter?: React.Dispatch<React.SetStateAction<Filter>>;
@@ -86,7 +88,9 @@ const Project = ({
         ))}
       </ul>
 
-      <p className="project__description">{project.description}</p>
+      <p className="project__description">
+        {sliceText(project.description, maxLength)}
+      </p>
 
       <div className="project__options">
         <Button

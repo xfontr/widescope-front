@@ -62,7 +62,7 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
         ...messages.history,
         {
           user: user,
-          content: messages.current,
+          content: "",
         },
       ],
     });
