@@ -2,6 +2,13 @@ import { act } from "react-dom/test-utils";
 import mockProject from "../../test-utils/mocks/mockProject";
 import { render, screen } from "../../test-utils/render/customRender";
 import ProjectDetailsPage from "./ProjectDetailsPage";
+import renderer from "react-test-renderer";
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
+import { ThemeProvider } from "styled-components";
+import styledMainTheme from "../../styles/styledMainTheme";
+import { BrowserRouter } from "react-router-dom";
+import GlobalStyles from "../../styles/GlobalStyles";
 
 let mockProjectId = mockProject.id;
 
@@ -12,6 +19,21 @@ jest.mock("react-router-dom", () => ({
 
 describe("Given a ProjectDetailsPage component", () => {
   describe("When instantiated with a valid param", () => {
+    test("Then it should match the snapshot", () => {
+      const expectedPage = renderer.create(
+        <Provider store={store}>
+          <ThemeProvider theme={styledMainTheme}>
+            <BrowserRouter>
+              <GlobalStyles />
+              <ProjectDetailsPage />
+            </BrowserRouter>
+          </ThemeProvider>
+        </Provider>
+      );
+
+      expect(expectedPage).toMatchSnapshot();
+    });
+
     test("Then it should get a project and display it", async () => {
       await render(<ProjectDetailsPage />);
 

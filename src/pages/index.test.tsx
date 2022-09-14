@@ -1,6 +1,6 @@
 import mockProject from "../test-utils/mocks/mockProject";
 import { render, screen } from "../test-utils/render/customRender";
-import { navRoutes } from "./routes";
+import { navRoutes } from "../configs/routes";
 
 jest.mock("../sockets", () => ({
   open: () => undefined,
@@ -8,7 +8,7 @@ jest.mock("../sockets", () => ({
   emit: () => jest.fn(),
 }));
 
-describe("Given a routes module", () => {
+describe("Given a index module", () => {
   describe("When instantiated any of the lazy rendered components", () => {
     test("They should appear in the document", async () => {
       render(
@@ -35,6 +35,14 @@ describe("Given a routes module", () => {
         await screen.findByRole("heading", {
           name: "Your creations. Thanks for sharing!",
         }),
+
+        await screen.findByRole("heading", {
+          name: "Meet other authors",
+        }),
+
+        await screen.findByRole("heading", {
+          name: "Let them know what you've got",
+        }),
       ];
 
       const logInPage = await screen.findAllByRole("heading", {
@@ -47,8 +55,8 @@ describe("Given a routes module", () => {
       });
 
       pages.forEach((element) => expect(element).toBeInTheDocument());
-      expect(logInPage).toHaveLength(2);
-      expect(projectDetailsPage).toHaveLength(2);
+      expect(logInPage[0]).toBeInTheDocument();
+      expect(projectDetailsPage[0]).toBeInTheDocument();
     });
   });
 });
