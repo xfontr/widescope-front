@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { InputStyled } from "../RenderForm/RenderFormStyled";
 import Button from "../Button/Button";
@@ -48,7 +48,7 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
 
   openListener(user.id, messages, setMessage);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
 
     if (!messages.current) {
@@ -100,10 +100,10 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
           <InputStyled
             type="text"
             value={messages.current}
-            onChange={(e) =>
+            onChange={(event) =>
               setMessage({
                 ...messages,
-                current: e.target.value,
+                current: event.target.value,
               })
             }
           />

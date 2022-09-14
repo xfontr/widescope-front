@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setVisibilityActionCreator } from "../../store/slices/uiModal/uiModalSlice";
 import {
@@ -33,9 +34,11 @@ const useToken = () => {
     try {
       const user = await getUserData(decodedToken.id);
 
-      dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
-      dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
-      dispatch(toggleStatusActionCreator(true));
+      batch(() => {
+        dispatch(loadUserActionCreator(setUserBasicData(user as IUser, token)));
+        dispatch(loadUserDataActionCreator(setUserExtraData(user as IUser)));
+        dispatch(toggleStatusActionCreator(true));
+      });
     } catch (error) {
       logOut();
       localStorage.clear();
