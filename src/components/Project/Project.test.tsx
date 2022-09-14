@@ -150,9 +150,7 @@ describe("Given a Project component", () => {
 
       const image = screen.getByAltText(`${mockProject.name} logo`);
 
-      expect(image.getAttribute("src")).toBe(
-        `${apiUrl}/uploads/r_${mockProject.logo}`
-      );
+      expect(image.getAttribute("src")).toBe(`${apiUrl}/r_${mockProject.logo}`);
     });
 
     test("The image source should be the database one if the local one is not found", () => {

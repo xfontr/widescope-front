@@ -46,11 +46,12 @@ const Project = ({
           <h3 className="project__title">{project.name}</h3>
         </div>
         <img
-          src={`${apiUrl}/uploads/r_${project.logo}`}
+          src={`${apiUrl}/r_${project.logo}`}
           onError={({ currentTarget }) => {
             if (requests) {
               return;
             }
+
             currentTarget.onerror = null;
             currentTarget.src = `${project.logoBackup.slice(
               0,

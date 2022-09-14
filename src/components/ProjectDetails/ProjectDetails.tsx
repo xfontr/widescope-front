@@ -25,7 +25,7 @@ const ProjectDetails = ({ project }: ProjectDetailsProps): JSX.Element => {
       </div>
 
       <img
-        src={`${apiUrl}/uploads/${project.logo}`}
+        src={`${apiUrl}/${project.logo}`}
         onError={({ currentTarget }) => {
           if (requests) {
             return;
