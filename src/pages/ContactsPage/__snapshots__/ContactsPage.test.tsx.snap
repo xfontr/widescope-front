@@ -2,7 +2,7 @@
 
 exports[`Given a ManageContacts component When instantiated Then it should match the snapshot 1`] = `
 <div
-  className="sc-crXcEl evZJcF"
+  className="sc-kDDrLX devrGj"
 >
   <h2
     className="page__title"
@@ -55,7 +55,7 @@ exports[`Given a ManageContacts component When instantiated Then it should match
       Your friends
     </h3>
     <ul
-      className="sc-iqcoie fkEIdW"
+      className="sc-jqUVSM hKyCQk"
     >
       <span>
         You don't seem to have any contacts :(

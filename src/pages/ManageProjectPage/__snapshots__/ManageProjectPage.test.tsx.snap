@@ -8,12 +8,12 @@ Array [
     New project
   </h2>,
   <form
-    className="sc-hKMtZM ctpeAE"
+    className="sc-bczRLJ jzjTXG"
     data-testid="form"
     onSubmit={[Function]}
   >
     <header
-      className="sc-eCYdqJ jizDxD"
+      className="sc-gsnTZi kjzfXG"
     >
       <h3
         className="form__title"
@@ -22,16 +22,16 @@ Array [
       </h3>
     </header>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-dkzDqf bRizeo"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-hKMtZM chFrlm"
         htmlFor="name"
       >
         Name
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-eCYdqJ dwpIGp"
         id="name"
         name="name"
         onChange={[Function]}
@@ -41,16 +41,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-dkzDqf bRizeo"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-hKMtZM chFrlm"
         htmlFor="repository"
       >
         Repository URL
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-eCYdqJ dwpIGp"
         id="repository"
         name="repository"
         onChange={[Function]}
@@ -60,16 +60,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ area"
+      className="sc-dkzDqf bRizeo area"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-hKMtZM chFrlm"
         htmlFor="logo"
       >
         Project logo
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-eCYdqJ dwpIGp"
         id="logo"
         name="logo"
         onChange={[Function]}
@@ -78,16 +78,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-dkzDqf bRizeo"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-hKMtZM chFrlm"
         htmlFor="technologyFront"
       >
         Frontend main library or framework
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-eCYdqJ dwpIGp"
         id="technologyFront"
         name="technologyFront"
         onChange={[Function]}
@@ -97,16 +97,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-dkzDqf bRizeo"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-hKMtZM chFrlm"
         htmlFor="technologyBack"
       >
         Backend main library or framework
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-eCYdqJ dwpIGp"
         id="technologyBack"
         name="technologyBack"
         onChange={[Function]}
@@ -116,16 +116,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ area"
+      className="sc-dkzDqf bRizeo area"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-hKMtZM chFrlm"
         htmlFor="description"
       >
         Description
       </label>
       <textarea
-        className="sc-iBkjds jsjeVM"
+        className="sc-eCYdqJ dwpIGp"
         id="description"
         name="description"
         onChange={[Function]}
@@ -135,17 +135,17 @@ Array [
       />
     </div>
     <div
-      className="sc-papXJ kLgKOk"
+      className="sc-iBkjds hTcyAC"
     >
       <ul
         className="error-list"
       />
     </div>
     <footer
-      className="sc-ftvSup kVrNfS"
+      className="sc-jSMfEi etMdQu"
     >
       <button
-        className="sc-bczRLJ jZmJeh undefined button--default "
+        className="sc-gKXOVf fgJUzp undefined button--default "
         onClick={[Function]}
         rel="noopener noreferrer"
         target="_blank"

@@ -1,12 +1,13 @@
 import AppStyled from "./AppStyled";
-import NavigationMenu from "../NavigationMenu/NavigationMenu";
-import Modal from "../Modal/Modal";
 import { navRoutes } from "../../configs/routes";
 import { useAppSelector } from "../../app/hooks";
 import { Link, Routes } from "react-router-dom";
 import useToken from "../../hooks/useToken/useToken";
-import { Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import renderRoutes from "../../utils/renderRoutes/renderRoutes";
+import Modal from "../Modal/Modal";
+
+const NavigationMenu = lazy(() => import("../NavigationMenu/NavigationMenu"));
 
 const App = (): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
@@ -25,11 +26,13 @@ const App = (): JSX.Element => {
         <Link to="/">
           <h1 className="header__title">wideScope</h1>
         </Link>
-        <NavigationMenu />
+        <Suspense>
+          <NavigationMenu />
+        </Suspense>
       </header>
 
       <main>
-        <Suspense fallback={<span>Loading...</span>}>
+        <Suspense>
           <Routes key="routes">
             {Object.values(navRoutes).map((route) =>
               renderRoutes(isLogged, route)

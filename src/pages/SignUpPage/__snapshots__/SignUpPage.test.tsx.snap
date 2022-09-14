@@ -12,12 +12,12 @@ Array [
     </span>
   </h2>,
   <form
-    className="sc-hKMtZM ctpeAE"
+    className="sc-gsnTZi mLvGM"
     data-testid="form"
     onSubmit={[Function]}
   >
     <header
-      className="sc-eCYdqJ jizDxD"
+      className="sc-dkzDqf cpXhox"
     >
       <h3
         className="form__heading"
@@ -31,16 +31,16 @@ Array [
       </span>
     </header>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-hKMtZM gFva-Db"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-eCYdqJ lgrxDH"
         htmlFor="name"
       >
         Name
       </label>
       <input
-        className="sc-iBkjds jsjeVM  form__input--user"
+        className="sc-jSMfEi fmIreX  form__input--user"
         id="name"
         name="name"
         onChange={[Function]}
@@ -50,16 +50,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-hKMtZM gFva-Db"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-eCYdqJ lgrxDH"
         htmlFor="password"
       >
         Password
       </label>
       <input
-        className="sc-iBkjds jsjeVM  form__input--password"
+        className="sc-jSMfEi fmIreX  form__input--password"
         id="password"
         name="password"
         onChange={[Function]}
@@ -68,16 +68,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-hKMtZM gFva-Db"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-eCYdqJ lgrxDH"
         htmlFor="repeatPassword"
       >
         Repeat password
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-jSMfEi fmIreX"
         id="repeatPassword"
         name="repeatPassword"
         onChange={[Function]}
@@ -86,16 +86,16 @@ Array [
       />
     </div>
     <div
-      className="sc-jSMfEi icykpQ"
+      className="sc-hKMtZM gFva-Db"
     >
       <label
-        className="sc-gKXOVf jsDXqo"
+        className="sc-eCYdqJ lgrxDH"
         htmlFor="email"
       >
         Email address
       </label>
       <input
-        className="sc-iBkjds jsjeVM"
+        className="sc-jSMfEi fmIreX"
         id="email"
         name="email"
         onChange={[Function]}
@@ -104,14 +104,14 @@ Array [
       />
     </div>
     <div
-      className="sc-papXJ kLgKOk"
+      className="sc-iBkjds hTcyAC"
     >
       <ul
         className="error-list"
       />
     </div>
     <footer
-      className="sc-ftvSup kVrNfS"
+      className="sc-gKXOVf fdJfAH"
     >
       <button
         className="sc-bczRLJ jZmJeh undefined button--default "
