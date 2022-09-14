@@ -3,9 +3,31 @@ import mockProject from "../../test-utils/mocks/mockProject";
 import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import UserProjectsPage from "./UserProjectsPage";
+import renderer from "react-test-renderer";
+import GlobalStyles from "../../styles/GlobalStyles";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
+import styledMainTheme from "../../styles/styledMainTheme";
 
 describe("Given a UserProjectsPage component", () => {
   describe("When instantiated", () => {
+    test("Then it should match the snapshot", () => {
+      const expectedPage = renderer.create(
+        <Provider store={store}>
+          <ThemeProvider theme={styledMainTheme}>
+            <BrowserRouter>
+              <GlobalStyles />
+              <UserProjectsPage />
+            </BrowserRouter>
+          </ThemeProvider>
+        </Provider>
+      );
+
+      expect(expectedPage).toMatchSnapshot();
+    });
+
     test("Then it should show a title and the projects retreived", async () => {
       reactRender(<UserProjectsPage />, { wrapper: WrapperWithMockStore });
 

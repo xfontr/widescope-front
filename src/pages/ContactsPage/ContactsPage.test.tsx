@@ -4,9 +4,32 @@ import mockContact from "../../test-utils/mocks/mockContact";
 import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import ManageContacts from "./ContactsPage";
+import renderer from "react-test-renderer";
+import ContactsPage from "./ContactsPage";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { BrowserRouter } from "react-router-dom";
+import GlobalStyles from "../../styles/GlobalStyles";
+import styledMainTheme from "../../styles/styledMainTheme";
+import { store } from "../../app/store";
 
 describe("Given a ManageContacts component", () => {
   describe("When instantiated", () => {
+    test("Then it should match the snapshot", () => {
+      const expectedPage = renderer.create(
+        <Provider store={store}>
+          <ThemeProvider theme={styledMainTheme}>
+            <BrowserRouter>
+              <GlobalStyles />
+              <ContactsPage />
+            </BrowserRouter>
+          </ThemeProvider>
+        </Provider>
+      );
+
+      expect(expectedPage).toMatchSnapshot();
+    });
+
     test("Then there should be a heading and a search form", async () => {
       render(<ManageContacts />);
 

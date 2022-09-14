@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given a NotFoundPage component When instantiated Then it should match the snapshot 1`] = `
+Array [
+  <h2
+    className="page__title page__title--wide"
+  >
+    Oops! We couldn't find what you are
+    <span
+      className="page__title--bold"
+    >
+       looking for
+    </span>
+  </h2>,
+  <span
+    className="page__title-subheading"
+  >
+    But hey, what about exploring some of our projects?
+  </span>,
+  <button
+    className="sc-bczRLJ jZmJeh undefined button--default "
+    onClick={[Function]}
+    rel="noopener noreferrer"
+    target="_blank"
+    type="button"
+  >
+    Explore
+  </button>,
+]
+`;

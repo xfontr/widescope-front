@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given a LandingPage component When intantiated if the user is not logged Then it should match the snapshot 1`] = `
+Array [
+  <section
+    className="sc-gsnTZi cPBToR full-width"
+  >
+    <div
+      className="container"
+    >
+      <h1
+        className="page__title page__title--landing"
+      >
+        Let them know
+        <span
+          className="page__title--bold"
+        >
+           what you've got
+        </span>
+      </h1>
+      <p
+        className="page__title-subheading page__title-subheading--landing"
+      >
+        Set your projects to a new level by sharing them with wideScope's glowing community of developers.
+      </p>
+      <a
+        className="sc-bczRLJ jZmJeh undefined button--default "
+        onClick={[Function]}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Get started
+      </a>
+      <a
+        className="sc-bczRLJ jZmJeh undefined button--outline "
+        onClick={[Function]}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Explore
+      </a>
+    </div>
+  </section>,
+  <p>
+    Getting some projects...
+  </p>,
+  <p>
+    Loading...
+  </p>,
+]
+`;

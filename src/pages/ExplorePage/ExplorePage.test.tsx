@@ -10,6 +10,13 @@ import {
   UserProjects,
 } from "../../hooks/types/useProjectTypes";
 import { AxiosResponse } from "axios";
+import { Provider } from "react-redux";
+import { store } from "../../app/store";
+import { ThemeProvider } from "styled-components";
+import { BrowserRouter } from "react-router-dom";
+import GlobalStyles from "../../styles/GlobalStyles";
+import styledMainTheme from "../../styles/styledMainTheme";
+import renderer from "react-test-renderer";
 
 const mockAmountOfProjects = 9;
 const mockListOfProjects = new Array(mockAmountOfProjects).fill(mockProject);
@@ -36,6 +43,21 @@ jest.mock("axios", () => ({
 
 describe("Given a ExplorePage component", () => {
   describe("When instantiated", () => {
+    test("Then it should match the snapshot", () => {
+      const expectedPage = renderer.create(
+        <Provider store={store}>
+          <ThemeProvider theme={styledMainTheme}>
+            <BrowserRouter>
+              <GlobalStyles />
+              <ExplorePage />
+            </BrowserRouter>
+          </ThemeProvider>
+        </Provider>
+      );
+
+      expect(expectedPage).toMatchSnapshot();
+    });
+
     test("Then it should show a title, the projects retreived and the pagination", async () => {
       render(<ExplorePage />);
 

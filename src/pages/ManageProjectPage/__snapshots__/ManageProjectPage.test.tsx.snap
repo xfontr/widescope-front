@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given a ManageProjectPage component When instantiated as a create project page Then it should match the snapshot 1`] = `
+Array [
+  <h2
+    className="page__title"
+  >
+    New project
+  </h2>,
+  <form
+    className="sc-hKMtZM ctpeAE"
+    data-testid="form"
+    onSubmit={[Function]}
+  >
+    <header
+      className="sc-eCYdqJ jizDxD"
+    >
+      <h3
+        className="form__title"
+      >
+        Tell us about your project
+      </h3>
+    </header>
+    <div
+      className="sc-jSMfEi icykpQ"
+    >
+      <label
+        className="sc-gKXOVf jsDXqo"
+        htmlFor="name"
+      >
+        Name
+      </label>
+      <input
+        className="sc-iBkjds jsjeVM"
+        id="name"
+        name="name"
+        onChange={[Function]}
+        placeholder="Music app"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="sc-jSMfEi icykpQ"
+    >
+      <label
+        className="sc-gKXOVf jsDXqo"
+        htmlFor="repository"
+      >
+        Repository URL
+      </label>
+      <input
+        className="sc-iBkjds jsjeVM"
+        id="repository"
+        name="repository"
+        onChange={[Function]}
+        placeholder="http://www.github.com/music-app"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="sc-jSMfEi icykpQ area"
+    >
+      <label
+        className="sc-gKXOVf jsDXqo"
+        htmlFor="logo"
+      >
+        Project logo
+      </label>
+      <input
+        className="sc-iBkjds jsjeVM"
+        id="logo"
+        name="logo"
+        onChange={[Function]}
+        type="file"
+        value=""
+      />
+    </div>
+    <div
+      className="sc-jSMfEi icykpQ"
+    >
+      <label
+        className="sc-gKXOVf jsDXqo"
+        htmlFor="technologyFront"
+      >
+        Frontend main library or framework
+      </label>
+      <input
+        className="sc-iBkjds jsjeVM"
+        id="technologyFront"
+        name="technologyFront"
+        onChange={[Function]}
+        placeholder="React"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="sc-jSMfEi icykpQ"
+    >
+      <label
+        className="sc-gKXOVf jsDXqo"
+        htmlFor="technologyBack"
+      >
+        Backend main library or framework
+      </label>
+      <input
+        className="sc-iBkjds jsjeVM"
+        id="technologyBack"
+        name="technologyBack"
+        onChange={[Function]}
+        placeholder="Express"
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="sc-jSMfEi icykpQ area"
+    >
+      <label
+        className="sc-gKXOVf jsDXqo"
+        htmlFor="description"
+      >
+        Description
+      </label>
+      <textarea
+        className="sc-iBkjds jsjeVM"
+        id="description"
+        name="description"
+        onChange={[Function]}
+        placeholder="Music app is about sharing music between users"
+        type=""
+        value=""
+      />
+    </div>
+    <div
+      className="sc-papXJ kLgKOk"
+    >
+      <ul
+        className="error-list"
+      />
+    </div>
+    <footer
+      className="sc-ftvSup kVrNfS"
+    >
+      <button
+        className="sc-bczRLJ jZmJeh undefined button--default "
+        onClick={[Function]}
+        rel="noopener noreferrer"
+        target="_blank"
+        type="submit"
+      >
+        Create project
+      </button>
+    </footer>
+  </form>,
+]
+`;
+
+exports[`Given a ManageProjectPage component When instantiated as a update project page Then it should match the snapshot 1`] = `
+Array [
+  <h2
+    className="page__title"
+  >
+    Update project
+  </h2>,
+  <span>
+    Loading the requested project...
+  </span>,
+]
+`;

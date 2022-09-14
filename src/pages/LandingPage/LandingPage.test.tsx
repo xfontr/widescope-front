@@ -6,6 +6,13 @@ import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import LandingPage from "./LandingPage";
 import { act } from "react-dom/test-utils";
+import renderer from "react-test-renderer";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { store } from "../../app/store";
+import styledMainTheme from "../../styles/styledMainTheme";
+import { BrowserRouter } from "react-router-dom";
+import GlobalStyles from "../../styles/GlobalStyles";
 
 const mockNavigate = jest.fn().mockReturnThis();
 
@@ -16,6 +23,21 @@ jest.mock("react-router-dom", () => ({
 
 describe("Given a LandingPage component", () => {
   describe("When intantiated if the user is not logged", () => {
+    test("Then it should match the snapshot", () => {
+      const expectedPage = renderer.create(
+        <Provider store={store}>
+          <ThemeProvider theme={styledMainTheme}>
+            <BrowserRouter>
+              <GlobalStyles />
+              <LandingPage />
+            </BrowserRouter>
+          </ThemeProvider>
+        </Provider>
+      );
+
+      expect(expectedPage).toMatchSnapshot();
+    });
+
     test("Then it should show a hero section, a list of projects and a CTA to log in", async () => {
       // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(() => {
