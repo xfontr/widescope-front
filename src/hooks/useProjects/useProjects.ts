@@ -47,7 +47,7 @@ const useProjects = () => {
           }${technology && "&technology="}${technology}`
         );
 
-        dispatch(loadAllActionCreator(projects.list as Projects));
+        dispatch(loadAllActionCreator(projects.list));
         dispatch(
           closeActionCreator({
             message: "",

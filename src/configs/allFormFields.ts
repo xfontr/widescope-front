@@ -90,7 +90,7 @@ export const allFormFields: Record<FormFields, FormValue> = {
     type: "text",
     label: "Backend main library or framework",
     name: "technologyBack",
-    placeholder: "React",
+    placeholder: "Express",
     belongsTo: ["createProject", "updateProject"],
   },
 

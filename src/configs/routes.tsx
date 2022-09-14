@@ -116,11 +116,4 @@ export const navRoutes: Record<string, NavRoute> = {
     name: "Contacts",
     render: () => <ContactsPage />,
   },
-
-  // messages: {
-  //   path: "/messages",
-  //   display: "always",
-  //   name: "Messages",
-  //   render: () => <Messages friend={"Prueba"} />,
-  // },
 };
