@@ -15,9 +15,9 @@ const MessagesStyled = styled.div`
   .modal-close {
     z-index: 999999;
     position: absolute;
-    top: 0;
-    width: 60px;
-    height: 60px;
+    top: 0.5rem;
+    width: 45px;
+    height: 45px;
     background-color: white;
     cursor: pointer;
     display: flex;
@@ -27,7 +27,7 @@ const MessagesStyled = styled.div`
     background-color: ${({ theme }) => theme.colors.secondary};
 
     &.fa svg {
-      width: 1.7rem;
+      width: 1.5rem;
       fill: ${({ theme }) => theme.colors.primary};
     }
   }

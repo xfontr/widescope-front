@@ -27,9 +27,9 @@ const UserProjectsPage = (): JSX.Element => {
         <span className="page__title--bold"> Thanks for sharing!</span>
       </h2>
 
-      {projects.length && <Projects projects={projects} isReadOnly={false} />}
-
-      {!projects.length && (
+      {projects.length ? (
+        <Projects projects={projects} isReadOnly={false} />
+      ) : (
         <span>
           You don't seem to have any project up. What about sharing one of your
           works?

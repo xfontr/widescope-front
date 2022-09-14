@@ -60,7 +60,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while loading projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -91,7 +91,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while loading projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -128,7 +128,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while getting the projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -168,7 +168,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while creating the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -196,7 +196,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while deleting the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -236,7 +236,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while updating the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );

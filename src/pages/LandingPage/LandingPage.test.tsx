@@ -5,6 +5,7 @@ import mockProject from "../../test-utils/mocks/mockProject";
 import { render, screen } from "../../test-utils/render/customRender";
 import { WrapperWithMockStore } from "../../test-utils/render/Wrapper";
 import LandingPage from "./LandingPage";
+import { act } from "react-dom/test-utils";
 
 const mockNavigate = jest.fn().mockReturnThis();
 
@@ -16,7 +17,10 @@ jest.mock("react-router-dom", () => ({
 describe("Given a LandingPage component", () => {
   describe("When intantiated if the user is not logged", () => {
     test("Then it should show a hero section, a list of projects and a CTA to log in", async () => {
-      render(<LandingPage />);
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(() => {
+        render(<LandingPage />);
+      });
 
       const landingPage = [
         screen.getByRole("heading", {

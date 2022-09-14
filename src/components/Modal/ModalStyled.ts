@@ -25,6 +25,7 @@ const ModalStyled = styled.div`
   & .modal__message {
     display: block;
     margin-top: 0.6rem;
+    text-align: center;
 
     &--loading {
       color: inherit;

@@ -58,11 +58,12 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
     socket!.emit(`MESSAGE_FROM:${user.id}`, messages.current, friend.id);
     setMessage({
       ...messages,
+      current: "",
       history: [
         ...messages.history,
         {
           user: user,
-          content: "",
+          content: messages.current,
         },
       ],
     });
@@ -82,17 +83,13 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
         </svg>
       </div>
       <div className="modal-container">
-        <ul className="messages">
+        <ul className="messages" key={"messages"}>
           {messages.history.map((message, index) => (
-            <>
+            <li key={index}>
               {message.content && (
-                <Message
-                  user={message.user}
-                  message={message.content}
-                  index={index}
-                />
+                <Message user={message.user} message={message.content} />
               )}
-            </>
+            </li>
           ))}
         </ul>
 
