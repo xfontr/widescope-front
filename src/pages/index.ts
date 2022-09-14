@@ -1,5 +1,7 @@
 import { lazy } from "react";
 
+import LandingPage from "./LandingPage/LandingPage";
+
 const ExplorePage = lazy(() => import("./ExplorePage/ExplorePage"));
 const LogInPage = lazy(() => import("./LogInPage/LogInPage"));
 const ManageProjectPage = lazy(
@@ -16,8 +18,6 @@ const UserProjectsPage = lazy(
 );
 
 const ContactsPage = lazy(() => import("./ContactsPage/ContactsPage"));
-
-const LandingPage = lazy(() => import("./LandingPage/LandingPage"));
 
 export {
   ExplorePage,

@@ -55,8 +55,8 @@ describe("Given a index module", () => {
       });
 
       pages.forEach((element) => expect(element).toBeInTheDocument());
-      expect(logInPage).toHaveLength(1);
-      expect(projectDetailsPage).toHaveLength(2);
+      expect(logInPage[0]).toBeInTheDocument();
+      expect(projectDetailsPage[0]).toBeInTheDocument();
     });
   });
 });

@@ -3,11 +3,10 @@ import { navRoutes } from "../../configs/routes";
 import { useAppSelector } from "../../app/hooks";
 import { Link, Routes } from "react-router-dom";
 import useToken from "../../hooks/useToken/useToken";
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import renderRoutes from "../../utils/renderRoutes/renderRoutes";
 import Modal from "../Modal/Modal";
-
-const NavigationMenu = lazy(() => import("../NavigationMenu/NavigationMenu"));
+import NavigationMenu from "../NavigationMenu/NavigationMenu";
 
 const App = (): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLogged);
@@ -26,9 +25,8 @@ const App = (): JSX.Element => {
         <Link to="/">
           <h1 className="header__title">wideScope</h1>
         </Link>
-        <Suspense>
-          <NavigationMenu />
-        </Suspense>
+
+        <NavigationMenu />
       </header>
 
       <main>
