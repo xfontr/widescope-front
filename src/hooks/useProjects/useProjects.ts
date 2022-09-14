@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
+import { batch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
 import {
@@ -47,17 +48,19 @@ const useProjects = () => {
           }${technology && "&technology="}${technology}`
         );
 
-        dispatch(loadAllActionCreator(projects.list));
-        dispatch(
-          closeActionCreator({
-            message: "",
-            type: "success",
-          })
-        );
+        batch(() => {
+          dispatch(loadAllActionCreator(projects.list));
+          dispatch(
+            closeActionCreator({
+              message: "",
+              type: "success",
+            })
+          );
+        });
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while loading projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -88,7 +91,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while loading projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -125,7 +128,7 @@ const useProjects = () => {
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while getting the projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -152,18 +155,20 @@ const useProjects = () => {
           }
         );
 
-        dispatch(addProjectActionCreator(projectCreated));
-        dispatch(addUserProjectActionCreator(projectCreated));
-        dispatch(
-          closeActionCreator({
-            message: "Project created successfully",
-            type: "success",
-          })
-        );
+        batch(() => {
+          dispatch(addProjectActionCreator(projectCreated));
+          dispatch(addUserProjectActionCreator(projectCreated));
+          dispatch(
+            closeActionCreator({
+              message: "Project created successfully",
+              type: "success",
+            })
+          );
+        });
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while creating the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -183,14 +188,15 @@ const useProjects = () => {
           },
         });
 
-        dispatch(deleteProjectActionCreator(projectId));
-        dispatch(deleteUserProjectActionCreator(projectId));
-
-        dispatch(setVisibilityActionCreator(false));
+        batch(() => {
+          dispatch(deleteProjectActionCreator(projectId));
+          dispatch(deleteUserProjectActionCreator(projectId));
+          dispatch(setVisibilityActionCreator(false));
+        });
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while deleting the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -217,18 +223,20 @@ const useProjects = () => {
           }
         );
 
-        dispatch(updateProjectActionCreator(projectUpdated));
-        dispatch(updateUserProjectActionCreator(projectUpdated));
-        dispatch(
-          closeActionCreator({
-            message: "Project updated successfully",
-            type: "success",
-          })
-        );
+        batch(() => {
+          dispatch(updateProjectActionCreator(projectUpdated));
+          dispatch(updateUserProjectActionCreator(projectUpdated));
+          dispatch(
+            closeActionCreator({
+              message: "Project updated successfully",
+              type: "success",
+            })
+          );
+        });
       } catch (error) {
         dispatch(
           closeActionCreator({
-            message: "Error while updating the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { InputStyled } from "../RenderForm/RenderFormStyled";
 import Button from "../Button/Button";
@@ -48,7 +48,7 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
 
   openListener(user.id, messages, setMessage);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
 
     if (!messages.current) {
@@ -58,6 +58,7 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
     socket!.emit(`MESSAGE_FROM:${user.id}`, messages.current, friend.id);
     setMessage({
       ...messages,
+      current: "",
       history: [
         ...messages.history,
         {
@@ -82,17 +83,13 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
         </svg>
       </div>
       <div className="modal-container">
-        <ul className="messages">
+        <ul className="messages" key={"messages"}>
           {messages.history.map((message, index) => (
-            <>
+            <li key={index}>
               {message.content && (
-                <Message
-                  user={message.user}
-                  message={message.content}
-                  index={index}
-                />
+                <Message user={message.user} message={message.content} />
               )}
-            </>
+            </li>
           ))}
         </ul>
 
@@ -100,10 +97,10 @@ const Messages = ({ friend, close }: MessageProps): JSX.Element => {
           <InputStyled
             type="text"
             value={messages.current}
-            onChange={(e) =>
+            onChange={(event) =>
               setMessage({
                 ...messages,
-                current: e.target.value,
+                current: event.target.value,
               })
             }
           />

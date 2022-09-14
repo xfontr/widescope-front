@@ -8,7 +8,7 @@ import Message from "./Message";
 describe("Given a Message component", () => {
   describe("When called with all the message information (message, sender...)", () => {
     test("Then it should display the message with the author", () => {
-      render(<Message message="Message" user={mockContact} index={1} />);
+      render(<Message message="Message" user={mockContact} />);
 
       const message = [
         screen.getByText("Message"),
@@ -24,7 +24,7 @@ describe("Given a Message component", () => {
           id: mockUser.id,
           name: mockUser.name,
         };
-        reactRender(<Message message="Message" user={falseUser} index={1} />, {
+        reactRender(<Message message="Message" user={falseUser} />, {
           wrapper: WrapperWithMockStore,
         });
 

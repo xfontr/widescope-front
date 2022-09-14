@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useCallback } from "react";
+import { batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import endpoints from "../../configs/endpoints";
@@ -75,16 +76,18 @@ const useUser = () => {
 
         const user: IUser = (await getUserData(tokenContent.id)) as IUser;
 
-        dispatch(loadUserActionCreator(setUserBasicData(user, token)));
-        dispatch(loadUserDataActionCreator(setUserExtraData(user)));
-        dispatch(toggleStatusActionCreator(true));
+        batch(() => {
+          dispatch(loadUserActionCreator(setUserBasicData(user, token)));
+          dispatch(loadUserDataActionCreator(setUserExtraData(user)));
+          dispatch(toggleStatusActionCreator(true));
 
-        dispatch(
-          closeActionCreator({
-            message: "Log in successful",
-            type: "success",
-          })
-        );
+          dispatch(
+            closeActionCreator({
+              message: "Log in successful",
+              type: "success",
+            })
+          );
+        });
         navigate(navRoutes.explore.path);
       } catch (error) {
         dispatch(
@@ -153,14 +156,17 @@ const useUser = () => {
           },
         });
 
-        dispatch(addFriendActionCreator({ id: users[0].id, name: friendName }));
-
-        dispatch(
-          closeActionCreator({
-            message: "Friend added",
-            type: "success",
-          })
-        );
+        batch(() => {
+          dispatch(
+            addFriendActionCreator({ id: users[0].id, name: friendName })
+          );
+          dispatch(
+            closeActionCreator({
+              message: "Friend added",
+              type: "success",
+            })
+          );
+        });
       } catch (error) {
         dispatch(
           closeActionCreator({
@@ -183,14 +189,16 @@ const useUser = () => {
         `${apiUrl}${endpoints.usersRoot}/${id}?friends=all`
       );
 
-      dispatch(loadFriendsActionCreator(userFriends));
+      batch(() => {
+        dispatch(loadFriendsActionCreator(userFriends));
 
-      dispatch(
-        closeActionCreator({
-          message: "",
-          type: "success",
-        })
-      );
+        dispatch(
+          closeActionCreator({
+            message: "",
+            type: "success",
+          })
+        );
+      });
     } catch (error) {
       dispatch(
         closeActionCreator({

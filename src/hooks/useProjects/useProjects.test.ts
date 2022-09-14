@@ -60,7 +60,7 @@ describe("Given a getAll function returned by a useProjects function", () => {
         await waitFor(() => {
           expect(mockUseDispatch).toHaveBeenCalledWith(
             closeActionCreator({
-              message: "Error while loading projects",
+              message: "No projects avaliable",
               type: "error",
             })
           );
@@ -111,7 +111,7 @@ describe("Given a getById function returned by a useProjects function", () => {
 
       expect(mockUseDispatch).toHaveBeenCalledWith(
         closeActionCreator({
-          message: "Error while loading projects",
+          message: "No projects avaliable",
           type: "error",
         })
       );
@@ -198,7 +198,7 @@ describe("Given a create function returned by a useProjects function", () => {
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: "Error while creating the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -264,7 +264,7 @@ describe("Given a getByAuthor function returned by a useProjects function", () =
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: "Error while getting the projects",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -358,7 +358,7 @@ describe("Given a deleteProject function returned by a useProjects function", ()
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: "Error while deleting the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );
@@ -444,7 +444,7 @@ describe("Given a update function returned by a useProjects function", () => {
       await waitFor(() => {
         expect(mockUseDispatch).toHaveBeenCalledWith(
           closeActionCreator({
-            message: "Error while updating the project",
+            message: "No projects avaliable",
             type: "error",
           })
         );

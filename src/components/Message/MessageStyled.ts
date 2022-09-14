@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MessageStyled = styled.li`
+const MessageStyled = styled.div`
   width: 100%;
 
   .message {
