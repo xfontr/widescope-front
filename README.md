@@ -1,46 +1,86 @@
-# Getting Started with Create React App
+# Widescope
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+[Widescope](https://xfont-final-project-202207-bcn.netlify.app/home) is a platform to share app projects between the users. The users can create, read, update and delete their own projects. As an additional feature, it is possible to speak to another using with a chat.
 
-## Available Scripts
+The technologies used for this proyect were:
 
-In the project directory, you can run:
+### 🔸 Front
 
-### `npm start`
+React | Redux | PWA | Styled Components | Typescript | Jest
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 🔸 Back
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+NodeJS | ExpressJS | MongoDB | Mongoose | JWT | Firebase | Jest | Supertest
 
-### `npm test`
+### 🔸 Tools
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Trello | Postman | Figma | Sonar Cloud
 
-### `npm run build`
+## Metrics
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🚀 GTMetrix
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Optimized with react component lazy loading**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src="https://i.imgur.com/yVPOWop.png" width="300">
+<img src="https://i.imgur.com/ree44Mz.png" width="300">
 
-### `npm run eject`
+**100% coverage with more than 350 tests**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+📈 [Back SonarCloud metrics](https://sonarcloud.io/project/overview?id=isdi-coders-2022_Xifre-Font_Back-Final-Project-202207-BCN)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+📈 [Front SonarCloud metrics](https://sonarcloud.io/project/overview?id=isdi-coders-2022_Xifre-Font_Front-Final-Project-202207-BCN)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Links
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+🌐✨ [Widescope](https://xfont-final-project-202207-bcn.netlify.app/home)
 
-## Learn More
+💻🗄 [Back deploy on Heroku](https://xfont-final-project-202207.herokuapp.com/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+🔗 [Original front repository](https://github.com/isdi-coders-2022/Xifre-Font_Front-Final-Project-202207-BCN)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+🔗 [Original back repository](https://github.com/isdi-coders-2022/Xifre-Font_Back-Final-Project-202207-BCN)
+
+## Back endpoints
+
+`🔹 GET ➡️ .../users/all`  
+Provides a list with all the users.
+
+`🔹 GET ➡️ .../users/:id`  
+Provides a specific user by id.
+
+`🔹 GET ➡️ .../users/:id?friends=all`  
+Provides all the friends a user has, with their names and IDs.
+
+`🔹 GET ➡️ .../projects`  
+Provides a list with all the projects.
+
+`🔹 GET ➡️ .../projects?technology=angular`  
+Provides a list with all the projects that have the technology specified in the query.
+
+`🔹 GET ➡️ .../projects?limit=10&offset=0`  
+Uses offset and limit to specify the amount of projects to be provided and the starting point.
+
+`🔹 GET ➡️ .../projects/:id`  
+Provides a specific project by id.
+
+`🔹 GET ➡️ .../projects/:user-name`  
+Provides a list of users filtered by project.
+
+`🔹 POST ➡️ .../users/log-in`  
+It requires a name and a password as a payload, and it responds with a token if the data introduced is verified as a registered user.
+
+`🔹 POST ➡️ .../users/sign-up`  
+It requires a name, a password and an email address. It creates a new user in the database.
+
+`🔹 POST ➡️ .../projects/new`  
+Posts a new project. It requires a name, a repository URL, a logo, an author name and ID, a back-end technology, a front-end technology and a description.
+
+`🔹 DELETE ➡️ .../projects/delete/:id`  
+Deletes the project with specified ID.
+
+`🔹 PUT ➡️ .../projects/update/:id`  
+Updates the project with specified ID. It requires the same data required for creating a project, with only the logo being optional.
+
+`🔹 PATCH ➡️ .../users/:friendId`  
+It requires authentication, so the requesting user ID will be registered in the request header. This request will add the friend with the specified ID to the client friend list.
